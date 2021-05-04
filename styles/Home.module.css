@@ -34,6 +34,29 @@
   align-items: center;
 }
 
+.bannerImgLeft {
+  width: 20vw;
+  height: auto;
+  flex-grow: 1;
+  max-width: 300px;
+}
+
+.bannerImgRight {
+  width: 20vw;
+  height: auto;
+  flex-grow: 1;
+  max-width: 300px;
+  transform: scaleX(-1);
+}
+
+.bannerTitle {
+  width: 30vw;
+  max-width: 500px;
+  height: auto;
+  flex-grow: 1;
+  align-self: flex-end;
+}
+
 .footer a {
   display: flex;
   justify-content: center;
@@ -56,7 +79,7 @@
   color: #f9be94;
   margin: 0;
   line-height: 1.15;
-  font-size: 5rem;
+  font-size: 15rem;
   font-family: "Nickainley", cursive;
 }
 
@@ -89,6 +112,16 @@
   width: 100vw;
   margin-top: 3rem;
 }
+
+.gridTitle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  width: 100vw;
+  margin-top: 3rem;
+}
+
 
 .column {
   width: 33%

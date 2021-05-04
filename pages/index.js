@@ -10,13 +10,15 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Le Coquette
-        </h1>
+        <div className={styles.gridTitle}>
+          <img src='./leftWing.png' className={styles.bannerImgLeft}/>
+          <img src='./title.png' className={styles.bannerTitle}/>
+          <img src='./leftWing.png' className={styles.bannerImgRight}/>
+
+        </div>
         <h3 className={styles.description}>
           BY MZ NAILS
         </h3>
-        <img src='./Marina Colors.jpg'/>
 
         <div className={styles.grid}>
           <div className={styles.column}>
