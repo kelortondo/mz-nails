@@ -16,6 +16,7 @@ export default function Home() {
         <h3 className={styles.description}>
           BY MZ NAILS
         </h3>
+        <img src='./Marina Colors.jpg'/>
 
         <div className={styles.grid}>
           <div className={styles.column}>
