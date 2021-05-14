@@ -1,8 +1,21 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import Link from 'next/link'
+
+import React, { useState } from 'react';
+// react plugin for creating date-time-picker
+import Datetime from "react-datetime";
+import "react-datetime/css/react-datetime.css";
+
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
+  const [booking, setBooking] = useState(false);
+
+  function toggleBooking() {
+    setBooking(!booking);
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -21,14 +34,18 @@ export default function Home() {
         </h3>
 
         <div className={styles.grid}>
-          <div className={styles.column}>
+          <div className={`${styles.column} ${styles.grid}`}>
             <h3 className={styles.description}>ABOUT</h3>
           </div>
-          <div className={styles.column}>
+          <div className={`${styles.column} ${styles.grid}`}>
             <h3 className={styles.description}>WORK</h3>
           </div>
-          <div className={styles.column}>
-            <h3 className={styles.description}>BOOK</h3>
+          <div className={`${styles.column} ${styles.grid}`}>
+            <h3 className={styles.description} onClick={toggleBooking}><Link href="/"><a>BOOK</a></Link></h3>
+            <div style={{display: booking ? "block" : "none"}}>
+              <Datetime input={false}/>
+            </div>
+
           </div>
         </div>
       </main>
