@@ -12,6 +12,10 @@ a {
   text-decoration: none;
 }
 
+a:active, a:hover {
+  color:#ef88ba;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -20,3 +24,7 @@ a {
   font-family: 'Nickainley';
   src: url('/fonts/Nickainley-Normal.otf');
  }
+
+ #booking-panel, #about-panel, #work-panel {
+  display: none;
+}

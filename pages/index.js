@@ -1,22 +1,14 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
-
-import React, { useState } from 'react';
-// react plugin for creating date-time-picker
-import Datetime from "react-datetime";
-import "react-datetime/css/react-datetime.css";
-
 import styles from '../styles/Home.module.css'
 
-export default function Home() {
-  const [booking, setBooking] = useState(false);
+<Link href="/posts/first-post">
+<a>this page!</a>
+</Link>
 
-  function toggleBooking() {
-    setBooking(!booking);
-  }
-
-  return (
+function Landing() {
+  return(
     <div className={styles.container}>
       <Head>
         <title>MZ Nails</title>
@@ -34,18 +26,11 @@ export default function Home() {
         </h3>
 
         <div className={styles.grid}>
-          <div className={`${styles.column} ${styles.grid}`}>
-            <h3 className={styles.description}>ABOUT</h3>
+          <div className={styles.column}>
+            <h3 className={styles.description}><Link href="/eng"><a>ENGLISH</a></Link></h3>
           </div>
-          <div className={`${styles.column} ${styles.grid}`}>
-            <h3 className={styles.description}>WORK</h3>
-          </div>
-          <div className={`${styles.column} ${styles.grid}`}>
-            <h3 className={styles.description} onClick={toggleBooking}><Link href="/"><a>BOOK</a></Link></h3>
-            <div style={{display: booking ? "block" : "none"}}>
-              <Datetime input={false}/>
-            </div>
-
+          <div className={styles.column}>
+            <h3 className={styles.description}>ESPAÑOL</h3>
           </div>
         </div>
       </main>
@@ -56,3 +41,5 @@ export default function Home() {
     </div>
   )
 }
+
+export default Landing
