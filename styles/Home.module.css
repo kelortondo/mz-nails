@@ -162,9 +162,18 @@
 
 .info {
   color: #f7d9ca;
-  font-size: 1.0rem;
+  font-size: 1.25rem;
   font-family: "Quicksand";
-  margin: 5rem;
+  width: 80%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+}
+
+.bookingInfo {
+  font-family: "Quicksand";
+  width: 80%;
+  margin: auto;
 }
 
 .logo {
@@ -178,3 +187,5 @@
     flex-direction: column;
   }
 }
+
+

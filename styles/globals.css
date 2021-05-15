@@ -12,7 +12,8 @@ a {
   text-decoration: none;
 }
 
-a:active, a:hover {
+/* mouse over link */
+a:hover, a:active {
   color:#ef88ba;
 }
 
@@ -24,7 +25,6 @@ a:active, a:hover {
   font-family: 'Nickainley';
   src: url('/fonts/Nickainley-Normal.otf');
  }
-
  #booking-panel, #about-panel, #work-panel {
   display: none;
 }
