@@ -2,6 +2,7 @@ import React from 'react';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import styles from '../styles/Home.module.css'
+const axios = require('axios');
 
 class BookingForm extends React.Component {
   constructor(props) {
@@ -23,8 +24,6 @@ class BookingForm extends React.Component {
   }
 
   handleChange(event) {
-    console.log((event));
-
     if (event.target) {
       let stateVar = event.target.name;
       let val;
@@ -44,6 +43,13 @@ class BookingForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    axios.post('/api/clients', this.state)
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
   }
 
   render() {
@@ -97,8 +103,9 @@ class BookingForm extends React.Component {
         </form>
         <div>
           Date Requested:
-          <DatePicker dateFormat="MM/dd/yyyy" minDate={new Date()} selected={this.state.aptDate}onChange={date => this.handleChange(date)} inline/>
+          <DatePicker dateFormat="MM/dd/yyyy" minDate={new Date()} selected={this.state.aptDate} onChange={date => this.handleChange(date)} inline/>
           <p style={{backgroundColor: 'white'}}>Apt times here</p>
+          <button onClick={(e) => this.handleSubmit(e)}>Book appointment</button>
         </div>
       </div>
     );
