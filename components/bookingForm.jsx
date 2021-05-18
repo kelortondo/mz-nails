@@ -17,6 +17,7 @@ class BookingForm extends React.Component {
       aptDate: new Date(),
       manicure: false,
       pedicure: false,
+      approved: false
     };
 
     this.handleChange = this.handleChange.bind(this);

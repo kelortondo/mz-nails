@@ -109,7 +109,7 @@
 .description {
   color: #83b9e7;
   font-size: 2.5rem;
-  font-family: "Nickainley", cursive;
+  font-family: "Quicksand";
   width: 100%;
   text-align: center;
 }
@@ -126,7 +126,7 @@
 .grid {
   display: flex;
   align-items: flex-start;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
   width: 100%;
   margin-top: 1rem;
@@ -167,6 +167,10 @@
 
 .column {
   width: 33%;
+}
+
+.column50 {
+  width: 50%;
 }
 
 .info {

@@ -18,6 +18,6 @@ const getClients = (cb) => {
       cb(null, result);
     }
   })
-}
+};
 
 module.exports = { createClient, getClients };

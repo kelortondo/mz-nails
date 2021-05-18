@@ -35,8 +35,9 @@ a:hover, a:active {
   margin-bottom: 0.5rem;
 }
 
- #booking-panel, #about-panel, #work-panel {
+ #booking-panel, #about-panel, #work-panel, #schedule-panel, #requests-panel {
   display: none;
+  height: 100%;
 }
 
 form {
