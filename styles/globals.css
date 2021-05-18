@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400&display=swap');
+
 html,
 body {
   background-color: #010101;
@@ -22,8 +24,10 @@ a:hover, a:active {
 }
 
 #about, #book, #work {
-  font-family: 'Nickainley';
-  font-size: 2.25rem;
+  font-family: 'Quicksand';
+  font-size: 1.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 @font-face {

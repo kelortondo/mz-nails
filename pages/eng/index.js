@@ -76,21 +76,22 @@ export default function Home() {
           <img src='./shortBanner.png'style={{height: '100%'}}/>
         </div>
 
-        <div className={styles.grid}>
+        <div className={[styles.grid, styles.navBar].join(' ')}>
           <div className={`${styles.column} `}>
-            <h3 className={styles.description} onClick={toggleAbout} id='about'><Link href="#"><a>About</a></Link></h3>
+            <div className={styles.description} onClick={toggleAbout} id='about'><Link href="#"><a>ABOUT</a></Link></div>
           </div>
           <div className={`${styles.column} `}>
-            <h3 className={styles.description} onClick={toggleWork} id='work'><Link href="#"><a>Work</a></Link></h3>
+            <div className={styles.description} onClick={toggleWork} id='work'><Link href="#"><a>SERVICES</a></Link></div>
           </div>
           <div className={`${styles.column} `}>
-            <h3 className={styles.description} onClick={toggleBooking} id='book'><Link href="#"><a>Book</a></Link></h3>
+            <div className={styles.description} onClick={toggleBooking} id='book'><Link href="#"><a>BOOK</a></Link></div>
           </div>
         </div>
+        <Gallery />
         <div className={styles.grid}>
           <div id='about-panel' className={styles.info} >
             <div style={{display: 'inline-block', width: '25%'}}>
-              <img src={'./marina.png'} style={{ width: '100%', objectFit: 'cover', paddingRight: '5%'}}/>
+              <img src={'./marinaPic.png'} style={{ width: '100%', objectFit: 'cover', paddingRight: '5%'}}/>
             </div>
             <div style={{display: 'inline-block', width: '70%'}}>
               <p>My name is Marina Zapiola. I am 22 years old and I am a beautician.</p>

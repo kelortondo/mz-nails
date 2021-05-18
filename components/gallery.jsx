@@ -5,11 +5,11 @@ import IconButton from '@material-ui/core/IconButton';
 import Grid from '@material-ui/core/Grid';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
-import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
+import ChangeHistoryTwoToneIcon from '@material-ui/icons/ChangeHistoryTwoTone';
+import ChangeHistoryIcon from '@material-ui/icons/ChangeHistory';
 
 const Gallery = (props) => {
-  const photos = ['/nails0.png', '/nails1.png']
+  const photos = ['/nails0.png', '/nails1.png', '/nails2.png', '/nails3.png', '/nails4.png']
   const [currentPhoto, setCurrentPhoto] = useState(0);
 
   const increment = function() {
@@ -25,7 +25,7 @@ const Gallery = (props) => {
   }
 
   return (
-    <div>
+    <div style={{margin: '1rem'}}>
       <Grid container alignItems="center">
         <Grid item xs={1}>
           <IconButton
@@ -39,9 +39,9 @@ const Gallery = (props) => {
           <img
             src={photos[currentPhoto]}
             style={{
-              objectFit: "contain",
-              width: '400px',
-              maxHeight: '400px'
+              objectFit: "cover",
+              width: "500px",
+              height: "600px"
             }}/>
         </Grid>
         <Grid item xs={1}>
@@ -66,7 +66,7 @@ const Gallery = (props) => {
             return (
               <Grid item key={index}>
                 <IconButton>
-                  <RadioButtonCheckedIcon style={{ color: 'white' }}/>
+                  <ChangeHistoryTwoToneIcon style={{ color: 'white', filter: "invert(0.2) sepia(50) saturate(100) hue-rotate(290deg)" }}/>
                 </IconButton>
               </Grid>
             );
@@ -74,7 +74,7 @@ const Gallery = (props) => {
             return (
               <Grid item key={index}>
                 <IconButton onClick={() => setCurrentPhoto(index)}>
-                  <RadioButtonUncheckedIcon style={{ color: 'white' }}/>
+                  <ChangeHistoryIcon style={{ color: 'white' }}/>
                 </IconButton>
               </Grid>
             );

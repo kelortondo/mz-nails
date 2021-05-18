@@ -108,10 +108,10 @@
 
 .description {
   color: #83b9e7;
-  line-height: 1.5;
   font-size: 2.5rem;
   font-family: "Nickainley", cursive;
   width: 100%;
+  text-align: center;
 }
 
 .code {
@@ -131,6 +131,11 @@
   width: 100%;
   margin-top: 1rem;
   height: auto;
+}
+
+.navBar {
+  border-top: double #f7d9ca;
+  border-bottom: double #f7d9ca;
 }
 
 .dropDowns {
@@ -157,7 +162,7 @@
   justify-content: center;
   flex-wrap: nowrap;
   width: 100vw;
-  height: 15vh;
+  height: 10vh;
 }
 
 
