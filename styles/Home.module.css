@@ -142,7 +142,6 @@
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
-  width: 80vw;
   max-height: 50vh;
 }
 
@@ -190,4 +189,14 @@
   }
 }
 
+.react-datepicker {
+  font-family: "Quicksand";
+  font-size: 0.8rem;
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #aeaeae;
+  display: inline-block;
+  position: relative;
+  border-radius: 0;
+}
 

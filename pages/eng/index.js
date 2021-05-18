@@ -5,13 +5,10 @@ import Link from 'next/link'
 
 import React, { useState } from 'react';
 
-// react plugin for creating date-time-picker
-import Datetime from "react-datetime";
-import "react-datetime/css/react-datetime.css";
-
 import styles from '../../styles/Home.module.css'
 
-import Gallery from '../../components/gallery.jsx'
+import Gallery from '../../components/gallery.jsx';
+import BookingForm from '../../components/bookingForm.jsx';
 
 export default function Home() {
   const [booking, setBooking] = useState(false);
@@ -87,7 +84,7 @@ export default function Home() {
             <div className={styles.description} onClick={toggleBooking} id='book'><Link href="#"><a>BOOK</a></Link></div>
           </div>
         </div>
-        <Gallery />
+        {/* <Gallery /> */}
         <div className={styles.grid}>
           <div id='about-panel' className={styles.info} >
             <div style={{display: 'inline-block', width: '25%'}}>
@@ -123,7 +120,7 @@ export default function Home() {
             </div>
           </div>
           <div id='booking-panel' className={styles.bookingInfo}>
-            <Datetime input={false}/>
+            <BookingForm />
           </div>
         </div>
       </main>

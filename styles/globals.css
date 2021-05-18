@@ -9,6 +9,11 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
+@font-face {
+  font-family: 'Nickainley';
+  src: url('/fonts/Nickainley-Normal.otf');
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -30,11 +35,28 @@ a:hover, a:active {
   margin-bottom: 0.5rem;
 }
 
-@font-face {
-  font-family: 'Nickainley';
-  src: url('/fonts/Nickainley-Normal.otf');
- }
-
  #booking-panel, #about-panel, #work-panel {
   display: none;
+}
+
+form {
+  background-color: #f7f7f9;
+  padding: 1rem;
+  width: 50%;
+  margin: auto;
+}
+
+input, select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 0.5rem 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  font-family: 'Quicksand';
+}
+
+#veronica, #dolores, #manicure, #pedicure {
+  width: 10%;
+  margin-bottom: 0.75rem;
 }

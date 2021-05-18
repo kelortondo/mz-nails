@@ -40,7 +40,7 @@ const Gallery = (props) => {
             src={photos[currentPhoto]}
             style={{
               objectFit: "cover",
-              width: "500px",
+              width: "600px",
               height: "600px"
             }}/>
         </Grid>
