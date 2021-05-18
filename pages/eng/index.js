@@ -69,16 +69,12 @@ export default function Home() {
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
       </Head>
 
-      <main className={styles.main}>
-        <div className={styles.gridTitle}>
-          <img src='./leftWing.png' className={styles.bannerImgLeft}/>
-          <img src='./title.png' className={styles.bannerTitle}/>
-          <img src='./leftWing.png' className={styles.bannerImgRight}/>
+      <div className={styles.gutterLeft}></div>
 
+      <main className={styles.main}>
+        <div className={styles.gridTitleSmall}>
+          <img src='./shortBanner.png'style={{height: '100%'}}/>
         </div>
-        <h3 className={styles.subtitle}>
-          BY MZ NAILS
-        </h3>
 
         <div className={styles.grid}>
           <div className={`${styles.column} `}>
@@ -131,8 +127,10 @@ export default function Home() {
         </div>
       </main>
 
+      <div className={styles.gutterRight}></div>
+
       <footer className={styles.footer}>
-      <p className={styles.footerText}><span className={styles.subtitle}>CREATED BY</span> Kayla Elortondo</p>
+        <p className={styles.footerText}><span className={styles.subtitle}>CREATED BY</span> Kayla Elortondo</p>
       </footer>
     </div>
   )
