@@ -1,14 +1,19 @@
-const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/mznails');
 
-const db = mongoose.connection;
+import mongoose from 'mongoose';
 
-db.on('error', () => {
-  console.log('mongoose connection error');
-});
+const connectDB = handler => async (req, res) => {
+  if (mongoose.connections[0].readyState) {
+    // Use current db connection
+    return handler(req, res);
+  }
+  // Use new db connection
+  await mongoose.connect('mongodb://localhost/mznails', {
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+    useCreateIndex: true,
+    useNewUrlParser: true
+  });
+  return handler(req, res);
+};
 
-db.once('open', () => {
-  console.log('mongoose connected successfully');
-});
-
-module.exports = db;
+export default connectDB;
