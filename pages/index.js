@@ -21,22 +21,22 @@ function Landing() {
           <img src='./leftWing.png' className={styles.bannerImgRight}/>
 
         </div>
-        <h3 className={styles.description}>
+        <h3 className={styles.subtitle}>
           BY MZ NAILS
         </h3>
 
         <div className={styles.grid}>
           <div className={styles.column}>
-            <h3 className={styles.description}><Link href="/eng"><a>ENGLISH</a></Link></h3>
+            <h3 className={styles.description}><Link href="/eng"><a>English</a></Link></h3>
           </div>
           <div className={styles.column}>
-            <h3 className={styles.description}>ESPAÑOL</h3>
+            <h3 className={styles.description}>Español</h3>
           </div>
         </div>
       </main>
 
       <footer className={styles.footer}>
-        <p className={styles.description}>CREATED BY KAYLA ELORTONDO</p>
+        <p className={styles.footerText}><span className={styles.subtitle}>CREATED BY</span> Kayla Elortondo</p>
       </footer>
     </div>
   )

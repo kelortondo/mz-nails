@@ -1,0 +1,88 @@
+
+import React, { useState } from 'react';
+//Material-UI dependencies
+import IconButton from '@material-ui/core/IconButton';
+import Grid from '@material-ui/core/Grid';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
+import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
+
+const Gallery = (props) => {
+  const photos = ['/nails0.png', '/nails1.png']
+  const [currentPhoto, setCurrentPhoto] = useState(0);
+
+  const increment = function() {
+    setCurrentPhoto(currentPhoto + 1)
+  }
+
+  const decrement = function() {
+    setCurrentPhoto(currentPhoto - 1)
+  }
+
+  const setPhoto = function(index) {
+    setCurrentPhoto(index)
+  }
+
+  return (
+    <div>
+      <Grid container alignItems="center">
+        <Grid item xs={1}>
+          <IconButton
+            style={currentPhoto === 0 ? { visibility: 'hidden', color: 'white' } : { color: 'white' }}
+            onClick={() => decrement()}
+          >
+            <ArrowBackIcon/>
+          </IconButton>
+        </Grid>
+        <Grid item container xs={10} justify="center">
+          <img
+            src={photos[currentPhoto]}
+            style={{
+              objectFit: "contain",
+              width: '400px',
+              maxHeight: '400px'
+            }}/>
+        </Grid>
+        <Grid item xs={1}>
+          <IconButton
+            style={currentPhoto === photos.length - 1 ?
+              { visibility: 'hidden', color: 'white' } :
+              { color: 'white' }}
+            onClick={() => increment()}
+          >
+            <ArrowForwardIcon/>
+          </IconButton>
+        </Grid>
+      </Grid>
+      <Grid
+        container
+        alignItems="center"
+        alignContent="center"
+        justify="center"
+        >
+        {photos.map((photo, index) => {
+          if (currentPhoto === index) {
+            return (
+              <Grid item key={index}>
+                <IconButton>
+                  <RadioButtonCheckedIcon style={{ color: 'white' }}/>
+                </IconButton>
+              </Grid>
+            );
+          } else {
+            return (
+              <Grid item key={index}>
+                <IconButton onClick={() => setCurrentPhoto(index)}>
+                  <RadioButtonUncheckedIcon style={{ color: 'white' }}/>
+                </IconButton>
+              </Grid>
+            );
+          }
+        })}
+      </Grid>
+    </div>
+  );
+};
+
+export default Gallery;

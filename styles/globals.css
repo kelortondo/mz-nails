@@ -21,10 +21,16 @@ a:hover, a:active {
   box-sizing: border-box;
 }
 
+#about, #book, #work {
+  font-family: 'Nickainley';
+  font-size: 2.25rem;
+}
+
 @font-face {
   font-family: 'Nickainley';
   src: url('/fonts/Nickainley-Normal.otf');
  }
+
  #booking-panel, #about-panel, #work-panel {
   display: none;
 }

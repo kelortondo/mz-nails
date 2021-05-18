@@ -11,6 +11,8 @@ import "react-datetime/css/react-datetime.css";
 
 import styles from '../../styles/Home.module.css'
 
+import Gallery from '../../components/gallery.jsx'
+
 export default function Home() {
   const [booking, setBooking] = useState(false);
   const [work, setWork] = useState(false);
@@ -74,19 +76,19 @@ export default function Home() {
           <img src='./leftWing.png' className={styles.bannerImgRight}/>
 
         </div>
-        <h3 className={styles.description}>
+        <h3 className={styles.subtitle}>
           BY MZ NAILS
         </h3>
 
         <div className={styles.grid}>
           <div className={`${styles.column} `}>
-            <h3 className={styles.description} onClick={toggleAbout} id='about'><Link href="#"><a>ABOUT</a></Link></h3>
+            <h3 className={styles.description} onClick={toggleAbout} id='about'><Link href="#"><a>About</a></Link></h3>
           </div>
           <div className={`${styles.column} `}>
-            <h3 className={styles.description} onClick={toggleWork} id='work'><Link href="#"><a>WORK</a></Link></h3>
+            <h3 className={styles.description} onClick={toggleWork} id='work'><Link href="#"><a>Work</a></Link></h3>
           </div>
           <div className={`${styles.column} `}>
-            <h3 className={styles.description} onClick={toggleBooking} id='book'><Link href="#"><a>BOOK</a></Link></h3>
+            <h3 className={styles.description} onClick={toggleBooking} id='book'><Link href="#"><a>Book</a></Link></h3>
           </div>
         </div>
         <div className={styles.grid}>
@@ -108,19 +110,19 @@ export default function Home() {
           </div>
 
           <div id='work-panel' className={styles.info}>
-            <div style={{display: 'inline-block', width: '25%', verticalAlign: 'top'}}>
-            <span style={{fontFamily: 'Nickainley', fontSize: '2rem'}}>Services:</span>
-              <ul>
-                <li>Russian/combined manicure</li>
-                <li>Traditional/semi permanent enamelling</li>
-                <li>Polygel sculpting</li>
-                <li>Kapping gel</li>
-                <li>Nail art</li>
-                <li>Pedicures</li>
-              </ul>
-            </div>
-            <div style={{display: 'inline-block'}}>
-
+            <div className={styles.dropDowns}>
+              <div>
+                <span style={{fontFamily: 'Nickainley', fontSize: '2rem'}}>Services:</span>
+                <ul>
+                  <li>Russian/combined manicure</li>
+                  <li>Traditional/semi permanent enamelling</li>
+                  <li>Polygel sculpting</li>
+                  <li>Kapping gel</li>
+                  <li>Nail art</li>
+                  <li>Pedicures</li>
+                </ul>
+              </div>
+              <Gallery/>
             </div>
           </div>
           <div id='booking-panel' className={styles.bookingInfo}>
@@ -130,7 +132,7 @@ export default function Home() {
       </main>
 
       <footer className={styles.footer}>
-        <p className={styles.description}>CREATED BY KAYLA ELORTONDO</p>
+      <p className={styles.footerText}><span className={styles.subtitle}>CREATED BY</span> Kayla Elortondo</p>
       </footer>
     </div>
   )
