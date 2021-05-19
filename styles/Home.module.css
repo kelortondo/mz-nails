@@ -144,6 +144,7 @@
   justify-content: flex-start;
   flex-wrap: wrap;
   max-height: 50vh;
+  width: 100%;
 }
 
 .gridTitle {
@@ -178,7 +179,7 @@
   color: #f7d9ca;
   font-size: 1.25rem;
   font-family: "Quicksand";
-  width: 80%;
+  width: 100%;
 }
 
 .bookingInfo {
@@ -220,4 +221,17 @@
   background-color: black;
   color: #cd1144;
   opacity: 0.5;
+}
+
+.aptRequest {
+  background-color: #f7d9ca;
+  color: black;
+  width: 100%;
+  padding: 0.5rem;
+  margin: 1rem;
+}
+
+.aptRequest p {
+  margin-block-start: 0.25em;
+  margin-block-end: 0.25em;
 }

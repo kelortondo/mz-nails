@@ -4,6 +4,7 @@ import Link from 'next/link'
 import styles from '../styles/Home.module.css'
 import React, { useState } from 'react';
 import LocationAdjustor from '../components/locationAdjuster.jsx';
+import RequestedAppointments from '../components/requestedAppointments.jsx';
 
 
 function Landing() {
@@ -100,7 +101,7 @@ function Landing() {
 
           <div id='requests-panel' className={styles.info}>
             <div className={styles.dropDowns}>
-
+              <RequestedAppointments/>
             </div>
           </div>
         </div>

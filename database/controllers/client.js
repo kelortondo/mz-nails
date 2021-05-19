@@ -20,4 +20,14 @@ const getClients = (cb) => {
   })
 };
 
-module.exports = { createClient, getClients };
+const getRequestedApts = (cb) => {
+  Client.find({ approved: false}, (err, result) => {
+    if (err) {
+      cb(err, null);
+    } else {
+      cb(null, result);
+    }
+  })
+}
+
+module.exports = { createClient, getClients, getRequestedApts };
