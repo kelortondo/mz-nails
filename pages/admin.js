@@ -12,7 +12,6 @@ function Landing() {
   const [schedule, setSchedule] = useState(false);
   const [requests, setRequests] = useState(false);
   const [adjustLoc, setAdjustLoc] = useState(false);
-  const [adjustApts, setAdjustApts] = useState(false);
   const [seeSched, setSeeSched] = useState(false);
   const [adminElement, setAdminEl] = useState(<></>);
 
@@ -38,21 +37,12 @@ function Landing() {
 
   function toggleAdjustLoc() {
     setAdjustLoc(true);
-    setAdjustApts(false);
     setSeeSched(false);
     setAdminEl(<LocationAdjustor/>)
   }
 
-  function toggleAdjustApts() {
-    setAdjustLoc(false);
-    setAdjustApts(true);
-    setSeeSched(false);
-    setAdminEl(<div>Adjust appointments</div>);
-  }
-
   function toggleSeeSched() {
     setAdjustLoc(false);
-    setAdjustApts(false);
     setSeeSched(true);
     setAdminEl(<Schedule/>);
   }
@@ -85,7 +75,6 @@ function Landing() {
             <div className={styles.dropDowns}>
               <div className={styles.verticalNav}>
                 <div onClick={toggleAdjustLoc}><Link href="#"><a>Adjust location</a></Link></div>
-                <div onClick={toggleAdjustApts}><Link href="#"><a>Alter existing appointments</a></Link></div>
                 <div onClick={toggleSeeSched}><Link href="#"><a>See schedule</a></Link></div>
               </div>
               <div style={{paddingLeft: '5%'}}>

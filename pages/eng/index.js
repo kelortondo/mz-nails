@@ -22,9 +22,11 @@ export default function Home() {
     $("#work").css("color", "#83b9e7");
     $("#about").css("color", "#83b9e7");
     $("#book").css("color", "#ef88ba");
-    $("#about-panel").slideUp("slow", function() {
-      $("#work-panel").slideUp("slow", function() {
-        $("#booking-panel").slideDown("slow");
+    $("#bookPicDiv").fadeOut("slow", function() {
+      $("#about-panel").slideUp("slow", function() {
+        $("#work-panel").slideUp("slow", function() {
+          $("#booking-panel").slideDown("slow");
+        });
       });
     });
   }
@@ -36,9 +38,11 @@ export default function Home() {
     $("#work").css("color", "#ef88ba");
     $("#about").css("color", "#83b9e7");
     $("#book").css("color", "#83b9e7");
-    $("#booking-panel").slideUp("slow", function() {
-      $("#about-panel").slideUp("slow", function() {
-        $("#work-panel").slideDown("slow");
+    $("#bookPicDiv").fadeOut("slow", function() {
+      $("#booking-panel").slideUp("slow", function() {
+        $("#about-panel").slideUp("slow", function() {
+          $("#work-panel").slideDown("slow");
+        });
       });
     });
   }
@@ -50,9 +54,11 @@ export default function Home() {
     $("#work").css("color", "#83b9e7");
     $("#about").css("color", "#ef88ba");
     $("#book").css("color", "#83b9e7");
-    $("#booking-panel").slideUp("slow", function() {
-      $("#work-panel").slideUp("slow", function() {
-        $("#about-panel").slideDown("slow");
+    $("#bookPicDiv").fadeOut("slow", function() {
+      $("#booking-panel").slideUp("slow", function() {
+        $("#work-panel").slideUp("slow", function() {
+          $("#about-panel").slideDown("slow");
+        });
       });
     });
   }
@@ -84,7 +90,7 @@ export default function Home() {
             <div className={styles.description} onClick={toggleBooking} id='book'><Link href="#"><a>BOOK</a></Link></div>
           </div>
         </div>
-        <div className={styles.containImgButton} style={booking || work || about ? { display: 'none'} : {}}>
+        <div className={styles.containImgButton} id="bookPicDiv">
           <img src="./designecologist-r-Ej0NQmFlQ-unsplash.jpg" style={{maxHeight: '70vh', marginTop: '1rem', maxWidth: '100%', objectFit: 'contain'}}/>
           <button className={styles.bookBtn} onClick={toggleBooking}>Book now!</button>
         </div>
