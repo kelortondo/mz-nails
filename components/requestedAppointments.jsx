@@ -43,10 +43,11 @@ class RequestedAppointments extends React.Component {
   }
 
   handleSubmit(event) {
-    event.preventDefault();
-
-    axios.post('/api/appointments', {})
-    .then(() => {
+    axios.get('/api/appointments')
+    .then((response) => {
+      this.setState({
+        requests: response.data
+      })
     })
     .catch((err) => {
       console.log(err);
@@ -58,7 +59,7 @@ class RequestedAppointments extends React.Component {
       <>
         {this.state.requests.map((request, index) => {
           return(
-            <AppointmentRequest key={index} req={request}/>
+            <AppointmentRequest key={index} req={request} handleRerender={this.handleSubmit}/>
           )
         })}
       </>

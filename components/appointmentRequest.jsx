@@ -1,6 +1,23 @@
 import React from 'react';
 import styles from '../styles/Home.module.css'
-function AppointmentRequest({req}) {
+import axios from 'axios';
+function AppointmentRequest({req, handleRerender}) {
+
+  const handleDelete = function() {
+    axios.delete('/api/appointments', {
+      data: {
+        id: req._id
+      }
+    })
+    .then((response) => {
+      console.log(response);
+      handleRerender();
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
+
   return(
     <div className={styles.aptRequest}>
       <p style={{fontFamily: "Nickainley", fontSize: '1.75rem'}}>Client info:</p>
@@ -10,7 +27,7 @@ function AppointmentRequest({req}) {
       <div>
         <button className={styles.aptBtn}>Approve</button>
         <button className={styles.aptBtn}>Approve with changes</button>
-        <button className={styles.aptBtn}>Remove</button>
+        <button className={styles.aptBtn} onClick={handleDelete}>Remove</button>
       </div>
     </div>
   )

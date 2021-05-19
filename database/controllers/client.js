@@ -30,4 +30,14 @@ const getRequestedApts = (cb) => {
   })
 }
 
-module.exports = { createClient, getClients, getRequestedApts };
+const deleteRequest = (id, cb) => {
+  Client.findByIdAndDelete(id, (err, result) => {
+    if (err) {
+      cb(err, null);
+    } else {
+      cb(null, result);
+    }
+  })
+}
+
+module.exports = { createClient, getClients, getRequestedApts, deleteRequest };

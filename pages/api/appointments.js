@@ -1,15 +1,15 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
 import connectDB from '../../database/index.js';
-import { getRequestedApts } from '../../database/controllers/client.js';
+import { getRequestedApts, deleteRequest } from '../../database/controllers/client.js';
 
 const handler = async (req, res) => {
-  if (req.method === 'POST') {
-    createClient(req.body, (err, result) => {
+  if (req.method === 'DELETE') {
+    deleteRequest(req.body.id, (err, result) => {
       if (err) {
         res.status(500).send(err.message)
       } else {
-        res.status(201).send(result)
+        res.status(204).send(result)
       }
     });
   } else if (req.method === 'GET') {
