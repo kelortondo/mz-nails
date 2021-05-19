@@ -4,7 +4,7 @@ import axios from 'axios';
 function AppointmentRequest({req, handleRerender}) {
 
   const handleDelete = function() {
-    axios.delete('/api/appointments', {
+    axios.delete('/api/requests', {
       data: {
         id: req._id
       }
@@ -19,7 +19,7 @@ function AppointmentRequest({req, handleRerender}) {
   }
 
   const handleApprove = function() {
-    axios.put('/api/appointments', {id: req._id})
+    axios.put('/api/requests', {id: req._id})
     .then((response) => {
       console.log(response);
       handleRerender();
@@ -32,9 +32,9 @@ function AppointmentRequest({req, handleRerender}) {
   return(
     <div className={styles.aptRequest}>
       <p style={{fontFamily: "Nickainley", fontSize: '1.75rem'}}>Client info:</p>
-      <p style={{marginLeft: '1rem'}}><i>Name:</i> {req.firstName} {req.lastName} || <i>Email:</i> {req.email} || <i>Phone number:</i> {req.phone}</p>
+      <p style={{marginLeft: '1rem'}}>Name: {req.firstName} {req.lastName} || Email: {req.email} || Phone number: {req.phone}</p>
       <p style={{fontFamily: "Nickainley", fontSize: '1.75rem'}}>Request info:</p>
-      <p style={{marginLeft: '1rem'}}><i>Location:</i> {req.location} || <i>Requested date:</i> {req.aptDate.slice(0, 10)} || <i>Requested service:</i> {req.service}, {req.pedicure ? 'pedicure,' : ''} {req.manicure ? 'manicure' : ''}</p>
+      <p style={{marginLeft: '1rem'}}>Location: {req.location} || Requested date/time: {req.aptDate} || Requested service: {req.service}, {req.pedicure ? 'pedicure,' : ''} {req.manicure ? 'manicure' : ''}</p>
       <div>
         <button className={styles.aptBtn} onClick={handleApprove}>Approve</button>
         <button className={styles.aptBtn} >Approve with changes</button>

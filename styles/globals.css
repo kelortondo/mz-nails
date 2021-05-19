@@ -44,7 +44,7 @@ form {
   background-color: #f7f7f9;
   padding: 1rem;
   width: 50%;
-  margin: auto;
+  color: black;
 }
 
 input, select {
@@ -80,4 +80,5 @@ input, select {
 .react-datepicker__day--highlighted-custom-2 {
   color: #fd8abb !important
 }
+
 

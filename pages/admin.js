@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import LocationAdjustor from '../components/locationAdjuster.jsx';
 import RequestedAppointments from '../components/requestedAppointments.jsx';
 import Schedule from '../components/schedule.jsx';
+import AptScheduler from '../components/aptScheduler.jsx';
 
 
 function Landing() {
@@ -13,6 +14,7 @@ function Landing() {
   const [requests, setRequests] = useState(false);
   const [adjustLoc, setAdjustLoc] = useState(false);
   const [seeSched, setSeeSched] = useState(false);
+  const [addApt, setAddApt] = useState(false);
   const [adminElement, setAdminEl] = useState(<></>);
 
   function toggleSchedule() {
@@ -38,13 +40,31 @@ function Landing() {
   function toggleAdjustLoc() {
     setAdjustLoc(true);
     setSeeSched(false);
+    setAddApt(false);
     setAdminEl(<LocationAdjustor/>)
+    $("#adj-loc-div").css("color", "#ef88ba");
+    $("#see-sched-div").css("color", "#83b9e7");
+    $("#create-apt-div").css("color", "#83b9e7");
   }
 
   function toggleSeeSched() {
     setAdjustLoc(false);
     setSeeSched(true);
+    setAddApt(false);
     setAdminEl(<Schedule/>);
+    $("#adj-loc-div").css("color", "#83b9e7");
+    $("#see-sched-div").css("color", "#ef88ba");
+    $("#create-apt-div").css("color", "#83b9e7");
+  }
+
+  function toggleAddApt() {
+    setAdjustLoc(false);
+    setSeeSched(false);
+    setAddApt(true);
+    setAdminEl(<AptScheduler/>);
+    $("#adj-loc-div").css("color", "#83b9e7");
+    $("#see-sched-div").css("color", "#83b9e7");
+    $("#create-apt-div").css("color", "#ef88ba");
   }
 
   return (
@@ -72,12 +92,13 @@ function Landing() {
 
         <div className={styles.grid}>
           <div id='schedule-panel' className={styles.info} >
-            <div className={styles.dropDowns}>
+            <div className={styles.dropDownsNoWrap}>
               <div className={styles.verticalNav}>
-                <div onClick={toggleAdjustLoc}><Link href="#"><a>Adjust location</a></Link></div>
-                <div onClick={toggleSeeSched}><Link href="#"><a>See schedule</a></Link></div>
+                <div onClick={toggleAdjustLoc} id="adj-loc-div"><Link href="#"><a>Adjust location</a></Link></div>
+                <div onClick={toggleSeeSched} id="see-sched-div"><Link href="#"><a>See schedule</a></Link></div>
+                <div onClick={toggleAddApt} id="create-apt-div"><Link href="#"><a>Create appointment</a></Link></div>
               </div>
-              <div style={{paddingLeft: '5%'}}>
+              <div style={{overflowY: 'auto'}}>
                 {adminElement}
               </div>
             </div>

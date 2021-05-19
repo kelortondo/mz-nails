@@ -17,7 +17,7 @@ class RequestedAppointments extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('/api/appointments')
+    axios.get('/api/requests')
     .then((response) => {
       this.setState({
         requests: response.data
@@ -43,7 +43,7 @@ class RequestedAppointments extends React.Component {
   }
 
   handleSubmit(event) {
-    axios.get('/api/appointments')
+    axios.get('/api/requests')
     .then((response) => {
       this.setState({
         requests: response.data

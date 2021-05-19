@@ -148,6 +148,14 @@
   width: 100%;
 }
 
+.dropDownsNoWrap {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  max-height: 100%;
+  width: 100%;
+}
+
 .gridTitle {
   display: flex;
   align-items: center;
@@ -288,5 +296,33 @@
 }
 
 .aptApproved .aptBtn:hover {
+  background-color: #83bae8;
+}
+
+.verticalNav div {
+  color: #83b9e7;
+  margin: 1rem;
+  padding: 1rem;
+}
+
+.verticalNav {
+  color: #83b9e7;
+  width: 30%;
+}
+
+.reqAptBtn {
+  background-color: #f9be95;
+  color: black;
+  font-size: 1.25rem;
+  font-family: "Quicksand";
+  padding: 12px 24px;
+  margin: auto;
+  border: none;
+  cursor: pointer;
+  opacity: 1;
+  transition: 0.5s;
+}
+
+.reqAptBtn:hover {
   background-color: #83bae8;
 }
