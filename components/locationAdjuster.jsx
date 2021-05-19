@@ -24,11 +24,13 @@ class LocationAdjustor extends React.Component {
     axios.get('/api/location')
     .then((response) => {
       let locations = response.data;
+      console.log(locations)
       locations.forEach((date) => {
         if (date["_id"] === "veronica") {
           let parsedDates = [];
           date.dates.forEach((stringDate) => {
-            parsedDates.push(new Date(stringDate))
+            let timelessDate = stringDate.slice(0, 10).replace(/-/g, '\/');
+            parsedDates.push(new Date(timelessDate))
           })
           this.setState({
             veronicaDays: parsedDates
@@ -36,7 +38,8 @@ class LocationAdjustor extends React.Component {
         } else if (date["_id"] === "dolores") {
           let parsedDates = [];
           date.dates.forEach((stringDate) => {
-            parsedDates.push(new Date(stringDate))
+            let timelessDate = stringDate.slice(0, 10).replace(/-/g, '\/');
+            parsedDates.push(new Date(timelessDate))
           })
           this.setState({
             doloresDays: parsedDates
@@ -83,7 +86,7 @@ class LocationAdjustor extends React.Component {
     const dateMove = new Date(startDate);
     let strDate = startDate;
 
-    while (strDate <= endDate) {
+    while (strDate < endDate) {
       strDate = dateMove.toISOString().slice(0, 10);
       listDate.push(strDate);
       dateMove.setDate(dateMove.getDate() + 1);
@@ -104,11 +107,56 @@ class LocationAdjustor extends React.Component {
       })
     })
     axios.post('/api/location', {bulk: bulkWrite})
-    .then((response) => {
-      console.log(response);
+    .then(() => {
+      axios.get('/api/location')
+      .then((response) => {
+        let locations = response.data;
+        locations.forEach((date) => {
+          if (date["_id"] === "veronica") {
+            let parsedDates = [];
+            date.dates.forEach((stringDate) => {
+              let timelessDate = stringDate.slice(0, 10).replace(/-/g, '\/');
+            parsedDates.push(new Date(timelessDate))
+            })
+            this.setState({
+              veronicaDays: parsedDates
+            })
+          } else if (date["_id"] === "dolores") {
+            let parsedDates = [];
+            date.dates.forEach((stringDate) => {
+              let timelessDate = stringDate.slice(0, 10).replace(/-/g, '\/');
+              parsedDates.push(new Date(timelessDate))
+            })
+            this.setState({
+              doloresDays: parsedDates
+            })
+          }
+        })
+      })
+      .then(() => {
+        this.setState({
+          dateHighlights: [
+            {
+              "react-datepicker__day--highlighted-custom-1": this.state.doloresDays
+            },
+            {
+              "react-datepicker__day--highlighted-custom-2": this.state.veronicaDays
+            }
+          ]
+        })
+      })
+      .catch((err) => {
+        console.log(err);
+      })
     })
     .catch((err) => {
       console.log(err);
+    })
+
+    this.setState({
+      location: '',
+      startDate: '',
+      endDate:  ''
     })
   }
 
