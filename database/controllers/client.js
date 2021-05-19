@@ -40,4 +40,24 @@ const deleteRequest = (id, cb) => {
   })
 }
 
-module.exports = { createClient, getClients, getRequestedApts, deleteRequest };
+const approveRequest = (id, cb) => {
+  Client.findByIdAndUpdate(id, {approved: true}, (err, result) => {
+    if (err) {
+      cb(err, null);
+    } else {
+      cb(null, result);
+    }
+  })
+}
+
+const getApprovedApts = (cb) => {
+  Client.find({ approved: true}, (err, result) => {
+    if (err) {
+      cb(err, null);
+    } else {
+      cb(null, result);
+    }
+  })
+}
+
+module.exports = { createClient, getClients, getRequestedApts, deleteRequest, approveRequest, getApprovedApts };

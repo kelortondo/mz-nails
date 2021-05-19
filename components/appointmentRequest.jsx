@@ -18,6 +18,17 @@ function AppointmentRequest({req, handleRerender}) {
     })
   }
 
+  const handleApprove = function() {
+    axios.put('/api/appointments', {id: req._id})
+    .then((response) => {
+      console.log(response);
+      handleRerender();
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
+
   return(
     <div className={styles.aptRequest}>
       <p style={{fontFamily: "Nickainley", fontSize: '1.75rem'}}>Client info:</p>
@@ -25,8 +36,8 @@ function AppointmentRequest({req, handleRerender}) {
       <p style={{fontFamily: "Nickainley", fontSize: '1.75rem'}}>Request info:</p>
       <p style={{marginLeft: '1rem'}}><i>Location:</i> {req.location} || <i>Requested date:</i> {req.aptDate.slice(0, 10)} || <i>Requested service:</i> {req.service}, {req.pedicure ? 'pedicure,' : ''} {req.manicure ? 'manicure' : ''}</p>
       <div>
-        <button className={styles.aptBtn}>Approve</button>
-        <button className={styles.aptBtn}>Approve with changes</button>
+        <button className={styles.aptBtn} onClick={handleApprove}>Approve</button>
+        <button className={styles.aptBtn} >Approve with changes</button>
         <button className={styles.aptBtn} onClick={handleDelete}>Remove</button>
       </div>
     </div>
