@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Rochester&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400&display=swap');
+@import "react-datepicker/dist/react-datepicker.css";
 
 @font-face {
   font-family: 'Nickainley';
@@ -193,14 +194,5 @@
   }
 }
 
-.react-datepicker {
-  font-family: "Quicksand";
-  font-size: 0.8rem;
-  background-color: #fff;
-  color: #000;
-  border: 1px solid #aeaeae;
-  display: inline-block;
-  position: relative;
-  border-radius: 0;
-}
+
 

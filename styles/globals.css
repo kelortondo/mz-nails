@@ -61,3 +61,22 @@ input, select {
   width: 10%;
   margin-bottom: 0.75rem;
 }
+
+.react-datepicker {
+  font-family: "Quicksand";
+  font-size: 0.8rem;
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #aeaeae;
+  display: inline-block;
+  position: relative;
+  border-radius: 0;
+}
+
+.react-datepicker__day--highlighted-custom-1 {
+  color: #83bae8 !important
+}
+
+.react-datepicker__day--highlighted-custom-2 {
+  color: #fd8abb !important
+}

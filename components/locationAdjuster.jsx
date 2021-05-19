@@ -83,7 +83,7 @@ class LocationAdjustor extends React.Component {
     const dateMove = new Date(startDate);
     let strDate = startDate;
 
-    while (strDate < endDate) {
+    while (strDate <= endDate) {
       strDate = dateMove.toISOString().slice(0, 10);
       listDate.push(strDate);
       dateMove.setDate(dateMove.getDate() + 1);
@@ -118,11 +118,11 @@ class LocationAdjustor extends React.Component {
         Choose the location:
         <div>
           <input type="radio" id="veronica" name="location" value="veronica" checked={this.state.location === "veronica"} onChange={(e) => this.handleChange(e)}/>
-          <label for="veronica">Veronica</label>
+          <label for="veronica" style={{color: '#fd8abb'}}>Veronica</label>
         </div>
         <div>
           <input type="radio" id="dolores" name="location" value="dolores" checked={this.state.location === "dolores"} onChange={(e) => this.handleChange(e)}/>
-          <label for="dolores">Dolores</label>
+          <label for="dolores" style={{color: '#83bae8'}}>Dolores</label>
         </div>
 
         <div>
