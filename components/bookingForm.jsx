@@ -17,11 +17,43 @@ class BookingForm extends React.Component {
       aptDate: new Date(),
       manicure: false,
       pedicure: false,
-      approved: false
+      approved: false,
+      veronicaDays: [],
+      doloresDays: [],
+      availableDays: []
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    axios.get('/api/location')
+    .then((response) => {
+      let locations = response.data;
+      locations.forEach((date) => {
+        if (date["_id"] === "veronica") {
+          let parsedDates = [];
+          date.dates.forEach((stringDate) => {
+            parsedDates.push(new Date(stringDate))
+          })
+          this.setState({
+            veronicaDays: parsedDates
+          })
+        } else if (date["_id"] === "dolores") {
+          let parsedDates = [];
+          date.dates.forEach((stringDate) => {
+            parsedDates.push(new Date(stringDate))
+          })
+          this.setState({
+            doloresDays: parsedDates
+          })
+        }
+      })
+    })
+    .catch((err) => {
+      console.log(err);
+    })
   }
 
   handleChange(event) {
@@ -34,7 +66,17 @@ class BookingForm extends React.Component {
       } else {
         val = event.target.value;
       }
-      this.setState({[stateVar]: val});
+      this.setState({[stateVar]: val}, () => {
+        if (this.state.location === "veronica") {
+          this.setState({
+            availableDays: this.state.veronicaDays
+          })
+        } else if (this.state.location === "dolores") {
+          this.setState({
+            availableDays: this.state.doloresDays
+          })
+        }
+      });
     } else {
       this.setState({
         aptDate: event
@@ -104,7 +146,7 @@ class BookingForm extends React.Component {
         </form>
         <div>
           Date Requested:
-          <DatePicker dateFormat="MM/dd/yyyy" minDate={new Date()} selected={this.state.aptDate} onChange={date => this.handleChange(date)} inline/>
+          <DatePicker dateFormat="MM/dd/yyyy" includeDates={this.state.availableDays} minDate={new Date()} selected={this.state.aptDate} onChange={date => this.handleChange(date)} inline/>
           <p style={{backgroundColor: 'white'}}>Apt times here</p>
           <button onClick={(e) => this.handleSubmit(e)}>Book appointment</button>
         </div>
