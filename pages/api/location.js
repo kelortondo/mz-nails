@@ -14,7 +14,7 @@ const handler = async (req, res) => {
   } else if (req.method === 'GET') {
     getLocation((err, result) => {
       if (err) {
-        res.status(500).send('Error getting location info')
+        res.status(500).send(err)
       } else {
         res.status(200).send(result)
       }

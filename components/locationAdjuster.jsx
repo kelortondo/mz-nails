@@ -10,11 +10,55 @@ class LocationAdjustor extends React.Component {
     this.state = {
       location: '',
       startDate: '',
-      endDate:  ''
+      endDate:  '',
+      doloresDays: [],
+      veronicaDays: [],
+      dateHighlights: []
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    axios.get('/api/location')
+    .then((response) => {
+      let locations = response.data;
+      locations.forEach((date) => {
+        if (date["_id"] === "veronica") {
+          let parsedDates = [];
+          date.dates.forEach((stringDate) => {
+            parsedDates.push(new Date(stringDate))
+          })
+          this.setState({
+            veronicaDays: parsedDates
+          })
+        } else if (date["_id"] === "dolores") {
+          let parsedDates = [];
+          date.dates.forEach((stringDate) => {
+            parsedDates.push(new Date(stringDate))
+          })
+          this.setState({
+            doloresDays: parsedDates
+          })
+        }
+      })
+    })
+    .then(() => {
+      this.setState({
+        dateHighlights: [
+          {
+            "react-datepicker__day--highlighted-custom-1": this.state.doloresDays
+          },
+          {
+            "react-datepicker__day--highlighted-custom-2": this.state.veronicaDays
+          }
+        ]
+      })
+    })
+    .catch((err) => {
+      console.log(err);
+    })
   }
 
   handleChange(event) {
@@ -44,7 +88,28 @@ class LocationAdjustor extends React.Component {
       listDate.push(strDate);
       dateMove.setDate(dateMove.getDate() + 1);
     };
-    console.log(listDate);
+
+    const bulkWrite = [];
+    listDate.forEach((date) => {
+      bulkWrite.push({
+        updateOne: {
+          filter: {
+            date: date
+          },
+          update: {
+            location: this.state.location
+          },
+          upsert: true
+        }
+      })
+    })
+    axios.post('/api/location', {bulk: bulkWrite})
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
   }
 
   render() {
@@ -68,6 +133,7 @@ class LocationAdjustor extends React.Component {
               startDate={this.state.startDate}
               endDate={this.state.endDate}
               minDate={new Date()}
+              highlightDates={this.state.dateHighlights}
               selectsRange
               inline
             />

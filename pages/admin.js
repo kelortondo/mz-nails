@@ -92,7 +92,7 @@ function Landing() {
                 <div onClick={toggleAdjustApts}><Link href="#"><a>Alter existing appointments</a></Link></div>
                 <div onClick={toggleSeeSched}><Link href="#"><a>See schedule</a></Link></div>
               </div>
-              <div style={{width: '70%', paddingLeft: '5%', height: '100%'}}>
+              <div style={{paddingLeft: '5%'}}>
                 {adminElement}
               </div>
             </div>
