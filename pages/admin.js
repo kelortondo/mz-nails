@@ -5,6 +5,7 @@ import styles from '../styles/Home.module.css'
 import React, { useState } from 'react';
 import LocationAdjustor from '../components/locationAdjuster.jsx';
 import RequestedAppointments from '../components/requestedAppointments.jsx';
+import Schedule from '../components/schedule.jsx';
 
 
 function Landing() {
@@ -13,8 +14,7 @@ function Landing() {
   const [adjustLoc, setAdjustLoc] = useState(false);
   const [adjustApts, setAdjustApts] = useState(false);
   const [seeSched, setSeeSched] = useState(false);
-
-  let adminElement;
+  const [adminElement, setAdminEl] = useState(<></>);
 
   function toggleSchedule() {
     setSchedule(true);
@@ -40,26 +40,21 @@ function Landing() {
     setAdjustLoc(true);
     setAdjustApts(false);
     setSeeSched(false);
+    setAdminEl(<LocationAdjustor/>)
   }
 
   function toggleAdjustApts() {
     setAdjustLoc(false);
     setAdjustApts(true);
     setSeeSched(false);
+    setAdminEl(<div>Adjust appointments</div>);
   }
 
   function toggleSeeSched() {
     setAdjustLoc(false);
     setAdjustApts(false);
     setSeeSched(true);
-  }
-
-  if (adjustLoc === true) {
-    adminElement = <LocationAdjustor/>
-  } else if (adjustApts === true) {
-    adminElement = <div>Adjust appointments</div>
-  } else if (seeSched === true) {
-    adminElement = <div>See schedule</div>
+    setAdminEl(<Schedule/>);
   }
 
   return (
@@ -73,7 +68,7 @@ function Landing() {
 
       <main className={styles.main}>
         <div className={styles.gridTitleSmall}>
-          <img src='./shortBanner.png'style={{height: '100%'}}/>
+          <Link href="/"><a><img src='./shortBanner.png'style={{height: '100%'}}/></a></Link>
         </div>
 
         <div className={[styles.grid, styles.navBar].join(' ')}>

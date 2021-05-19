@@ -85,7 +85,7 @@ export default function Home() {
           </div>
         </div>
         <div className={styles.containImgButton} style={booking || work || about ? { display: 'none'} : {}}>
-          <img src="./designecologist-r-Ej0NQmFlQ-unsplash.jpg" style={{maxHeight: '75vh', marginTop: '1rem', maxWidth: '100%', objectFit: 'contain'}}/>
+          <img src="./designecologist-r-Ej0NQmFlQ-unsplash.jpg" style={{maxHeight: '70vh', marginTop: '1rem', maxWidth: '100%', objectFit: 'contain'}}/>
           <button className={styles.bookBtn} onClick={toggleBooking}>Book now!</button>
         </div>
         <div className={styles.grid}>
