@@ -12,14 +12,8 @@ function Landing() {
       <div className={styles.gutterLeft}></div>
       <main className={styles.main}>
         <div className={styles.gridTitle}>
-          <img src='./leftWing.png' className={styles.bannerImgLeft}/>
-          <img src='./title.png' className={styles.bannerTitle}/>
-          <img src='./leftWing.png' className={styles.bannerImgRight}/>
-
+          <Link href="/"><a><img src='./shortBanner.png'style={{height: '100%'}}/></a></Link>
         </div>
-        <h3 className={styles.subtitle}>
-          BY MZ NAILS
-        </h3>
         <div className={[styles.grid, styles.navBar].join(' ')}>
           <div className={styles.column50}>
             <div className={styles.description}><Link href="/eng"><a>ENGLISH</a></Link></div>

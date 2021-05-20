@@ -75,8 +75,8 @@ export default function Home() {
       <div className={styles.gutterLeft}></div>
 
       <main className={styles.main}>
-        <div className={styles.gridTitleSmall}>
-          <img src='./shortBanner.png'style={{height: '100%'}}/>
+      <div className={styles.gridTitleSmall}>
+          <Link href="/"><a><img src='./shortBanner.png'style={{height: '100%'}}/></a></Link>
         </div>
 
         <div className={[styles.grid, styles.navBar].join(' ')}>
@@ -96,19 +96,21 @@ export default function Home() {
         </div>
         <div className={styles.grid}>
           <div id='about-panel' className={styles.info} >
-            <div style={{display: 'inline-block', width: '25%'}}>
-              <img src={'./marinaPic.png'} style={{ width: '100%', objectFit: 'cover', paddingRight: '5%'}}/>
-            </div>
-            <div style={{display: 'inline-block', width: '70%'}}>
-              <p>My name is Marina Zapiola. I am 22 years old and I am a beautician.</p>
-              <p>I love everything that has to do with aesthetics. I am also a hairdresser but I was inclined to manicure, which is my true passion. I love to design, draw and challenge my creativity.</p>
-              <p>I enjoy any type of physical activity and love animals. In fact all the products I use are cruelty free.</p>
-              <p>I have 5 years of experience, over which time I have expanded by skills by attending various courses held in Buenos Aires.</p>
-              <p>This year we launched MZ nails on wheels - <span style={{fontFamily: 'Nickainley', fontSize: '2rem'}}>Le Coquette.</span>
-                  We bought a food truck, remodeled it, and turned it into a Nail Spa for the comfort of our clients.
-                  I am always thinking about how to provide you with a better service, not only in quality but also in comfort!</p>
-              <p>To book an appointment, please call at (224) 169-5816 or fill out the booking form.</p>
-              <p>Find me on Instagram at <a href="https://www.instagram.com/_mz_nails/">@_mz_nails</a> </p>
+            <div className={styles.dropDowns}>
+              <div>
+                <img src={'./marinaPic.png'} style={{ masWidth: '50%', objectFit: 'cover', paddingLeft: '5%'}}/>
+              </div>
+              <div style={{width: '50%', paddingLeft: '5%'}}>
+                <p>My name is Marina Zapiola. I am 22 years old and I am a beautician.</p>
+                <p>I love everything that has to do with aesthetics. I am also a hairdresser but I was inclined to manicure, which is my true passion. I love to design, draw and challenge my creativity.</p>
+                <p>I enjoy any type of physical activity and love animals. In fact all the products I use are cruelty free.</p>
+                <p>I have 5 years of experience, over which time I have expanded by skills by attending various courses held in Buenos Aires.</p>
+                <p>This year we launched MZ nails on wheels - <span style={{fontFamily: 'Nickainley', fontSize: '2rem'}}>Le Coquette.</span>
+                    We bought a food truck, remodeled it, and turned it into a Nail Spa for the comfort of our clients.
+                    I am always thinking about how to provide you with a better service, not only in quality but also in comfort!</p>
+                <p>To book an appointment, please call at (224) 169-5816 or fill out the booking form.</p>
+                <p>Find me on Instagram at <a href="https://www.instagram.com/_mz_nails/">@_mz_nails</a> </p>
+              </div>
             </div>
           </div>
 

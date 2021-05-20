@@ -11,7 +11,7 @@ class BookingForm extends React.Component {
     super(props);
 
     let startDateString = new Date().toISOString().slice(0, 10);
-    let start = new Date(startDateString+'T03:00:00.000-03:00');
+    let start = new Date(startDateString+'T12:00:00.000-03:00');
 
     this.state = {
       firstName: '',
@@ -104,8 +104,9 @@ class BookingForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    let fixedTimeString = new Date(this.state.aptDate).toISOString().replace('Z', '');
-    let time = new Date(fixedTimeString+'-03:00')
+    //let fixedTimeString = new Date(this.state.aptDate).toISOString().replace('Z', '');
+    //let time = new Date(fixedTimeString+'-03:00')
+    let time = this.state.aptDate;
     console.log(time)
     this.setState({
       aptDate: time
