@@ -80,7 +80,7 @@ const getApprovedApts = (date, cb) => {
     let start = new Date(startDateString+'T03:00:00.000-03:00');
     let end = new Date(endDateString+'T03:00:00.000-03:00');
 
-    Client.find({ aptDate: { $gte: new Date(start), $lte: new Date(end) } }).sort({aptDate: 1})
+    Client.find({ aptDate: { $gte: new Date(start), $lte: new Date(end) }, approved: true }).sort({aptDate: 1})
     .exec((err, result) => {
       if (err) {
         cb(err, null);

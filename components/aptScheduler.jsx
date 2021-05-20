@@ -11,7 +11,7 @@ class AptScheduler extends React.Component {
     super(props);
 
     let startDateString = new Date().toISOString().slice(0, 10);
-    let start = new Date(startDateString+'T03:00:00.000-03:00');
+    let start = new Date(startDateString+'T09:00:00.000-03:00');
 
     this.state = {
       firstName: '',
