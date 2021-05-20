@@ -1,6 +1,6 @@
 
 import connectDB from '../../database/index.js';
-import { getApprovedApts, deleteRequest, createClient } from '../../database/controllers/client.js';
+import { getApprovedApts, deleteRequest, createClient, updateAppointment } from '../../database/controllers/client.js';
 
 const handler = async (req, res) => {
   if (req.method === 'GET') {
@@ -21,6 +21,14 @@ const handler = async (req, res) => {
     })
   } else if (req.method === 'POST') {
     createClient(req.body, (err, result) => {
+      if (err) {
+        res.status(500).send(err.message)
+      } else {
+        res.status(201).send(result)
+      }
+    })
+  } else if (req.method == "PUT") {
+    updateAppointment(req.body, (err, result) => {
       if (err) {
         res.status(500).send(err.message)
       } else {

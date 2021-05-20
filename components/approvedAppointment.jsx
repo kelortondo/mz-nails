@@ -33,6 +33,7 @@ function ApprovedAppointment({req, handleRerender}) {
 
   const handleClose = () => {
     setOpen(false);
+    handleRerender();
   };
 
   const handleDelete = function() {
@@ -61,9 +62,6 @@ function ApprovedAppointment({req, handleRerender}) {
     })
   }
 
-  const handleEdit = function() {
-
-  }
 
   return(
     <div className={styles.aptApproved}>
@@ -87,7 +85,7 @@ function ApprovedAppointment({req, handleRerender}) {
         >
           <Fade in={open}>
             <div className={classes.paper}>
-              <AptEditor req={req}/>
+              <AptEditor req={req} handleClose={handleClose.bind(this)}/>
             </div>
           </Fade>
         </Modal>

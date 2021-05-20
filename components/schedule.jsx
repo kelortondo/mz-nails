@@ -15,10 +15,10 @@ class Schedule extends React.Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.refreshSchedule = this.refreshSchedule.bind(this);
   }
 
-  componentDidMount() {
+  refreshSchedule() {
     axios.get(`/api/schedule?date=${this.state.startDate}`)
     .then((response) => {
       this.setState({
@@ -28,6 +28,10 @@ class Schedule extends React.Component {
     .catch((err) => {
       console.log(err);
     })
+  }
+
+  componentDidMount() {
+    this.refreshSchedule();
   }
 
   handleChange(event) {
@@ -53,16 +57,7 @@ class Schedule extends React.Component {
             console.log(err);
           })
         } else {
-          axios.get(`/api/schedule?date=${this.state.startDate}`)
-          .then((response) => {
-            console.log(response);
-          this.setState({
-            requests: response.data
-            })
-          })
-          .catch((err) => {
-            console.log(err);
-          })
+          this.refreshSchedule();
         }
       });
     } else {
@@ -70,16 +65,7 @@ class Schedule extends React.Component {
         startDate: event
       }, () => {
         if (this.state.seeAll === false) {
-          axios.get(`/api/schedule?date=${this.state.startDate}`)
-          .then((response) => {
-            console.log(response);
-          this.setState({
-            requests: response.data
-            })
-          })
-          .catch((err) => {
-            console.log(err);
-          })
+          this.refreshSchedule();
         } else {
           axios.get(`/api/schedule`)
           .then((response) => {
@@ -96,18 +82,6 @@ class Schedule extends React.Component {
     }
   }
 
-  handleSubmit(event) {
-    axios.get(`/api/schedule?date=${this.state.startDate}`)
-    .then((response) => {
-      this.setState({
-        requests: response.data
-      })
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-  }
-
   render() {
     return (
       <>
@@ -118,7 +92,7 @@ class Schedule extends React.Component {
         </div>
         {this.state.requests.map((request, index) => {
           return(
-            <ApprovedAppointment key={index} req={request} handleRerender={this.handleSubmit}/>
+            <ApprovedAppointment key={index} req={request} handleRerender={this.refreshSchedule}/>
           )
         })}
       </>

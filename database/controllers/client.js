@@ -50,6 +50,26 @@ const approveRequest = (id, cb) => {
   })
 }
 
+const updateAppointment = (apt, cb) => {
+  Client.findByIdAndUpdate(apt._id, {
+    firstName: apt.firstName,
+    lastName: apt.lastName,
+    aptDate: apt.aptDate,
+    email: apt.email,
+    location: apt.location,
+    phone: apt.phone,
+    service: apt.service,
+    manicure: apt.manicure,
+    pedicure: apt.pedicure
+  }, (err, result) => {
+    if (err) {
+      cb(err, null);
+    } else {
+      cb(null, result);
+    }
+  })
+}
+
 const getApprovedApts = (date, cb) => {
   if (date) {
     let startDateString = new Date(date).toISOString().slice(0, 10);
@@ -57,8 +77,8 @@ const getApprovedApts = (date, cb) => {
     dateMove.setDate(dateMove.getDate() + 1);
     let endDateString = dateMove.toISOString().slice(0, 10);
 
-    let start = new Date(startDateString+'T00:00:00.000-03:00');
-    let end = new Date(endDateString+'T00:00:00.000-03:00');
+    let start = new Date(startDateString+'T03:00:00.000-03:00');
+    let end = new Date(endDateString+'T03:00:00.000-03:00');
 
     Client.find({ aptDate: { $gte: new Date(start), $lte: new Date(end) } }).sort({aptDate: 1})
     .exec((err, result) => {
@@ -80,4 +100,4 @@ const getApprovedApts = (date, cb) => {
   }
 }
 
-module.exports = { createClient, getClients, getRequestedApts, deleteRequest, approveRequest, getApprovedApts };
+module.exports = { createClient, getClients, getRequestedApts, deleteRequest, approveRequest, getApprovedApts, updateAppointment };

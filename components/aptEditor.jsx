@@ -11,6 +11,7 @@ class AptEditor extends React.Component {
     super(props);
 
     this.state = {
+      _id: this.props.req._id,
       firstName: this.props.req.firstName,
       lastName: this.props.req.lastName,
       email: this.props.req.email,
@@ -107,7 +108,7 @@ class AptEditor extends React.Component {
     this.setState({
       aptDate: time
     }, () => {
-      axios.post('/api/schedule', this.state)
+      axios.put('/api/schedule', this.state)
       .then((response) => {
         this.setState({
           firstName: '',
@@ -120,7 +121,8 @@ class AptEditor extends React.Component {
           pedicure: false,
           approved: true
         });
-        alert('Appointment created!')
+        alert('Appointment updated!')
+        this.props.handleClose();
       })
       .catch((err) => {
         console.log(err);
