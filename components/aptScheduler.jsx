@@ -11,7 +11,7 @@ class AptScheduler extends React.Component {
     super(props);
 
     let startDateString = new Date().toISOString().slice(0, 10);
-    let start = new Date(startDateString+'T12:00:00.000-03:00');
+    let start = new Date(startDateString+'T03:00:00.000-03:00');
 
     this.state = {
       firstName: '',
@@ -96,24 +96,38 @@ class AptScheduler extends React.Component {
         }
       });
     } else {
-      let fixedTimeString = new Date(event).toISOString().replace('Z', '');
-      console.log(fixedTimeString)
-      let time = new Date(fixedTimeString+'-03:00')
-      console.log(time)
       this.setState({
-        aptDate: new Date(time)
+        aptDate: new Date(event)
       })
     }
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    axios.post('/api/schedule', this.state)
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((err) => {
-      console.log(err);
+    let fixedTimeString = new Date(this.state.aptDate).toISOString().replace('Z', '');
+    let time = new Date(fixedTimeString+'-03:00')
+    console.log(time)
+    this.setState({
+      aptDate: time
+    }, () => {
+      axios.post('/api/schedule', this.state)
+      .then((response) => {
+        this.setState({
+          firstName: '',
+          lastName: '',
+          email: '',
+          phone: '',
+          service: '',
+          aptDate: null,
+          manicure: false,
+          pedicure: false,
+          approved: true
+        });
+        alert('Appointment created!')
+      })
+      .catch((err) => {
+        console.log(err);
+      })
     })
   }
 

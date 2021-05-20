@@ -2,42 +2,39 @@ import React from 'react';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import styles from '../styles/Home.module.css'
-const axios = require('axios');
 import setHours from "date-fns/setHours";
 import setMinutes from "date-fns/setMinutes";
+const axios = require('axios');
 
-class BookingForm extends React.Component {
+class AptEditor extends React.Component {
   constructor(props) {
     super(props);
 
-    let startDateString = new Date().toISOString().slice(0, 10);
-    let start = new Date(startDateString+'T03:00:00.000-03:00');
-
     this.state = {
-      firstName: '',
-      lastName: '',
-      email: '',
-      phone: '',
-      location: '',
-      service: '',
-      aptDate: start,
-      manicure: false,
-      pedicure: false,
-      approved: false,
+      firstName: this.props.req.firstName,
+      lastName: this.props.req.lastName,
+      email: this.props.req.email,
+      phone: this.props.req.phone,
+      location: this.props.req.location,
+      service: this.props.req.service,
+      aptDate: new Date(this.props.req.aptDate),
+      manicure: this.props.req.manicure,
+      pedicure: this.props.req.pedicure,
+      approved: true,
       veronicaDays: [],
       doloresDays: [],
       availableDays: [],
       includedTimes: [
-        setHours(setMinutes(start, 0), 9),
-        setHours(setMinutes(start, 0), 10),
-        setHours(setMinutes(start, 0), 11),
-        setHours(setMinutes(start, 0), 12),
-        setHours(setMinutes(start, 0), 13),
-        setHours(setMinutes(start, 0), 14),
-        setHours(setMinutes(start, 0), 15),
-        setHours(setMinutes(start, 0), 16),
-        setHours(setMinutes(start, 0), 17),
-        setHours(setMinutes(start, 0), 18)
+        setHours(setMinutes(new Date(), 0), 9),
+        setHours(setMinutes(new Date(), 0), 10),
+        setHours(setMinutes(new Date(), 0), 11),
+        setHours(setMinutes(new Date(), 0), 12),
+        setHours(setMinutes(new Date(), 0), 13),
+        setHours(setMinutes(new Date(), 0), 14),
+        setHours(setMinutes(new Date(), 0), 15),
+        setHours(setMinutes(new Date(), 0), 16),
+        setHours(setMinutes(new Date(), 0), 17),
+        setHours(setMinutes(new Date(), 0), 18)
       ]
     };
 
@@ -110,7 +107,7 @@ class BookingForm extends React.Component {
     this.setState({
       aptDate: time
     }, () => {
-      axios.post('/api/clients', this.state)
+      axios.post('/api/schedule', this.state)
       .then((response) => {
         this.setState({
           firstName: '',
@@ -121,9 +118,9 @@ class BookingForm extends React.Component {
           aptDate: null,
           manicure: false,
           pedicure: false,
-          approved: false
+          approved: true
         });
-        alert('Request received! You will be contacted to confim your appointment within a day.')
+        alert('Appointment created!')
       })
       .catch((err) => {
         console.log(err);
@@ -133,8 +130,8 @@ class BookingForm extends React.Component {
 
   render() {
     return (
-      <div className={styles.dropDowns}>
-        <form style={{margin: 'auto'}} onSubmit={this.handleSubmit}>
+      <div className={styles.editAptModal}>
+        <form onSubmit={this.handleSubmit} style={{margin: 'auto', maxWidth: '600px'}}>
           <label>
             First name:
             <input required type="text" name='firstName' value={this.state.firstName} onChange={(e) => this.handleChange(e)} />
@@ -151,7 +148,7 @@ class BookingForm extends React.Component {
             Phone number:
             <input required type="tel" name='phone' value={this.state.phone} onChange={(e) => this.handleChange(e)} />
           </label>
-            Desired location of service:
+            Location of service:
             <div>
               <input type="radio" id="veronica" name="location" value="veronica" checked={this.state.location === "veronica"} onChange={(e) => this.handleChange(e)}/>
               <label for="veronica">Veronica</label>
@@ -181,24 +178,22 @@ class BookingForm extends React.Component {
             </div>
         </form>
         <div style={{margin: 'auto'}}>
-          Date Requested:
-            <DatePicker
-              dateFormat="MM/dd/yyyy h:mm aa"
-              includeDates={this.state.availableDays}
-              minDate={new Date()}
-              selected={this.state.aptDate}
-              onChange={date => this.handleChange(date)}
-              inline
-              showTimeSelect
-              includeTimes={this.state.includedTimes}
-              timeIntervals={60}
-            />
-          <button className={styles.reqAptBtn} onClick={(e) => this.handleSubmit(e)}>Request appointment</button>
+          <DatePicker
+            dateFormat="MM/dd/yyyy h:mm aa"
+            includeDates={this.state.availableDays}
+            minDate={new Date()}
+            selected={this.state.aptDate}
+            onChange={date => this.handleChange(date)}
+            inline
+            showTimeSelect
+            includeTimes={this.state.includedTimes}
+            timeIntervals={60}
+          />
+          <div><button className={styles.editAptBtn} onClick={(e) => this.handleSubmit(e)}>Save appointment</button></div>
         </div>
       </div>
     );
   }
 }
 
-export default BookingForm;
-
+export default AptEditor;

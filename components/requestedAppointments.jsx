@@ -55,15 +55,21 @@ class RequestedAppointments extends React.Component {
   }
 
   render() {
-    return (
-      <>
-        {this.state.requests.map((request, index) => {
-          return(
-            <AppointmentRequest key={index} req={request} handleRerender={this.handleSubmit}/>
-          )
-        })}
-      </>
-    );
+    if (this.state.requests.length === 0) {
+      return (
+        <div style={{margin: 'auto'}}>No pending requests, check back later.</div>
+      )
+    } else {
+      return (
+        <>
+          {this.state.requests.map((request, index) => {
+            return(
+              <AppointmentRequest key={index} req={request} handleRerender={this.handleSubmit}/>
+            )
+          })}
+        </>
+      );
+    }
   }
 }
 
