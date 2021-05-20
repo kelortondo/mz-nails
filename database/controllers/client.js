@@ -50,14 +50,33 @@ const approveRequest = (id, cb) => {
   })
 }
 
-const getApprovedApts = (cb) => {
-  Client.find({ approved: true}, (err, result) => {
-    if (err) {
-      cb(err, null);
-    } else {
-      cb(null, result);
-    }
-  })
+const getApprovedApts = (date, cb) => {
+  if (date) {
+    let startDateString = new Date(date).toISOString().slice(0, 10);
+    const dateMove = new Date(startDateString);
+    dateMove.setDate(dateMove.getDate() + 1);
+    let endDateString = dateMove.toISOString().slice(0, 10);
+
+    let start = new Date(startDateString+'T00:00:00.000-03:00');
+    let end = new Date(endDateString+'T00:00:00.000-03:00');
+
+
+    Client.find({ aptDate: { $gte: new Date(start), $lte: new Date(end) }, approved: true}, (err, result) => {
+      if (err) {
+        cb(err, null);
+      } else {
+        cb(null, result);
+      }
+    })
+  } else {
+    Client.find({approved: true}, (err, result) => {
+      if (err) {
+        cb(err, null);
+      } else {
+        cb(null, result);
+      }
+    })
+  }
 }
 
 module.exports = { createClient, getClients, getRequestedApts, deleteRequest, approveRequest, getApprovedApts };

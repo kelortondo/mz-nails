@@ -9,7 +9,9 @@ class Schedule extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      requests: []
+      requests: [],
+      startDate: new Date(),
+      seeAll: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -17,7 +19,7 @@ class Schedule extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('/api/schedule')
+    axios.get(`/api/schedule?date=${this.state.startDate}`)
     .then((response) => {
       this.setState({
         requests: response.data
@@ -31,19 +33,71 @@ class Schedule extends React.Component {
   handleChange(event) {
     if (event.target) {
       let stateVar = event.target.name;
-      let val = event.target.value;
-      this.setState({[stateVar]: val});
+      let val;
+
+      if (event.target.type === 'checkbox') {
+        val = event.target.checked
+      } else {
+        val = event.target.value;
+      }
+      this.setState({[stateVar]: val}, () => {
+        if (this.state.seeAll === true) {
+          axios.get(`/api/schedule`)
+          .then((response) => {
+            console.log(response);
+          this.setState({
+            requests: response.data
+            })
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+        } else {
+          axios.get(`/api/schedule?date=${this.state.startDate}`)
+          .then((response) => {
+            console.log(response);
+          this.setState({
+            requests: response.data
+            })
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+        }
+      });
     } else {
-      const [start, end] = event;
       this.setState({
-        startDate: start,
-        endDate: end
+        startDate: event
+      }, () => {
+        if (this.state.seeAll === false) {
+          axios.get(`/api/schedule?date=${this.state.startDate}`)
+          .then((response) => {
+            console.log(response);
+          this.setState({
+            requests: response.data
+            })
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+        } else {
+          axios.get(`/api/schedule`)
+          .then((response) => {
+            console.log(response);
+          this.setState({
+            requests: response.data
+            })
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+        }
       })
     }
   }
 
   handleSubmit(event) {
-    axios.get('/api/schedule')
+    axios.get(`/api/schedule?date=${this.state.startDate}`)
     .then((response) => {
       this.setState({
         requests: response.data
@@ -57,6 +111,11 @@ class Schedule extends React.Component {
   render() {
     return (
       <>
+        <DatePicker selected={this.state.startDate} onChange={date => this.handleChange(date)} />
+        <div>
+          <label for="seeAll">See all</label>
+          <input type="checkbox" id="seeAll" name="seeAll" checked={this.state.seeAll} onChange={(e) => this.handleChange(e)}/>
+        </div>
         {this.state.requests.map((request, index) => {
           return(
             <ApprovedAppointment key={index} req={request} handleRerender={this.handleSubmit}/>

@@ -81,16 +81,22 @@ class LocationAdjustor extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const listDate = [];
-    const startDate = this.state.startDate.toISOString().slice(0, 10);
-    const endDate = this.state.endDate.toISOString().slice(0, 10);
-    const dateMove = new Date(startDate);
-    let strDate = startDate;
 
-    while (strDate < endDate) {
-      strDate = dateMove.toISOString().slice(0, 10);
-      listDate.push(strDate);
-      dateMove.setDate(dateMove.getDate() + 1);
-    };
+    if (this.state.endDate === null) {
+      const startDate = this.state.startDate.toISOString().slice(0, 10);
+      listDate.push(startDate)
+    } else {
+      const startDate = this.state.startDate.toISOString().slice(0, 10);
+      const endDate = this.state.endDate.toISOString().slice(0, 10);
+      const dateMove = new Date(startDate);
+      let strDate = startDate;
+
+      while (strDate < endDate) {
+        strDate = dateMove.toISOString().slice(0, 10);
+        listDate.push(strDate);
+        dateMove.setDate(dateMove.getDate() + 1);
+      };
+    }
 
     const bulkWrite = [];
     listDate.forEach((date) => {
@@ -106,47 +112,55 @@ class LocationAdjustor extends React.Component {
         }
       })
     })
+
     axios.post('/api/location', {bulk: bulkWrite})
     .then(() => {
-      axios.get('/api/location')
-      .then((response) => {
-        let locations = response.data;
-        locations.forEach((date) => {
-          if (date["_id"] === "veronica") {
-            let parsedDates = [];
-            date.dates.forEach((stringDate) => {
-              let timelessDate = stringDate.slice(0, 10).replace(/-/g, '\/');
-            parsedDates.push(new Date(timelessDate))
-            })
-            this.setState({
-              veronicaDays: parsedDates
-            })
-          } else if (date["_id"] === "dolores") {
-            let parsedDates = [];
-            date.dates.forEach((stringDate) => {
-              let timelessDate = stringDate.slice(0, 10).replace(/-/g, '\/');
+      this.setState({
+        doloresDays: [],
+        veronicaDays: [],
+        dateHighlights: []
+      }, () => {
+
+        axios.get('/api/location')
+        .then((response) => {
+          let locations = response.data;
+          locations.forEach((date) => {
+            if (date["_id"] === "veronica") {
+              let parsedDates = [];
+              date.dates.forEach((stringDate) => {
+                let timelessDate = stringDate.slice(0, 10).replace(/-/g, '\/');
               parsedDates.push(new Date(timelessDate))
-            })
-            this.setState({
-              doloresDays: parsedDates
-            })
-          }
-        })
-      })
-      .then(() => {
-        this.setState({
-          dateHighlights: [
-            {
-              "react-datepicker__day--highlighted-custom-1": this.state.doloresDays
-            },
-            {
-              "react-datepicker__day--highlighted-custom-2": this.state.veronicaDays
+              })
+              this.setState({
+                veronicaDays: parsedDates
+              })
+            } else if (date["_id"] === "dolores") {
+              let parsedDates = [];
+              date.dates.forEach((stringDate) => {
+                let timelessDate = stringDate.slice(0, 10).replace(/-/g, '\/');
+                parsedDates.push(new Date(timelessDate))
+              })
+              this.setState({
+                doloresDays: parsedDates
+              })
             }
-          ]
+          })
         })
-      })
-      .catch((err) => {
-        console.log(err);
+        .then(() => {
+          this.setState({
+            dateHighlights: [
+              {
+                "react-datepicker__day--highlighted-custom-1": this.state.doloresDays
+              },
+              {
+                "react-datepicker__day--highlighted-custom-2": this.state.veronicaDays
+              }
+            ]
+          })
+        })
+        .catch((err) => {
+          console.log(err);
+        })
       })
     })
     .catch((err) => {
@@ -172,6 +186,10 @@ class LocationAdjustor extends React.Component {
           <input type="radio" id="dolores" name="location" value="dolores" checked={this.state.location === "dolores"} onChange={(e) => this.handleChange(e)}/>
           <label for="dolores" style={{color: '#83bae8'}}>Dolores</label>
         </div>
+        <div>
+          <input type="radio" id="dayOff" name="location" value="off" checked={this.state.location === "off"} onChange={(e) => this.handleChange(e)}/>
+          <label for="dayOff" style={{color: '#f0f0f0'}}>Day off</label>
+        </div>
 
         <div>
           Choose the dates:
@@ -185,7 +203,7 @@ class LocationAdjustor extends React.Component {
               selectsRange
               inline
             />
-          <button onClick={(e) => this.handleSubmit(e)}>Submit changes</button>
+          <button className={styles.reqAptBtn} onClick={(e) => this.handleSubmit(e)}>Submit changes</button>
         </div>
       </div>
     );

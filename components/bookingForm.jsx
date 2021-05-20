@@ -9,6 +9,10 @@ import setMinutes from "date-fns/setMinutes";
 class BookingForm extends React.Component {
   constructor(props) {
     super(props);
+
+    let startDateString = new Date().toISOString().slice(0, 10);
+    let start = new Date(startDateString+'T12:00:00.000-03:00');
+
     this.state = {
       firstName: '',
       lastName: '',
@@ -16,7 +20,7 @@ class BookingForm extends React.Component {
       phone: '',
       location: '',
       service: '',
-      aptDate: new Date(),
+      aptDate: start,
       manicure: false,
       pedicure: false,
       approved: false,
@@ -24,16 +28,16 @@ class BookingForm extends React.Component {
       doloresDays: [],
       availableDays: [],
       includedTimes: [
-        setHours(setMinutes(new Date(), 0), 9),
-        setHours(setMinutes(new Date(), 0), 10),
-        setHours(setMinutes(new Date(), 0), 11),
-        setHours(setMinutes(new Date(), 0), 12),
-        setHours(setMinutes(new Date(), 0), 13),
-        setHours(setMinutes(new Date(), 0), 14),
-        setHours(setMinutes(new Date(), 0), 15),
-        setHours(setMinutes(new Date(), 0), 16),
-        setHours(setMinutes(new Date(), 0), 17),
-        setHours(setMinutes(new Date(), 0), 18)
+        setHours(setMinutes(start, 0), 9),
+        setHours(setMinutes(start, 0), 10),
+        setHours(setMinutes(start, 0), 11),
+        setHours(setMinutes(start, 0), 12),
+        setHours(setMinutes(start, 0), 13),
+        setHours(setMinutes(start, 0), 14),
+        setHours(setMinutes(start, 0), 15),
+        setHours(setMinutes(start, 0), 16),
+        setHours(setMinutes(start, 0), 17),
+        setHours(setMinutes(start, 0), 18)
       ]
     };
 
@@ -92,8 +96,10 @@ class BookingForm extends React.Component {
         }
       });
     } else {
+      let fixedTimeString = new Date(event).toISOString().replace('Z', '');
+      let time = new Date(fixedTimeString+'-03:00')
       this.setState({
-        aptDate: event
+        aptDate: new Date(time)
       })
     }
   }
@@ -102,7 +108,18 @@ class BookingForm extends React.Component {
     event.preventDefault();
     axios.post('/api/clients', this.state)
     .then((response) => {
-      console.log(response);
+      this.setState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        service: '',
+        aptDate: null,
+        manicure: false,
+        pedicure: false,
+        approved: false
+      });
+      alert('Request received! You will be contacted to confim your appointment within a day.')
     })
     .catch((err) => {
       console.log(err);

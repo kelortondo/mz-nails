@@ -4,7 +4,7 @@ import { getApprovedApts, deleteRequest, createClient } from '../../database/con
 
 const handler = async (req, res) => {
   if (req.method === 'GET') {
-    getApprovedApts((err, result) => {
+    getApprovedApts(req.query.date, (err, result) => {
       if (err) {
         res.status(500).send('Error getting appointment info')
       } else {

@@ -57,7 +57,7 @@ input, select {
   font-family: 'Quicksand';
 }
 
-#veronica, #dolores, #manicure, #pedicure {
+#veronica, #dolores, #manicure, #pedicure, #dayOff, #seeAll {
   width: 10%;
   margin-bottom: 0.75rem;
 }

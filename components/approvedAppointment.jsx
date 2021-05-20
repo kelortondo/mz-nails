@@ -35,7 +35,7 @@ function ApprovedAppointment({req, handleRerender}) {
       <p style={{fontFamily: "Nickainley", fontSize: '1.75rem'}}>Client info:</p>
       <p style={{marginLeft: '1rem'}}>Name: {req.firstName} {req.lastName} || Email: {req.email} || Phone number: {req.phone}</p>
       <p style={{fontFamily: "Nickainley", fontSize: '1.75rem'}}>Appointment info:</p>
-      <p style={{marginLeft: '1rem'}}>Location: {req.location} || Date/Time: {new Date(req.aptDate).toLocaleDateString('en-gb', {year: 'numeric', month: 'long', day: 'numeric'})} at {new Date(req.aptDate).toLocaleTimeString('en-gb')} || Service: {req.service}, {req.pedicure ? 'pedicure,' : ''} {req.manicure ? 'manicure' : ''}</p>
+      <p style={{marginLeft: '1rem'}}>Location: {req.location[0].toUpperCase() + req.location.slice(1)} || Date/Time: {new Date(req.aptDate).toLocaleDateString('en-gb', {year: 'numeric', month: 'long', day: 'numeric'})} at {new Date(req.aptDate).toLocaleTimeString('en-gb')} || Service: {req.service}{req.pedicure ? ', pedicure' : ''}{req.manicure ? ', manicure' : ''}</p>
       <div>
         <button className={styles.aptBtn}>Edit</button>
         <button className={styles.aptBtn} onClick={handleDelete}>Remove</button>

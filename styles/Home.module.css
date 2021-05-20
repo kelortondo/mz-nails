@@ -307,7 +307,7 @@
 
 .verticalNav {
   color: #83b9e7;
-  width: 30%;
+  min-width: 30%;
 }
 
 .reqAptBtn {
@@ -317,6 +317,7 @@
   font-family: "Quicksand";
   padding: 12px 24px;
   margin: auto;
+  width: 100%;
   border: none;
   cursor: pointer;
   opacity: 1;

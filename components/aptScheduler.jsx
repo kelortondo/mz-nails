@@ -9,6 +9,10 @@ const axios = require('axios');
 class AptScheduler extends React.Component {
   constructor(props) {
     super(props);
+
+    let startDateString = new Date().toISOString().slice(0, 10);
+    let start = new Date(startDateString+'T12:00:00.000-03:00');
+
     this.state = {
       firstName: '',
       lastName: '',
@@ -16,7 +20,7 @@ class AptScheduler extends React.Component {
       phone: '',
       location: '',
       service: '',
-      aptDate: new Date(),
+      aptDate: start,
       manicure: false,
       pedicure: false,
       approved: true,
@@ -92,8 +96,12 @@ class AptScheduler extends React.Component {
         }
       });
     } else {
+      let fixedTimeString = new Date(event).toISOString().replace('Z', '');
+      console.log(fixedTimeString)
+      let time = new Date(fixedTimeString+'-03:00')
+      console.log(time)
       this.setState({
-        aptDate: event
+        aptDate: new Date(time)
       })
     }
   }
@@ -112,7 +120,7 @@ class AptScheduler extends React.Component {
   render() {
     return (
       <div className={styles.dropDowns}>
-        <form onSubmit={this.handleSubmit} style={{margin: 'auto'}}>
+        <form onSubmit={this.handleSubmit}>
           <label>
             First name:
             <input required type="text" name='firstName' value={this.state.firstName} onChange={(e) => this.handleChange(e)} />
@@ -158,7 +166,7 @@ class AptScheduler extends React.Component {
               <label for="pedicure">Pedicure</label>
             </div>
         </form>
-        <div style={{margin: 'auto'}}>
+        <div style={{marginLeft: '2rem'}}>
           <div>Date/Time of Appointment:</div>
           <DatePicker
             dateFormat="MM/dd/yyyy h:mm aa"
