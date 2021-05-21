@@ -83,15 +83,15 @@ function Landing() {
 
         <div className={[styles.grid, styles.navBar].join(' ')}>
           <div className={styles.column50}>
-            <div className={styles.description} onClick={toggleSchedule} id='schedule'><Link href="#"><a>SCHEDULE</a></Link></div>
+            <div className={'navDivs'} onClick={toggleSchedule} id='schedule'><Link href="#"><a>SCHEDULE</a></Link></div>
           </div>
           <div className={styles.column50}>
-            <div className={styles.description} onClick={toggleRequests} id='requests'><Link href="#"><a>REQUESTS</a></Link></div>
+            <div className={'navDivs'} onClick={toggleRequests} id='requests'><Link href="#"><a>REQUESTS</a></Link></div>
           </div>
         </div>
 
         <div className={styles.grid}>
-          <div id='schedule-panel' className={styles.info} >
+          <div id='schedule-panel' className={`${styles.info} toggleablePanels`} >
             <div className={styles.dropDownsNoWrap}>
               <div className={styles.verticalNav}>
                 <div onClick={toggleAdjustLoc} id="adj-loc-div"><Link href="#"><a>Adjust location</a></Link></div>
@@ -104,7 +104,7 @@ function Landing() {
             </div>
           </div>
 
-          <div id='requests-panel' className={styles.info}>
+          <div id='requests-panel' className={`${styles.info} toggleablePanels`}>
             <div className={styles.dropDowns}>
               <RequestedAppointments/>
             </div>

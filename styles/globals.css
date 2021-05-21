@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400&display=swap');
 
+@font-face {
+  font-family: 'Nickainley';
+  src: url('/fonts/Nickainley-Normal.otf');
+}
+
+/* || GENERAL STYLES */
 html,
 body {
   background-color: #010101;
@@ -9,35 +15,17 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
-@font-face {
-  font-family: 'Nickainley';
-  src: url('/fonts/Nickainley-Normal.otf');
-}
-
 a {
   color: inherit;
   text-decoration: none;
 }
 
-/* mouse over link */
 a:hover, a:active {
   color:#ef88ba;
 }
 
 * {
   box-sizing: border-box;
-}
-
-#about, #book, #work {
-  font-family: 'Quicksand';
-  font-size: 1.5rem;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-}
-
- #booking-panel, #about-panel, #work-panel, #schedule-panel, #requests-panel {
-  display: none;
-  height: 100%;
 }
 
 form {
@@ -57,11 +45,28 @@ input, select {
   font-family: 'Quicksand';
 }
 
+.toggleablePanels {
+  display: none;
+  height: 100%;
+}
+
+.navDivs {
+  font-family: 'Quicksand';
+  font-size: 1.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  color: #83b9e7;
+  width: 100%;
+  text-align: center;
+}
+
+
 #veronica, #dolores, #manicure, #pedicure, #dayOff, #seeAll {
   width: 10%;
   margin-bottom: 0.75rem;
 }
 
+/* || DATEPICKER CUSTOMIZATION */
 .react-datepicker {
   font-family: "Quicksand";
   font-size: 0.8rem;

@@ -81,13 +81,13 @@ export default function Home() {
 
         <div className={[styles.grid, styles.navBar].join(' ')}>
           <div className={`${styles.column} `}>
-            <div className={styles.description} onClick={toggleAbout} id='about'><Link href="#"><a>ABOUT</a></Link></div>
+            <div className={`navDivs`} onClick={toggleAbout} id='about'><Link href="#"><a>ABOUT</a></Link></div>
           </div>
           <div className={`${styles.column} `}>
-            <div className={styles.description} onClick={toggleWork} id='work'><Link href="#"><a>SERVICES</a></Link></div>
+            <div className={`navDivs`} onClick={toggleWork} id='work'><Link href="#"><a>SERVICES</a></Link></div>
           </div>
           <div className={`${styles.column} `}>
-            <div className={styles.description} onClick={toggleBooking} id='book'><Link href="#"><a>BOOK</a></Link></div>
+            <div className={`navDivs`} onClick={toggleBooking} id='book'><Link href="#"><a>BOOK</a></Link></div>
           </div>
         </div>
         <div className={styles.containImgButton} id="bookPicDiv">
@@ -95,7 +95,7 @@ export default function Home() {
           <button className={styles.bookBtn} onClick={toggleBooking}>Book now!</button>
         </div>
         <div className={styles.grid}>
-          <div id='about-panel' className={styles.info} >
+          <div id='about-panel' className={`${styles.info} toggleablePanels`} >
             <div className={styles.dropDowns}>
               <div>
                 <img src={'./marinaPic.png'} style={{ masWidth: '50%', objectFit: 'cover', paddingLeft: '5%'}}/>
@@ -114,7 +114,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div id='work-panel' className={styles.info}>
+          <div id='work-panel' className={`${styles.info} toggleablePanels`}>
             <div className={styles.dropDowns}>
               <div>
                 <span style={{fontFamily: 'Nickainley', fontSize: '2rem'}}>Services:</span>
@@ -130,7 +130,7 @@ export default function Home() {
               <Gallery/>
             </div>
           </div>
-          <div id='booking-panel' className={styles.bookingInfo}>
+          <div id='booking-panel' className={`${styles.bookingInfo} toggleablePanels`}>
             <BookingForm />
           </div>
         </div>

@@ -5,8 +5,11 @@
 @font-face {
   font-family: 'Nickainley';
   src: url('/fonts/Nickainley-Normal.otf');
- }
+}
 
+/* || LAYOUT/FLEXBOX */
+
+/* Wraps all other divs to limit content to a single page without scrolling */
 .container {
   display: flex;
   flex-direction: row;
@@ -16,6 +19,20 @@
   flex-wrap: wrap;
 }
 
+/* Contains the  main content of the page besides the header/navbar */
+.main {
+  padding: 1%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 70%;
+  background-color: black;
+  height: 95vh;
+}
+
+/* Gutters on either side of the main content */
 .gutterLeft {
   background-image: url('/backgroundLeft.png');
   background-size: cover;
@@ -32,18 +49,7 @@
   height: 95vh;
 }
 
-.main {
-  padding: 1%;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  width: 70%;
-  background-color: black;
-  height: 95vh;
-}
-
+/* Contains the  main content of the page besides the header/navbar */
 .footer {
   width: 100%;
   height: 5vh;
@@ -53,6 +59,64 @@
   align-items: center;
   background-color: black;
 }
+
+/* Used for divs which contain other divs which should flex and/or become scrollable */
+.grid {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-top: 1rem;
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+/* Prevents nav bar from becoming scrollable and applies borders */
+.navBar {
+  border-top: double #f7d9ca;
+  border-bottom: double #f7d9ca;
+  overflow-y: visible;
+}
+
+.verticalNav div {
+  color: #83b9e7;
+  margin: 1rem;
+  padding: 1rem;
+}
+
+.verticalNav {
+  color: #83b9e7;
+  min-width: 30%;
+}
+
+/* Styling for dropdown divs that display based on navbar selection, with wrapping */
+.dropDowns {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  max-height: 100%;
+  width: 100%;
+}
+
+/* Styling for dropdown divs that display based on navbar selection, without wrapping */
+.dropDownsNoWrap {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  max-height: 100%;
+  width: 100%;
+}
+
+.column {
+  width: 33%;
+}
+
+.column50 {
+  width: 50%;
+}
+
+/* || TITLE */
 
 .bannerImgLeft {
   width: 20vw;
@@ -90,73 +154,6 @@
   text-align: center;
 }
 
-.subtitle {
-  color: #83b9e7;
-  line-height: 1.5;
-  font-size: 1.5rem;
-  font-family: "Quicksand";
-  width: 100%;
-  text-align: center;
-}
-
-.footerText {
-  color: #83b9e7;
-  line-height: 1.5;
-  font-size: 1.75rem;
-  font-family: "Nickainley", cursive;
-  text-align: center;
-}
-
-.description {
-  color: #83b9e7;
-  font-size: 2.5rem;
-  font-family: "Quicksand";
-  width: 100%;
-  text-align: center;
-}
-
-.code {
-  background: #fafafa;
-  border-radius: 5px;
-  padding: 0.75rem;
-  font-size: 1.1rem;
-  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-    Bitstream Vera Sans Mono, Courier New, monospace;
-}
-
-.grid {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  width: 100%;
-  margin-top: 1rem;
-  max-height: 100%;
-  overflow-y: auto;
-}
-
-.navBar {
-  border-top: double #f7d9ca;
-  border-bottom: double #f7d9ca;
-  overflow-y: visible;
-}
-
-.dropDowns {
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  max-height: 100%;
-  width: 100%;
-}
-
-.dropDownsNoWrap {
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: nowrap;
-  max-height: 100%;
-  width: 100%;
-}
-
 .gridTitle {
   display: flex;
   align-items: center;
@@ -176,13 +173,30 @@
   height: 10vh;
 }
 
-
-.column {
-  width: 33%;
+.subtitle {
+  color: #83b9e7;
+  line-height: 1.5;
+  font-size: 1.5rem;
+  font-family: "Quicksand";
+  width: 100%;
+  text-align: center;
 }
 
-.column50 {
-  width: 50%;
+/* || TEXT */
+
+.footerText {
+  color: #83b9e7;
+  line-height: 1.5;
+  font-size: 1.75rem;
+  font-family: "Nickainley", cursive;
+  text-align: center;
+}
+.description {
+  color: #83b9e7;
+  font-size: 2.5rem;
+  font-family: "Quicksand";
+  width: 100%;
+  text-align: center;
 }
 
 .info {
@@ -198,13 +212,9 @@
   margin: auto;
 }
 
-@media (max-width: 600px) {
-  .grid {
-    width: 100%;
-    flex-direction: column;
-  }
-}
+/* || BUTTONS */
 
+/* Holds the image/booking button on the main page */
 .containImgButton {
   position: relative
 }
@@ -233,6 +243,9 @@
   opacity: 0.5;
 }
 
+/* || COMPONENTS */
+
+/* Styling for component for requested appointment information */
 .aptRequest {
   background-color: #f7d9ca;
   color: black;
@@ -265,6 +278,7 @@
   background-color: #83bae8;
 }
 
+/* Styling for appointment editor component */
 .editAptModal {
   display: flex;
 }
@@ -288,8 +302,7 @@
   opacity: 0.5;
 }
 
-
-
+/* Styling for component for approved appointment information */
 .aptApproved {
   background-color: #f7d9ca;
   color: black;
@@ -322,17 +335,7 @@
   background-color: #83bae8;
 }
 
-.verticalNav div {
-  color: #83b9e7;
-  margin: 1rem;
-  padding: 1rem;
-}
-
-.verticalNav {
-  color: #83b9e7;
-  min-width: 30%;
-}
-
+/* Styling for the button used to submit an appointment request */
 .reqAptBtn {
   background-color: #f9be95;
   color: black;
