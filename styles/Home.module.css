@@ -33,7 +33,6 @@
   overflow-y: auto;
 }
 
-/* Prevents nav bar from becoming scrollable and applies borders */
 .navBar {
   border-top: double #f7d9ca;
   border-bottom: double #f7d9ca;
@@ -51,8 +50,6 @@
 .gridTitle {
   margin-bottom: 25vh;
 }
-
-
 
 .footer {
   width: 100%;
@@ -117,7 +114,6 @@
 
 /* || BUTTONS */
 
-/* Holds the image/booking button on the main page */
 .containImgButton {
   position: relative
 }
@@ -148,7 +144,6 @@
 
 /* || COMPONENTS */
 
-/* Styling for component for requested appointment information */
 .aptRequest {
   background-color: #f7d9ca;
   color: black;
@@ -257,7 +252,6 @@
   background-color: #83bae8;
 }
 
-
 /* || Mobile landscape */
 @media (min-width: 640px) {
   .gridTitleSmall {
@@ -271,7 +265,6 @@
 
 /* || Tablet portrait */
 @media (min-width: 768px) {
-/* Used for divs which contain other divs which should flex and/or become scrollable */
 
 }
 
@@ -313,8 +306,6 @@
     max-height: 100vh;
     flex-wrap: wrap;
   }
-
-
 
   .gridTitle {
     display: flex;
@@ -367,7 +358,6 @@
   }
 
   /* || TITLE */
-
   .bannerImgLeft {
     width: 20vw;
     height: auto;
@@ -400,7 +390,6 @@
     margin-top: 1.5rem;
     height: 20%;
   }
-
   .gridTitleSmall {
     display: flex;
     align-items: center;
