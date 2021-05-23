@@ -115,7 +115,7 @@ function Landing() {
       <div className={styles.gutterRight}></div>
 
       <footer className={styles.footer}>
-        <p className={styles.footerText}><span className={styles.subtitle}>CREATED BY</span> Kayla Elortondo</p>
+        <p className={styles.footerText}><span className={styles.info}>CREATED BY</span> Kayla Elortondo</p>
       </footer>
     </div>
   )

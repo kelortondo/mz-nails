@@ -5,6 +5,16 @@
   src: url('/fonts/Nickainley-Normal.otf');
 }
 
+@media (max-width: 1000px) {
+  #eng {
+    padding-bottom: 10px;
+    border-bottom: double #f7d9ca;
+  }
+  #esp {
+    padding-top: 10px;
+  }
+}
+
 /* || GENERAL STYLES */
 html,
 body {
@@ -59,7 +69,6 @@ input, select {
   width: 100%;
   text-align: center;
 }
-
 
 #veronica, #dolores, #manicure, #pedicure, #dayOff, #seeAll {
   width: 10%;

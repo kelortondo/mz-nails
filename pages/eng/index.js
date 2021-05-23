@@ -75,8 +75,8 @@ export default function Home() {
       <div className={styles.gutterLeft}></div>
 
       <main className={styles.main}>
-      <div className={styles.gridTitleSmall}>
-          <Link href="/"><a><img src='./shortBanner.png'style={{height: '100%'}}/></a></Link>
+        <div className={styles.gridTitleSmall}>
+            <Link href="/"><a><img srcset='./title.png 1000w, ./shortBanner.png 1001w' sizes='(max-width: 1000px) 1000px, (min-width: 1001px) 1001px' style={{width: '100%'}}/></a></Link>
         </div>
 
         <div className={[styles.grid, styles.navBar].join(' ')}>
@@ -139,7 +139,7 @@ export default function Home() {
       <div className={styles.gutterRight}></div>
 
       <footer className={styles.footer}>
-        <p className={styles.footerText}><span className={styles.subtitle}>CREATED BY</span> Kayla Elortondo</p>
+        <p className={styles.footerText}><span className={styles.info}>CREATED BY</span> Kayla Elortondo</p>
       </footer>
     </div>
   )
