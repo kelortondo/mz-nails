@@ -74,7 +74,7 @@ function Landing() {
       <div className={styles.gutterLeft}></div>
 
       <main className={styles.main}>
-        <div className={styles.gridTitleSmall}>
+        <div className={styles.dropDowns}>
           <Link href="/"><a><img srcset='./title.png 1000w, ./shortBanner.png 1001w' sizes='(max-width: 1000px) 1000px, (min-width: 1001px) 1001px' style={{maxWidth: '100%', maxHeight: '15vh'}}/></a></Link>
           <div className={styles.subtitle}>BY MZ NAILS</div>
         </div>
@@ -89,9 +89,7 @@ function Landing() {
         <div className={styles.grid}>
           <div className={`${styles.info}`} >
             <div className={styles.dropDowns}>
-              <div style={{overflowY: 'auto'}}>
                 {adminElement}
-              </div>
             </div>
           </div>
         </div>

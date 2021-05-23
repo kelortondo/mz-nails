@@ -195,7 +195,7 @@ class BookingForm extends React.Component {
             includeTimes={this.state.includedTimes}
             timeIntervals={60}
           />
-          <button className={styles.reqAptBtn} onClick={(e) => this.handleSubmit(e)}>Request appointment</button>
+          <button style={{width: '327px'}}className={styles.reqAptBtn} onClick={(e) => this.handleSubmit(e)}>Request appointment</button>
         </div>
       </div>
     );
