@@ -57,7 +57,7 @@ class RequestedAppointments extends React.Component {
   render() {
     if (this.state.requests.length === 0) {
       return (
-        <div style={{margin: 'auto'}}>No pending requests, check back later.</div>
+        <div style={{margin: 'auto', textAlign: 'center'}}>No pending requests, check back later.</div>
       )
     } else {
       return (

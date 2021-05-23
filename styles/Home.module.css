@@ -21,6 +21,32 @@
   height: 95vh;
 }
 
+.grid {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-top: 1rem;
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+/* Prevents nav bar from becoming scrollable and applies borders */
+.navBar {
+  border-top: double #f7d9ca;
+  border-bottom: double #f7d9ca;
+  overflow-y: visible;
+}
+
+.column {
+  width: 33%;
+}
+
+.column50 {
+  width: 50%;
+}
+
 .gridTitle {
   margin-bottom: 25vh;
 }
@@ -223,31 +249,7 @@
 
 /* || Mobile landscape */
 @media (min-width: 640px) {
-  .grid {
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    width: 100%;
-    margin-top: 1rem;
-    max-height: 100%;
-    overflow-y: auto;
-  }
 
-  /* Prevents nav bar from becoming scrollable and applies borders */
-  .navBar {
-    border-top: double #f7d9ca;
-    border-bottom: double #f7d9ca;
-    overflow-y: visible;
-  }
-
-  .column {
-    width: 33%;
-  }
-
-  .column50 {
-    width: 50%;
-  }
 }
 
 /* || Tablet portrait */

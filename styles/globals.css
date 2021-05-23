@@ -5,16 +5,6 @@
   src: url('/fonts/Nickainley-Normal.otf');
 }
 
-@media (max-width: 639px) {
-  #eng {
-    padding-bottom: 10px;
-    border-bottom: double #f7d9ca;
-  }
-  #esp {
-    padding-top: 10px;
-  }
-}
-
 /* || GENERAL STYLES */
 html,
 body {

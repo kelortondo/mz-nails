@@ -10,61 +10,58 @@ import AptScheduler from '../components/aptScheduler.jsx';
 
 
 function Landing() {
-  const [schedule, setSchedule] = useState(false);
   const [requests, setRequests] = useState(false);
   const [adjustLoc, setAdjustLoc] = useState(false);
   const [seeSched, setSeeSched] = useState(false);
   const [addApt, setAddApt] = useState(false);
   const [adminElement, setAdminEl] = useState(<></>);
 
-  function toggleSchedule() {
-    setSchedule(true);
-    setRequests(false);
-    $("#requests").css("color", "#83b9e7");
-    $("#schedule").css("color", "#ef88ba");
-    $("#requests-panel").slideUp("slow", function() {
-      $("#schedule-panel").slideDown("slow");
-    });
-  }
-
   function toggleRequests() {
-    setSchedule(false);
     setRequests(true);
-    $("#schedule").css("color", "#83b9e7");
+    setSeeSched(false);
+    setAddApt(false);
+    setAdjustLoc(false);
+    setAdminEl(<RequestedAppointments/>)
     $("#requests").css("color", "#ef88ba");
-    $("#schedule-panel").slideUp("slow", function() {
-      $("#requests-panel").slideDown("slow");
-    });
+    $("#loc").css("color", "#83b9e7");
+    $("#apts").css("color", "#83b9e7");
+    $("#book").css("color", "#83b9e7");
   }
 
   function toggleAdjustLoc() {
     setAdjustLoc(true);
     setSeeSched(false);
     setAddApt(false);
+    setRequests(false);
     setAdminEl(<LocationAdjustor/>)
-    $("#adj-loc-div").css("color", "#ef88ba");
-    $("#see-sched-div").css("color", "#83b9e7");
-    $("#create-apt-div").css("color", "#83b9e7");
+    $("#loc").css("color", "#ef88ba");
+    $("#apts").css("color", "#83b9e7");
+    $("#book").css("color", "#83b9e7");
+    $("#requests").css("color", "#83b9e7");
   }
 
   function toggleSeeSched() {
     setAdjustLoc(false);
     setSeeSched(true);
     setAddApt(false);
+    setRequests(false);
     setAdminEl(<Schedule/>);
-    $("#adj-loc-div").css("color", "#83b9e7");
-    $("#see-sched-div").css("color", "#ef88ba");
-    $("#create-apt-div").css("color", "#83b9e7");
+    $("#loc").css("color", "#83b9e7");
+    $("#apts").css("color", "#ef88ba");
+    $("#book").css("color", "#83b9e7");
+    $("#requests").css("color", "#83b9e7");
   }
 
   function toggleAddApt() {
     setAdjustLoc(false);
     setSeeSched(false);
     setAddApt(true);
+    setRequests(false);
     setAdminEl(<AptScheduler/>);
-    $("#adj-loc-div").css("color", "#83b9e7");
-    $("#see-sched-div").css("color", "#83b9e7");
-    $("#create-apt-div").css("color", "#ef88ba");
+    $("#loc").css("color", "#83b9e7");
+    $("#apts").css("color", "#83b9e7");
+    $("#book").css("color", "#ef88ba");
+    $("#requests").css("color", "#83b9e7");
   }
 
   return (
@@ -78,35 +75,23 @@ function Landing() {
 
       <main className={styles.main}>
         <div className={styles.gridTitleSmall}>
-          <Link href="/"><a><img src='./shortBanner.png'style={{height: '100%'}}/></a></Link>
+          <Link href="/"><a><img srcset='./title.png 1000w, ./shortBanner.png 1001w' sizes='(max-width: 1000px) 1000px, (min-width: 1001px) 1001px' style={{maxWidth: '100%', maxHeight: '15vh'}}/></a></Link>
+          <div className={styles.subtitle}>BY MZ NAILS</div>
         </div>
 
-        <div className={[styles.grid, styles.navBar].join(' ')}>
-          <div className={styles.column50}>
-            <div className={'navDivs'} onClick={toggleSchedule} id='schedule'><Link href="#"><a>SCHEDULE</a></Link></div>
-          </div>
-          <div className={styles.column50}>
+        <div className={[styles.gridTitleSmall, styles.navBar].join(' ')} style={{height: 'auto'}}>
+            <div className={'navDivs'} onClick={toggleAdjustLoc} id='loc'><Link href="#"><a>LOCATION</a></Link></div>
+            <div className={'navDivs'} onClick={toggleSeeSched} id='apts'><Link href="#"><a>APPOINTMENTS</a></Link></div>
             <div className={'navDivs'} onClick={toggleRequests} id='requests'><Link href="#"><a>REQUESTS</a></Link></div>
-          </div>
+            <div className={'navDivs'} onClick={toggleAddApt} id='book'><Link href="#"><a>BOOK</a></Link></div>
         </div>
 
         <div className={styles.grid}>
-          <div id='schedule-panel' className={`${styles.info} toggleablePanels`} >
-            <div className={styles.dropDownsNoWrap}>
-              <div className={styles.verticalNav}>
-                <div onClick={toggleAdjustLoc} id="adj-loc-div"><Link href="#"><a>Adjust location</a></Link></div>
-                <div onClick={toggleSeeSched} id="see-sched-div"><Link href="#"><a>See schedule</a></Link></div>
-                <div onClick={toggleAddApt} id="create-apt-div"><Link href="#"><a>Create appointment</a></Link></div>
-              </div>
+          <div className={`${styles.info}`} >
+            <div className={styles.dropDowns}>
               <div style={{overflowY: 'auto'}}>
                 {adminElement}
               </div>
-            </div>
-          </div>
-
-          <div id='requests-panel' className={`${styles.info} toggleablePanels`}>
-            <div className={styles.dropDowns}>
-              <RequestedAppointments/>
             </div>
           </div>
         </div>
