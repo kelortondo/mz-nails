@@ -86,9 +86,8 @@ class Schedule extends React.Component {
     return (
       <>
         <DatePicker selected={this.state.startDate} onChange={date => this.handleChange(date)} />
-        <div>
-          <label for="seeAll">See all</label>
-          <input type="checkbox" id="seeAll" name="seeAll" checked={this.state.seeAll} onChange={(e) => this.handleChange(e)}/>
+        <div style={{minWidth: '150px', padding: '1%'}}>
+          <label style={{paddingRight: '5%'}}>See all</label><input  type="checkbox" id="seeAll" name="seeAll" checked={this.state.seeAll} onChange={(e) => this.handleChange(e)}/>
         </div>
         {this.state.requests.map((request, index) => {
           return(
