@@ -5,7 +5,7 @@
   src: url('/fonts/Nickainley-Normal.otf');
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 639px) {
   #eng {
     padding-bottom: 10px;
     border-bottom: double #f7d9ca;
@@ -41,8 +41,10 @@ a:hover, a:active {
 form {
   background-color: #f7dacb;
   padding: 1rem;
-  width: 50%;
+  width: 100%;
+  max-width: 400px;
   color: black;
+  margin: 0;
 }
 
 input, select {
@@ -83,8 +85,8 @@ input, select {
   color: #000;
   border: 1px solid #f9be95;
   display: inline-block;
-  position: relative;
   border-radius: 0;
+  margin: auto !important;
 }
 
 .react-datepicker__header {
