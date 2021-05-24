@@ -20,14 +20,14 @@ A site to allow for booking of services offered by a mobile nail salon business.
 <img src='public/Screen Shot 2021-05-20 at 8.15.25 PM.png'/>
 
 # Installation
-[(Back to top)](#table-of-contents)
 - From your terminal, `git clone https://github.com/kelortondo/MZNails.git`
 - Navigate to the mznails directory
 - `npm install`
 - `npm run dev`
 
 # Usage
-[(Back to top)](#table-of-contents)
+## Demo on AWS:
+
 ## Local instance:
 ### Customer-facing site:
 localhost:3000/
