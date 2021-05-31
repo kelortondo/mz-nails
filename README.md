@@ -36,12 +36,12 @@ module.exports = {
 
 # Usage
 ## Demo on AWS:
+<a href="http://18.224.69.27/">Customer-facing site</a><br>
+<a href="http://18.224.69.27/admin">Admin site</a>
 
 ## Local instance:
-### Customer-facing site:
-localhost:3000/
-### Admin site:
-localhost:3000/admin
+Customer-facing site: localhost:3000/<br>
+Admin site: localhost:3000/admin
 
 # Future plans:
 - Send an email to a client when their appointment has been confirmed
