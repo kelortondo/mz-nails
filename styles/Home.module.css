@@ -84,6 +84,10 @@
   text-align: center;
 }
 
+.titlePNG {
+  display: none;
+}
+
 .footerText {
   color: #f7dacb;
   line-height: 1.5;
@@ -114,19 +118,16 @@
 
 /* || BUTTONS */
 
-.containImgButton {
-  position: relative
-}
-
 .containImgButton .bookBtn {
   position: absolute;
-  top: 90%;
+  top: 70%;
   left: 50%;
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   background-color: #cd1144;
   color: white;
-  font-size: 3rem;
+  font-size: 7vw;
+  max-width: 50%;
   font-family: "Nickainley", cursive;
   padding: 12px 24px;
   border: none;
@@ -252,20 +253,38 @@
   background-color: #83bae8;
 }
 
-/* || Mobile landscape */
-@media (min-width: 640px) {
-  .gridTitleSmall {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: nowrap;
-    width: 100%;
-  }
-}
-
 /* || Tablet portrait */
 @media (min-width: 768px) {
+  .subtitle, .smallTitle{
+    display: none;
+  }
 
+  .containImgButton {
+  position: relative
+  }
+
+  .titlePNG {
+    display: inherit;
+  }
+
+  .containImgButton .bookBtn {
+    position: absolute;
+    top: 90%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    background-color: #cd1144;
+    color: white;
+    font-size: 3rem;
+    max-width: 50%;
+    font-family: "Nickainley", cursive;
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    opacity: 1;
+    transition: 0.5s;
+  }
 }
 
 @media (max-width: 1000px) {
@@ -288,10 +307,6 @@
 }
 
 @media (min-width: 1001px) {
-  .subtitle {
-    display: none;
-  }
-
   .gridTitle {
     margin-bottom: 0;
   }

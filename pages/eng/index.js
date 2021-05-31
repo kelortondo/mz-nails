@@ -76,8 +76,11 @@ export default function Home() {
 
       <main className={styles.main}>
         <div className={styles.gridTitleSmall}>
-            <Link href="/"><a><img srcSet='./title.png 1000w, ./shortBanner.png 1001w' sizes='(max-width: 1000px) 1000px, (min-width: 1001px) 1001px' style={{maxWidth: '100%', maxHeight: '15vh'}}/></a></Link>
-            <div className={styles.subtitle}>BY MZ NAILS</div>
+          <div className={styles.titlePNG} >
+            <Link href="/"><a><img src='./shortBanner.png' style={{maxWidth: '100%', maxHeight: '15vh'}}/></a></Link>
+          </div>
+          <div className={styles.smallTitle} ><img src='./title.png' style={{maxWidth: '100%', maxHeight: '15vh'}}/></div>
+          <div className={styles.subtitle}>BY MZ NAILS</div>
         </div>
 
         <div className={[styles.grid, styles.navBar].join(' ')}>
