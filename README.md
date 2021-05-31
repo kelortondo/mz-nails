@@ -34,3 +34,10 @@ localhost:3000/
 ### Admin site:
 localhost:3000/admin
 
+# Future plans:
+- Send an email to a client when their appointment has been confirmed
+- Implement authorization for admin site
+- Disable occupied appointment times when the client is attempting to request an appointment
+- Generate "add to calendar" link for approved appointments
+- Embed Instagram in gallery view 
+- Create a React Native version
