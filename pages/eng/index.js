@@ -104,7 +104,7 @@ export default function Home() {
               <div>
                 <img src={'./marinaPic.png'} style={{ maxWidth: '500px', objectFit: 'cover', paddingLeft: '5%'}}/>
               </div>
-              <div style={{paddingLeft: '5%', maxWidth: '600px', minWidth: '500px'}}>
+              <div style={{paddingLeft: '5%', maxWidth: '600px', minWidth: '400px'}}>
                 <p>My name is Marina Zapiola. I am 22 years old and I am a beautician.</p>
                 <p>I love everything that has to do with aesthetics. I am also a hairdresser but I was inclined to manicure, which is my true passion. I love to design, draw and challenge my creativity.</p>
                 <p>I enjoy any type of physical activity and love animals. In fact all the products I use are cruelty free.</p>
