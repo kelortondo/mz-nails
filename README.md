@@ -18,6 +18,7 @@ A site to allow for booking of services offered by a mobile nail salon business.
 # Preview
 <img src='public/Screen Shot 2021-05-20 at 2.20.59 PM.png'/>
 <img src='public/Screen Shot 2021-05-20 at 8.15.25 PM.png'/>
+<img src='public/Screen Shot 2021-05-31 at 3.56.13 PM.png'/>
 
 # Installation
 - From your terminal, `git clone https://github.com/kelortondo/MZNails.git`
@@ -48,5 +49,5 @@ Admin site: localhost:3000/admin
 - Implement authorization for admin site
 - Disable occupied appointment times when the client is attempting to request an appointment
 - Generate "add to calendar" link for approved appointments
-- Embed Instagram in gallery view 
+- Embed Instagram in gallery view
 - Create a React Native version

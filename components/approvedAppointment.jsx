@@ -19,8 +19,7 @@ function ApprovedAppointment({req, handleRerender}) {
       backgroundSize: '100%',
       boxShadow: theme.shadows[5],
       width: 'auto',
-      paddingTop: '1.5rem',
-      paddingBottom: '1.5rem'
+      padding: '2rem',
     },
   }));
 

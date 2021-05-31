@@ -180,19 +180,21 @@ class AptEditor extends React.Component {
               <label for="pedicure">Pedicure</label>
             </div>
         </form>
-        <div style={{margin: 'auto'}}>
-          <DatePicker
-            dateFormat="MM/dd/yyyy h:mm aa"
-            includeDates={this.state.availableDays}
-            minDate={new Date()}
-            selected={this.state.aptDate}
-            onChange={date => this.handleChange(date)}
-            inline
-            showTimeSelect
-            includeTimes={this.state.includedTimes}
-            timeIntervals={60}
-          />
-          <div><button className={styles.editAptBtn} onClick={(e) => this.handleSubmit(e)}>Save appointment</button></div>
+        <div >
+          <div style={{margin: 'auto'}}>
+            <DatePicker
+              dateFormat="MM/dd/yyyy h:mm aa"
+              includeDates={this.state.availableDays}
+              minDate={new Date()}
+              selected={this.state.aptDate}
+              onChange={date => this.handleChange(date)}
+              inline
+              showTimeSelect
+              includeTimes={this.state.includedTimes}
+              timeIntervals={60}
+            />
+            <div><button className={styles.editAptBtn} onClick={(e) => this.handleSubmit(e)}>Save appointment</button></div>
+          </div>
         </div>
       </div>
     );
