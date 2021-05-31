@@ -51,18 +51,6 @@ function ApprovedAppointment({req, handleRerender}) {
     })
   }
 
-  const handleApprove = function() {
-    axios.put('/api/requests', {id: req._id})
-    .then((response) => {
-      console.log(response);
-      handleRerender();
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-  }
-
-
   return(
     <div className={styles.aptApproved}>
       <p style={{fontFamily: "Nickainley", fontSize: '1.75rem'}}>Client info:</p>

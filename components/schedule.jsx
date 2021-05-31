@@ -19,15 +19,28 @@ class Schedule extends React.Component {
   }
 
   refreshSchedule() {
-    axios.get(`/api/schedule?date=${this.state.startDate}`)
-    .then((response) => {
+    if (this.state.seeAll) {
+      axios.get(`/api/schedule`)
+      .then((response) => {
+        console.log(response);
       this.setState({
         requests: response.data
+        })
       })
-    })
-    .catch((err) => {
-      console.log(err);
-    })
+      .catch((err) => {
+        console.log(err);
+      })
+    } else {
+      axios.get(`/api/schedule?date=${this.state.startDate}`)
+      .then((response) => {
+        this.setState({
+          requests: response.data
+        })
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    }
   }
 
   componentDidMount() {
