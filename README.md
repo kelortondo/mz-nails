@@ -24,6 +24,15 @@ A site to allow for booking of services offered by a mobile nail salon business.
 - Navigate to the mznails directory
 - `npm install`
 - `npm run dev`
+- Create a file in the main project directory called `next.config.js`. In that file, paste the following:
+```
+module.exports = {
+  env: {
+    SENDGRID_API_KEY: <insert your SendGrid API key here. See https://sendgrid.com/docs/ui/account-and-settings/api-keys/>,
+    OWNER_EMAIL: <insert the email where you would like to receive appointment request notifications>
+  }
+}
+```
 
 # Usage
 ## Demo on AWS:
