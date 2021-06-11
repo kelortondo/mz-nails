@@ -116,6 +116,10 @@
   width: 100%;
 }
 
+.quickSand {
+  font-family: "Quicksand";
+}
+
 /* || BUTTONS */
 .containImgButton .bookBtn {
   background-color: #cd1144;
@@ -247,6 +251,24 @@
 }
 
 .reqAptBtn:hover {
+  background-color: #83bae8;
+}
+
+/* Styling for the button used to submit an appointment request */
+.loginBtn {
+  background-color: #f9be95;
+  color: black;
+  font-size: 1.25rem;
+  font-family: "Quicksand";
+  padding: 12px 24px;
+  border: none;
+  cursor: pointer;
+  opacity: 1;
+  transition: 0.5s;
+  margin: auto;
+}
+
+.loginBtn:hover {
   background-color: #83bae8;
 }
 
