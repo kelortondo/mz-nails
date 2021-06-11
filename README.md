@@ -30,7 +30,10 @@ A site to allow for booking of services offered by a mobile nail salon business.
 module.exports = {
   env: {
     SENDGRID_API_KEY: <insert your SendGrid API key here. See https://sendgrid.com/docs/ui/account-and-settings/api-keys/>,
-    OWNER_EMAIL: <insert the email where you would like to receive appointment request notifications>
+    OWNER_EMAIL: <insert the email where you would like to receive appointment request notifications>,
+    ADMIN_ID: <insert admin ID>,
+    ADMIN_PW: <insert admin PW>,
+    APPLICATION_SECRET: <random 32 length string>
   }
 }
 ```
@@ -39,6 +42,7 @@ module.exports = {
 ## Demo on AWS:
 <a href="http://18.224.69.27/">Customer-facing site</a><br>
 <a href="http://18.224.69.27/admin">Admin site</a>
+<p>admin ID: admin, admin PW: password</p>
 
 ## Local instance:
 Customer-facing site: localhost:3000/<br>
