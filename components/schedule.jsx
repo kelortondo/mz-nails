@@ -22,9 +22,10 @@ class Schedule extends React.Component {
     if (this.state.seeAll) {
       axios.get(`/api/schedule`)
       .then((response) => {
-        this.setState({
-          requests: response.data
-          })
+        console.log(response);
+      this.setState({
+        requests: response.data
+        })
       })
       .catch((err) => {
         console.log(err);
@@ -60,9 +61,10 @@ class Schedule extends React.Component {
         if (this.state.seeAll === true) {
           axios.get(`/api/schedule`)
           .then((response) => {
-            this.setState({
-              requests: response.data
-              })
+            console.log(response);
+          this.setState({
+            requests: response.data
+            })
           })
           .catch((err) => {
             console.log(err);
@@ -80,9 +82,10 @@ class Schedule extends React.Component {
         } else {
           axios.get(`/api/schedule`)
           .then((response) => {
-            this.setState({
-              requests: response.data
-              })
+            console.log(response);
+          this.setState({
+            requests: response.data
+            })
           })
           .catch((err) => {
             console.log(err);

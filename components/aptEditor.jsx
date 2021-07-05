@@ -102,7 +102,10 @@ class AptEditor extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    //let fixedTimeString = new Date(this.state.aptDate).toISOString().replace('Z', '');
+    //let time = new Date(fixedTimeString+'-03:00')
     let time = this.state.aptDate;
+    console.log(time)
     this.setState({
       aptDate: time
     }, () => {

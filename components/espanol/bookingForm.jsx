@@ -1,12 +1,15 @@
 import React from 'react';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import styles from '../styles/Home.module.css'
+import styles from '../../styles/Home.module.css'
+const axios = require('axios');
 import setHours from "date-fns/setHours";
 import setMinutes from "date-fns/setMinutes";
-const axios = require('axios');
+import { registerLocale, setDefaultLocale } from  "react-datepicker";
+import es from 'date-fns/locale/es';
+registerLocale('es', es)
 
-class AptScheduler extends React.Component {
+class BookingForm extends React.Component {
   constructor(props) {
     super(props);
 
@@ -23,21 +26,21 @@ class AptScheduler extends React.Component {
       aptDate: start,
       manicure: false,
       pedicure: false,
-      approved: true,
+      approved: false,
       veronicaDays: [],
       doloresDays: [],
       availableDays: [],
       includedTimes: [
-        setHours(setMinutes(new Date(), 0), 9),
-        setHours(setMinutes(new Date(), 0), 10),
-        setHours(setMinutes(new Date(), 0), 11),
-        setHours(setMinutes(new Date(), 0), 12),
-        setHours(setMinutes(new Date(), 0), 13),
-        setHours(setMinutes(new Date(), 0), 14),
-        setHours(setMinutes(new Date(), 0), 15),
-        setHours(setMinutes(new Date(), 0), 16),
-        setHours(setMinutes(new Date(), 0), 17),
-        setHours(setMinutes(new Date(), 0), 18)
+        setHours(setMinutes(start, 0), 9),
+        setHours(setMinutes(start, 0), 10),
+        setHours(setMinutes(start, 0), 11),
+        setHours(setMinutes(start, 0), 12),
+        setHours(setMinutes(start, 0), 13),
+        setHours(setMinutes(start, 0), 14),
+        setHours(setMinutes(start, 0), 15),
+        setHours(setMinutes(start, 0), 16),
+        setHours(setMinutes(start, 0), 17),
+        setHours(setMinutes(start, 0), 18)
       ]
     };
 
@@ -107,11 +110,11 @@ class AptScheduler extends React.Component {
     //let fixedTimeString = new Date(this.state.aptDate).toISOString().replace('Z', '');
     //let time = new Date(fixedTimeString+'-03:00')
     let time = this.state.aptDate;
-    console.log(time)
+
     this.setState({
       aptDate: time
     }, () => {
-      axios.post('/api/schedule', this.state)
+      axios.post('/api/clients', this.state)
       .then((response) => {
         this.setState({
           firstName: '',
@@ -122,9 +125,9 @@ class AptScheduler extends React.Component {
           aptDate: null,
           manicure: false,
           pedicure: false,
-          approved: true
+          approved: false
         });
-        alert('Appointment created!')
+        alert('Request received! You will be contacted to confim your appointment within a day.')
       })
       .catch((err) => {
         console.log(err);
@@ -134,27 +137,26 @@ class AptScheduler extends React.Component {
 
   render() {
     return (
-      <>
+      <div className={styles.dropDowns}>
         <div style={{display: 'flex', flexWrap: 'wrap', alignContent: 'center', flexDirection: 'column', padding: '1%'}}>
-
           <form onSubmit={this.handleSubmit}>
             <label>
-              First name:
+              Nombre:
               <input required type="text" name='firstName' value={this.state.firstName} onChange={(e) => this.handleChange(e)} />
             </label>
             <label>
-              Last name:
+              Apellido:
               <input required type="text" name='lastName' value={this.state.lastName} onChange={(e) => this.handleChange(e)} />
             </label>
             <label>
-              Email Address:
+              Correo electrónico:
               <input required type="email" name='email' value={this.state.email} onChange={(e) => this.handleChange(e)} />
             </label>
             <label>
-              Phone number:
+              Número de teléfono:
               <input required type="tel" name='phone' value={this.state.phone} onChange={(e) => this.handleChange(e)} />
             </label>
-              Location of service:
+              Ubicación:
               <div>
                 <input type="radio" id="veronica" name="location" value="veronica" checked={this.state.location === "veronica"} onChange={(e) => this.handleChange(e)}/>
                 <label for="veronica">Veronica</label>
@@ -165,22 +167,22 @@ class AptScheduler extends React.Component {
               </div>
 
             <label>
-              Service:
+              Por favor, elija una opción
               <select required name='service' value={this.state.service} onChange={(e) => this.handleChange(e)}>
-                <option hidden selected disabled value="">Please choose an option</option>
-                <option value="capping">Capping</option>
-                <option value="sculpted">Sculpted</option>
-                <option value="semiperm">Semi-permanent</option>
+                <option hidden selected disabled value=""></option>
+                <option value="capping">Kapping gel</option>
+                <option value="sculpted">Esculpidas en Polygel</option>
+                <option value="semiperm">Esmaltado tradicional/ semi permanente</option>
               </select>
             </label>
-              Pedicure and/or Manicure:
+              Pedicura / Manicura:
               <div>
                 <input type="checkbox" id="manicure" name="manicure" checked={this.state.manicure} onChange={(e) => this.handleChange(e)}/>
-                <label for="manicure">Manicure</label>
+                <label for="manicure">Manicura</label>
               </div>
               <div>
                 <input type="checkbox" id="pedicure" name="pedicure" checked={this.state.pedicure} onChange={(e) => this.handleChange(e)}/>
-                <label for="pedicure">Pedicure</label>
+                <label for="pedicure">Pedicura</label>
               </div>
           </form>
         </div>
@@ -195,12 +197,14 @@ class AptScheduler extends React.Component {
             showTimeSelect
             includeTimes={this.state.includedTimes}
             timeIntervals={60}
+            locale="es"
           />
-          <div><button style={{width: '327px'}}className={styles.reqAptBtn} onClick={(e) => this.handleSubmit(e)}>Create appointment</button></div>
+          <button style={{width: '327px'}}className={styles.reqAptBtn} onClick={(e) => this.handleSubmit(e)}>Solicitar Turno</button>
         </div>
-      </>
+      </div>
     );
   }
 }
 
-export default AptScheduler;
+export default BookingForm;
+

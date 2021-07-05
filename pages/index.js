@@ -21,7 +21,7 @@ function Landing() {
             <div id="eng" className={styles.description}><Link href="/eng"><a>ENGLISH</a></Link></div>
           </div>
           <div className={styles.column50}>
-            <div id="esp" className={styles.description}><Link href="#"><a>ESPAÑOL</a></Link></div>
+            <div id="esp" className={styles.description}><Link href="/esp"><a>ESPAÑOL</a></Link></div>
           </div>
         </div>
       </main>
