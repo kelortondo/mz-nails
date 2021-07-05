@@ -121,7 +121,7 @@ class AptScheduler extends React.Component {
           pedicure: false,
           approved: true
         });
-        alert('Appointment created!')
+        alert('Appointment created! An email has been sent to the client to confirm.')
       })
       .catch((err) => {
         console.log(err);

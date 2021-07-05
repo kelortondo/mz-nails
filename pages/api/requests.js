@@ -221,7 +221,7 @@ const handler = async (req, res) => {
           res.status(500).send(err.message)
         })
 
-        res.status(204).send(result);
+        res.status(201).send(result);
       }
     })
   } else if (req.method === 'GET') {
