@@ -1,7 +1,6 @@
 const Location = require('../models/location.js');
 
 const updateLocation = (data, cb) => {
-  console.log(data.bulk)
   Location.bulkWrite(data.bulk, function (err, result) {
     if (err) {
       cb(err, null);

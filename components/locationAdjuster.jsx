@@ -24,7 +24,6 @@ class LocationAdjustor extends React.Component {
     axios.get('/api/location')
     .then((response) => {
       let locations = response.data;
-      console.log(locations)
       locations.forEach((date) => {
         if (date["_id"] === "veronica") {
           let parsedDates = [];

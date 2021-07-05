@@ -1,5 +1,3 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-
 import connectDB from '../../../database/index.js';
 import { approveRequest } from '../../../database/controllers/client.js';
 
@@ -9,7 +7,7 @@ const handler = async (req, res) => {
       if (err) {
         res.status(500).send(err.message);
       } else {
-        res.send('<html><p>Appointment request approved!</p></html>');
+        res.status(201).send('<html><p>Appointment request approved! An email has been sent to the client to confirm. You may close this window.</p></html>')
       }
     })
   }

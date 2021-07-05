@@ -10,7 +10,6 @@ function AppointmentRequest({req, handleRerender}) {
       }
     })
     .then((response) => {
-      console.log(response);
       handleRerender();
     })
     .catch((err) => {
@@ -21,7 +20,6 @@ function AppointmentRequest({req, handleRerender}) {
   const handleApprove = function() {
     axios.put('/api/requests', {id: req._id})
     .then((response) => {
-      console.log(response);
       handleRerender();
     })
     .catch((err) => {

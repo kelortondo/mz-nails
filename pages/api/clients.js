@@ -1,9 +1,10 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+
 import connectDB from '../../database/index.js';
 import { createClient } from '../../database/controllers/client.js';
 import { getClients } from '../../database/controllers/client.js';
-const sgMail = require('@sendgrid/mail')
+const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+const ip = process.env.IP_ADDRESS;
 
 const handler = async (req, res) => {
   if (req.method === 'POST') {
@@ -189,7 +190,7 @@ const handler = async (req, res) => {
                     <tbody>
                       <tr>
                       <td align="center" bgcolor="#e974b2" class="inner-td" style="border-radius:6px; font-size:16px; text-align:center; background-color:inherit;">
-                        <a href="http://localhost:3000/api/approveRequest/${result._id}" style="background-color:#e974b2; border:1px solid #ffffff; border-color:#ffffff; border-radius:6px; border-width:1px; color:#ffffff; display:inline-block; font-size:14px; font-weight:normal; letter-spacing:0px; line-height:normal; padding:12px 18px 12px 18px; text-align:center; text-decoration:none; border-style:solid;" target="_blank">Approve</a>
+                        <a href="${ip}:3000/api/approveRequest/${result._id}" style="background-color:#e974b2; border:1px solid #ffffff; border-color:#ffffff; border-radius:6px; border-width:1px; color:#ffffff; display:inline-block; font-size:14px; font-weight:normal; letter-spacing:0px; line-height:normal; padding:12px 18px 12px 18px; text-align:center; text-decoration:none; border-style:solid;" target="_blank">Approve</a>
                       </td>
                       </tr>
                     </tbody>
@@ -211,7 +212,7 @@ const handler = async (req, res) => {
                     <tbody>
                       <tr>
                       <td align="center" bgcolor="#e974b2" class="inner-td" style="border-radius:6px; font-size:16px; text-align:center; background-color:inherit;">
-                        <a href="buttonurlhere" style="background-color:#e974b2; border:1px solid #ffffff; border-color:#ffffff; border-radius:6px; border-width:1px; color:#ffffff; display:inline-block; font-size:14px; font-weight:normal; letter-spacing:0px; line-height:normal; padding:12px 18px 12px 18px; text-align:center; text-decoration:none; border-style:solid;" target="_blank">Edit/Deny</a>
+                        <a href="${ip}:3000/admin" style="background-color:#e974b2; border:1px solid #ffffff; border-color:#ffffff; border-radius:6px; border-width:1px; color:#ffffff; display:inline-block; font-size:14px; font-weight:normal; letter-spacing:0px; line-height:normal; padding:12px 18px 12px 18px; text-align:center; text-decoration:none; border-style:solid;" target="_blank">Edit/Deny</a>
                       </td>
                       </tr>
                     </tbody>
@@ -258,7 +259,6 @@ const handler = async (req, res) => {
       sgMail
         .send(msg)
         .then(() => {
-          console.log('Email sent')
           res.status(201).send('Appointment Requested')
         })
         .catch((error) => {

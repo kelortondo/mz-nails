@@ -42,7 +42,6 @@ function ApprovedAppointment({req, handleRerender}) {
       }
     })
     .then((response) => {
-      console.log(response);
       handleRerender();
     })
     .catch((err) => {
