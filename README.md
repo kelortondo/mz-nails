@@ -33,23 +33,22 @@ module.exports = {
     OWNER_EMAIL: <insert the email where you would like to receive appointment request notifications>,
     ADMIN_ID: <insert your admin ID>,
     ADMIN_PW: <insert your admin PW>,
-    APPLICATION_SECRET: <random 32 length string>
+    APPLICATION_SECRET: <random 32 length string>,
+    IP_ADDRESS: 'http://localhost:3000'
   }
 }
 ```
 
 # Usage
-## Demo on AWS:
-<a href="http://18.224.69.27/">Customer-facing site</a><br>
-<a href="http://18.224.69.27/admin">Admin site</a>
-<p>AWS demo ID: admin, PW: password</p>
+## Live Site:
+<a href="https://mznails.com.ar">https://mznails.com.ar</a><br>
+(This site is hosted in Brazil, to be closer to the users of the site in Argentina. Load times may be prolonged) 
 
 ## Local instance:
 Customer-facing site: localhost:3000/<br>
 Admin site: localhost:3000/admin
 
 # Future plans:
-- Send an email to a client when their appointment has been confirmed
 - Disable occupied appointment times when the client is attempting to request an appointment
 - Generate "add to calendar" link for approved appointments
 - Embed Instagram in gallery view
