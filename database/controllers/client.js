@@ -1,4 +1,5 @@
 const Client = require('../models/client.js');
+
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
@@ -263,7 +264,7 @@ const updateAppointment = (apt, cb) => {
     service: apt.service,
     manicure: apt.manicure,
     pedicure: apt.pedicure
-  }, (err, result) => {
+  }, {new: true}, (err, result) => {
     if (err) {
       cb(err, null);
     } else {
