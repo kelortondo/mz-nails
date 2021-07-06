@@ -107,8 +107,6 @@ class BookingForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    //let fixedTimeString = new Date(this.state.aptDate).toISOString().replace('Z', '');
-    //let time = new Date(fixedTimeString+'-03:00')
     let time = this.state.aptDate;
 
     this.setState({
@@ -127,7 +125,7 @@ class BookingForm extends React.Component {
           pedicure: false,
           approved: false
         });
-        alert('Request received! You will be contacted to confim your appointment within a day.')
+        alert('Su reserva a sido recibida con éxito. Aguarde confirmación.')
       })
       .catch((err) => {
         console.log(err);
