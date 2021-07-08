@@ -6,7 +6,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const handler = async (req, res) => {
   if (req.method === 'GET') {
-    getApprovedApts(req.query.date, (err, result) => {
+    getApprovedApts(req.query.startDate, req.query.endDate, (err, result) => {
       if (err) {
         res.status(500).send('Error getting appointment info')
       } else {

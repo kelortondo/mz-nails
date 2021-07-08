@@ -8,10 +8,16 @@ import ApprovedAppointment from './approvedAppointment.jsx';
 class Schedule extends React.Component {
   constructor(props) {
     super(props);
+
+    let oneYearFromNow = new Date();
+    oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() + 1);
+
     this.state = {
-      requests: [],
+      appointments: [],
       startDate: new Date(),
-      seeAll: false
+      endDate: oneYearFromNow,
+      seeAll: false,
+      hidePast: true
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -19,22 +25,34 @@ class Schedule extends React.Component {
   }
 
   refreshSchedule() {
-    if (this.state.seeAll) {
+    //If we want to see all appointments, including past appointments
+    if (this.state.seeAll && !this.state.hidePast) {
       axios.get(`/api/schedule`)
       .then((response) => {
-        console.log(response);
-      this.setState({
-        requests: response.data
-        })
+        this.setState({
+          appointments: response.data
+          })
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    //If we want to see all appointments, excluding past appointments
+    } else if (this.state.seeAll && this.state.hidePast) {
+      axios.get(`/api/schedule?startDate=${this.state.startDate}&endDate=${this.state.endDate}`)
+      .then((response) => {
+        this.setState({
+          appointments: response.data
+          })
       })
       .catch((err) => {
         console.log(err);
       })
     } else {
-      axios.get(`/api/schedule?date=${this.state.startDate}`)
+    //We only want to see appointments for the selected date
+      axios.get(`/api/schedule?startDate=${this.state.startDate}`)
       .then((response) => {
         this.setState({
-          requests: response.data
+          appointments: response.data
         })
       })
       .catch((err) => {
@@ -57,41 +75,16 @@ class Schedule extends React.Component {
       } else {
         val = event.target.value;
       }
+
       this.setState({[stateVar]: val}, () => {
-        if (this.state.seeAll === true) {
-          axios.get(`/api/schedule`)
-          .then((response) => {
-            console.log(response);
-          this.setState({
-            requests: response.data
-            })
-          })
-          .catch((err) => {
-            console.log(err);
-          })
-        } else {
           this.refreshSchedule();
         }
-      });
+      );
     } else {
-      this.setState({
-        startDate: event
-      }, () => {
-        if (this.state.seeAll === false) {
-          this.refreshSchedule();
-        } else {
-          axios.get(`/api/schedule`)
-          .then((response) => {
-            console.log(response);
-          this.setState({
-            requests: response.data
-            })
-          })
-          .catch((err) => {
-            console.log(err);
-          })
+      this.setState({ startDate: event}, () => {
+        this.refreshSchedule();
         }
-      })
+      );
     }
   }
 
@@ -100,9 +93,14 @@ class Schedule extends React.Component {
       <>
         <DatePicker selected={this.state.startDate} onChange={date => this.handleChange(date)} />
         <div style={{minWidth: '150px', padding: '1%'}}>
-          <label style={{paddingRight: '5%'}}>See all</label><input  type="checkbox" id="seeAll" name="seeAll" checked={this.state.seeAll} onChange={(e) => this.handleChange(e)}/>
+          <div>
+            <label style={{paddingRight: '5%'}}>See all</label><input  type="checkbox" id="seeAll" name="seeAll" checked={this.state.seeAll} onChange={(e) => this.handleChange(e)}/>
+          </div>
+          <div style={{display: this.state.seeAll ? 'block' : 'none'}}>
+            <label style={{paddingRight: '5%'}}>Hide past</label><input type="checkbox" id="seeAll" name="hidePast" checked={this.state.hidePast} onChange={(e) => this.handleChange(e)}/>
+          </div>
         </div>
-        {this.state.requests.map((request, index) => {
+        {this.state.appointments.map((request, index) => {
           return(
             <ApprovedAppointment key={index} req={request} handleRerender={this.refreshSchedule}/>
           )

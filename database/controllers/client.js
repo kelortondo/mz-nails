@@ -473,12 +473,21 @@ const updateAppointment = (apt, cb) => {
   })
 }
 
-const getApprovedApts = (date, cb) => {
-  if (date) {
-    let startDateString = new Date(date).toISOString().slice(0, 10);
-    const dateMove = new Date(startDateString);
-    dateMove.setDate(dateMove.getDate() + 1);
-    let endDateString = dateMove.toISOString().slice(0, 10);
+const getApprovedApts = (sdate, edate, cb) => {
+  if (sdate) {
+    //Modify the start date to have no associated time
+    let startDateString = new Date(sdate).toISOString().slice(0, 10);
+
+    //If we did not supply an end date
+    if (!edate) {
+      //Add one day (24 hours) to the start date to generate a one-day block of time
+      const dateMove = new Date(startDateString);
+      dateMove.setDate(dateMove.getDate() + 1);
+      var endDateString = dateMove.toISOString().slice(0, 10);
+    } else {
+      //Modify the end date to have no associated time
+      var endDateString = new Date(edate).toISOString().slice(0, 10);
+    }
 
     let start = new Date(startDateString+'T03:00:00.000-03:00');
     let end = new Date(endDateString+'T03:00:00.000-03:00');
