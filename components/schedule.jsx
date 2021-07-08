@@ -5,6 +5,10 @@ import styles from '../styles/Home.module.css'
 const axios = require('axios');
 import ApprovedAppointment from './approvedAppointment.jsx';
 
+import IconButton from '@material-ui/core/IconButton';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+
 class Schedule extends React.Component {
   constructor(props) {
     super(props);
@@ -88,10 +92,36 @@ class Schedule extends React.Component {
     }
   }
 
+  increaseDay() {
+    let currentDate = this.state.startDate;
+    currentDate.setDate(currentDate.getDate() + 1)
+
+    this.setState({startDate: currentDate}, () => {
+      this.refreshSchedule();
+    })
+  }
+
+  decreaseDay() {
+    let currentDate = this.state.startDate;
+    currentDate.setDate(currentDate.getDate() - 1)
+
+    this.setState({startDate: currentDate}, () => {
+      this.refreshSchedule();
+    })
+  }
+
   render() {
     return (
       <>
-        <DatePicker selected={this.state.startDate} onChange={date => this.handleChange(date)} />
+        <div>
+          <IconButton aria-label="previous day" onClick={(e) => this.decreaseDay()}>
+            <ArrowBackIcon style={{color: 'white'}}/>
+          </IconButton>
+          <DatePicker selected={this.state.startDate} onChange={date => this.handleChange(date)} />
+          <IconButton aria-label="next day" onClick={(e) => this.increaseDay()}>
+            <ArrowForwardIcon style={{color: 'white'}}/>
+          </IconButton>
+        </div>
         <div style={{minWidth: '150px', padding: '1%'}}>
           <div>
             <label style={{paddingRight: '5%'}}>See all</label><input  type="checkbox" id="seeAll" name="seeAll" checked={this.state.seeAll} onChange={(e) => this.handleChange(e)}/>
