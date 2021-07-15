@@ -7,7 +7,7 @@ const connectDB = handler => async (req, res) => {
     return handler(req, res);
   }
   // Use new db connection
-  await mongoose.connect('mongodb://localhost/mznails', {
+  await mongoose.connect('mongodb://192.168.50.6:27017/mznails', {
     useUnifiedTopology: true,
     useFindAndModify: false,
     useCreateIndex: true,

@@ -7,6 +7,8 @@
 
 # testing
 /coverage
+/pages/api/loaderio.js
+/public/loaderio-f3df6c7f7b75d52177b68eb29626c118.txt
 
 # next.js
 /.next/

@@ -10,7 +10,6 @@ function AppointmentRequest({req, handleRerender}) {
       }
     })
     .then((response) => {
-      console.log(response);
       handleRerender();
     })
     .catch((err) => {

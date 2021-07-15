@@ -10,6 +10,13 @@ class AptEditor extends React.Component {
   constructor(props) {
     super(props);
 
+    let startDateString = new Date().toISOString().slice(0, 10);
+    let start = new Date(startDateString+'T09:00:00.000-03:00');
+    let times = [];
+    for (let startHour = 9; startHour <= 18; startHour++) {
+      times.push(setHours(setMinutes(start, 0), startHour))
+    }
+
     this.state = {
       _id: this.props.req._id,
       firstName: this.props.req.firstName,
@@ -25,18 +32,7 @@ class AptEditor extends React.Component {
       veronicaDays: [],
       doloresDays: [],
       availableDays: [],
-      includedTimes: [
-        setHours(setMinutes(new Date(), 0), 9),
-        setHours(setMinutes(new Date(), 0), 10),
-        setHours(setMinutes(new Date(), 0), 11),
-        setHours(setMinutes(new Date(), 0), 12),
-        setHours(setMinutes(new Date(), 0), 13),
-        setHours(setMinutes(new Date(), 0), 14),
-        setHours(setMinutes(new Date(), 0), 15),
-        setHours(setMinutes(new Date(), 0), 16),
-        setHours(setMinutes(new Date(), 0), 17),
-        setHours(setMinutes(new Date(), 0), 18)
-      ]
+      includedTimes: times
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -102,10 +98,9 @@ class AptEditor extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    //let fixedTimeString = new Date(this.state.aptDate).toISOString().replace('Z', '');
-    //let time = new Date(fixedTimeString+'-03:00')
-    let time = this.state.aptDate;
-    console.log(time)
+    let fixedTimeString = new Date(this.state.aptDate).toISOString().replace('Z', '');
+    let time = new Date(fixedTimeString+'-03:00')
+
     this.setState({
       aptDate: time
     }, () => {

@@ -5,6 +5,7 @@ import styles from '../styles/Home.module.css'
 const axios = require('axios');
 import setHours from "date-fns/setHours";
 import setMinutes from "date-fns/setMinutes";
+import isBefore from "date-fns/isBefore";
 
 class BookingForm extends React.Component {
   constructor(props) {
@@ -12,6 +13,10 @@ class BookingForm extends React.Component {
 
     let startDateString = new Date().toISOString().slice(0, 10);
     let start = new Date(startDateString+'T09:00:00.000-03:00');
+    let times = [];
+    for (let startHour = 9; startHour <= 18; startHour++) {
+      times.push(setHours(setMinutes(start, 0), startHour))
+    }
 
     this.state = {
       firstName: '',
@@ -20,25 +25,14 @@ class BookingForm extends React.Component {
       phone: '',
       location: '',
       service: '',
-      aptDate: start,
+      aptDate: null,
       manicure: false,
       pedicure: false,
       approved: false,
       veronicaDays: [],
       doloresDays: [],
       availableDays: [],
-      includedTimes: [
-        setHours(setMinutes(start, 0), 9),
-        setHours(setMinutes(start, 0), 10),
-        setHours(setMinutes(start, 0), 11),
-        setHours(setMinutes(start, 0), 12),
-        setHours(setMinutes(start, 0), 13),
-        setHours(setMinutes(start, 0), 14),
-        setHours(setMinutes(start, 0), 15),
-        setHours(setMinutes(start, 0), 16),
-        setHours(setMinutes(start, 0), 17),
-        setHours(setMinutes(start, 0), 18)
-      ]
+      includedTimes: times
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -104,32 +98,60 @@ class BookingForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    //let fixedTimeString = new Date(this.state.aptDate).toISOString().replace('Z', '');
-    //let time = new Date(fixedTimeString+'-03:00')
-    let time = this.state.aptDate;
-    console.log(time)
-    this.setState({
-      aptDate: time
-    }, () => {
-      axios.post('/api/clients', this.state)
-      .then((response) => {
-        this.setState({
-          firstName: '',
-          lastName: '',
-          email: '',
-          phone: '',
-          service: '',
-          aptDate: null,
-          manicure: false,
-          pedicure: false,
-          approved: false
-        });
-        alert('Request received! You will be contacted to confim your appointment within a day.')
+    let missingInfo = false;
+
+    if (!this.state.firstName || !this.state.lastName) {
+      alert("Please enter your full name and submit again.");
+      missingInfo = true;
+    }
+
+    if (!this.state.email || !this.state.phone) {
+      alert("Please enter your phone number and email and submit again.");
+      missingInfo = true;
+    }
+
+    if (!this.state.service) {
+      alert("Please select a service and submit again.");
+      missingInfo = true;
+    }
+
+    if (!this.state.aptDate || isBefore(this.state.aptDate, start)) {
+      alert("Please select an appointment date/time and submit again.");
+      missingInfo = true;
+    }
+
+    if (!this.state.manicure && !this.state.pedicure) {
+      alert("Please choose a manicure or pedicure and submit again.");
+      missingInfo = true;
+    }
+
+    if (!missingInfo) {
+      let fixedTimeString = new Date(this.state.aptDate).toISOString().replace('Z', '');
+      let time = new Date(fixedTimeString)
+
+      this.setState({
+        aptDate: time
+      }, () => {
+        axios.post('/api/clients', this.state)
+        .then((response) => {
+          this.setState({
+            firstName: '',
+            lastName: '',
+            email: '',
+            phone: '',
+            service: '',
+            aptDate: null,
+            manicure: false,
+            pedicure: false,
+            approved: false
+          });
+          alert('Request received! You will be contacted to confim your appointment within a day.')
+        })
+        .catch((err) => {
+          console.log(err);
+        })
       })
-      .catch((err) => {
-        console.log(err);
-      })
-    })
+    }
   }
 
   render() {
@@ -155,11 +177,11 @@ class BookingForm extends React.Component {
             </label>
               Desired location of service:
               <div>
-                <input type="radio" id="veronica" name="location" value="veronica" checked={this.state.location === "veronica"} onChange={(e) => this.handleChange(e)}/>
+                <input required type="radio" id="veronica" name="location" value="veronica" checked={this.state.location === "veronica"} onChange={(e) => this.handleChange(e)}/>
                 <label for="veronica">Veronica</label>
               </div>
               <div>
-                <input type="radio" id="dolores" name="location" value="dolores" checked={this.state.location === "dolores"} onChange={(e) => this.handleChange(e)}/>
+                <input required type="radio" id="dolores" name="location" value="dolores" checked={this.state.location === "dolores"} onChange={(e) => this.handleChange(e)}/>
                 <label for="dolores">Dolores</label>
               </div>
 

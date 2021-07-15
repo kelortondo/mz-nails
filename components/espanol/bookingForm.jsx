@@ -15,6 +15,10 @@ class BookingForm extends React.Component {
 
     let startDateString = new Date().toISOString().slice(0, 10);
     let start = new Date(startDateString+'T09:00:00.000-03:00');
+    let times = [];
+    for (let startHour = 9; startHour <= 18; startHour++) {
+      times.push(setHours(setMinutes(start, 0), startHour))
+    }
 
     this.state = {
       firstName: '',
@@ -30,18 +34,7 @@ class BookingForm extends React.Component {
       veronicaDays: [],
       doloresDays: [],
       availableDays: [],
-      includedTimes: [
-        setHours(setMinutes(start, 0), 9),
-        setHours(setMinutes(start, 0), 10),
-        setHours(setMinutes(start, 0), 11),
-        setHours(setMinutes(start, 0), 12),
-        setHours(setMinutes(start, 0), 13),
-        setHours(setMinutes(start, 0), 14),
-        setHours(setMinutes(start, 0), 15),
-        setHours(setMinutes(start, 0), 16),
-        setHours(setMinutes(start, 0), 17),
-        setHours(setMinutes(start, 0), 18)
-      ]
+      includedTimes: times
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -107,30 +100,60 @@ class BookingForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    let time = this.state.aptDate;
+    let missingInfo = false;
 
-    this.setState({
-      aptDate: time
-    }, () => {
-      axios.post('/api/clients', this.state)
-      .then((response) => {
-        this.setState({
-          firstName: '',
-          lastName: '',
-          email: '',
-          phone: '',
-          service: '',
-          aptDate: null,
-          manicure: false,
-          pedicure: false,
-          approved: false
-        });
-        alert('Su reserva a sido recibida con éxito. Aguarde confirmación.')
+    if (!this.state.firstName || !this.state.lastName) {
+      alert("Please enter your full name and submit again.");
+      missingInfo = true;
+    }
+
+    if (!this.state.email || !this.state.phone) {
+      alert("Please enter your phone number and email and submit again.");
+      missingInfo = true;
+    }
+
+    if (!this.state.service) {
+      alert("Please select a service and submit again.");
+      missingInfo = true;
+    }
+
+    if (!this.state.aptDate || isBefore(this.state.aptDate, start)) {
+      alert("Please select an appointment date/time and submit again.");
+      missingInfo = true;
+    }
+
+    if (!this.state.manicure && !this.state.pedicure) {
+      alert("Please choose a manicure or pedicure and submit again.");
+      missingInfo = true;
+    }
+
+    if (!missingInfo) {
+      let fixedTimeString = new Date(this.state.aptDate).toISOString().replace('Z', '');
+      let time = new Date(fixedTimeString)
+
+      this.setState({
+        aptDate: time
+      }, () => {
+        axios.post('/api/clients', this.state)
+        .then((response) => {
+          this.setState({
+            firstName: '',
+            lastName: '',
+            email: '',
+            phone: '',
+            service: '',
+            aptDate: null,
+            manicure: false,
+            pedicure: false,
+            approved: false
+          });
+          alert('Su reserva a sido recibida con éxito. Aguarde confirmación.')
+        })
+        .catch((err) => {
+          console.log(err);
+        })
       })
-      .catch((err) => {
-        console.log(err);
-      })
-    })
+    }
   }
 
   render() {
@@ -186,7 +209,6 @@ class BookingForm extends React.Component {
         </div>
         <div style={{display: 'flex', flexWrap: 'wrap', alignContent: 'center', flexDirection: 'column', padding: '1%'}}>
           <DatePicker
-            dateFormat="MM/dd/yyyy h:mm aa"
             includeDates={this.state.availableDays}
             minDate={new Date()}
             selected={this.state.aptDate}
@@ -196,6 +218,7 @@ class BookingForm extends React.Component {
             includeTimes={this.state.includedTimes}
             timeIntervals={60}
             locale="es"
+            dateFormat="MM/dd/yyyy h:mm aa"
           />
           <button style={{width: '327px'}}className={styles.reqAptBtn} onClick={(e) => this.handleSubmit(e)}>Solicitar Turno</button>
         </div>

@@ -12,6 +12,10 @@ class AptScheduler extends React.Component {
 
     let startDateString = new Date().toISOString().slice(0, 10);
     let start = new Date(startDateString+'T09:00:00.000-03:00');
+    let times = [];
+    for (let startHour = 9; startHour <= 18; startHour++) {
+      times.push(setHours(setMinutes(start, 0), startHour))
+    }
 
     this.state = {
       firstName: '',
@@ -27,18 +31,7 @@ class AptScheduler extends React.Component {
       veronicaDays: [],
       doloresDays: [],
       availableDays: [],
-      includedTimes: [
-        setHours(setMinutes(new Date(), 0), 9),
-        setHours(setMinutes(new Date(), 0), 10),
-        setHours(setMinutes(new Date(), 0), 11),
-        setHours(setMinutes(new Date(), 0), 12),
-        setHours(setMinutes(new Date(), 0), 13),
-        setHours(setMinutes(new Date(), 0), 14),
-        setHours(setMinutes(new Date(), 0), 15),
-        setHours(setMinutes(new Date(), 0), 16),
-        setHours(setMinutes(new Date(), 0), 17),
-        setHours(setMinutes(new Date(), 0), 18)
-      ]
+      includedTimes: times
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -104,32 +97,60 @@ class AptScheduler extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    //let fixedTimeString = new Date(this.state.aptDate).toISOString().replace('Z', '');
-    //let time = new Date(fixedTimeString+'-03:00')
-    let time = this.state.aptDate;
-    console.log(time)
-    this.setState({
-      aptDate: time
-    }, () => {
-      axios.post('/api/schedule', this.state)
-      .then((response) => {
-        this.setState({
-          firstName: '',
-          lastName: '',
-          email: '',
-          phone: '',
-          service: '',
-          aptDate: null,
-          manicure: false,
-          pedicure: false,
-          approved: true
-        });
-        alert('Appointment created!')
+    let missingInfo = false;
+
+    if (!this.state.firstName || !this.state.lastName) {
+      alert("Please enter your full name and submit again.");
+      missingInfo = true;
+    }
+
+    if (!this.state.email || !this.state.phone) {
+      alert("Please enter your phone number and email and submit again.");
+      missingInfo = true;
+    }
+
+    if (!this.state.service) {
+      alert("Please select a service and submit again.");
+      missingInfo = true;
+    }
+
+    if (!this.state.aptDate || isBefore(this.state.aptDate, start)) {
+      alert("Please select an appointment date/time and submit again.");
+      missingInfo = true;
+    }
+
+    if (!this.state.manicure && !this.state.pedicure) {
+      alert("Please choose a manicure or pedicure and submit again.");
+      missingInfo = true;
+    }
+
+    if (!missingInfo) {
+      let fixedTimeString = new Date(this.state.aptDate).toISOString().replace('Z', '');
+      let time = new Date(fixedTimeString)
+
+      this.setState({
+        aptDate: time
+      }, () => {
+        axios.post('/api/schedule', this.state)
+        .then((response) => {
+          this.setState({
+            firstName: '',
+            lastName: '',
+            email: '',
+            phone: '',
+            service: '',
+            aptDate: null,
+            manicure: false,
+            pedicure: false,
+            approved: true
+          });
+          alert('Appointment created!')
+        })
+        .catch((err) => {
+          console.log(err);
+        })
       })
-      .catch((err) => {
-        console.log(err);
-      })
-    })
+    }
   }
 
   render() {
@@ -156,11 +177,11 @@ class AptScheduler extends React.Component {
             </label>
               Location of service:
               <div>
-                <input type="radio" id="veronica" name="location" value="veronica" checked={this.state.location === "veronica"} onChange={(e) => this.handleChange(e)}/>
+                <input required type="radio" id="veronica" name="location" value="veronica" checked={this.state.location === "veronica"} onChange={(e) => this.handleChange(e)}/>
                 <label for="veronica">Veronica</label>
               </div>
               <div>
-                <input type="radio" id="dolores" name="location" value="dolores" checked={this.state.location === "dolores"} onChange={(e) => this.handleChange(e)}/>
+                <input required type="radio" id="dolores" name="location" value="dolores" checked={this.state.location === "dolores"} onChange={(e) => this.handleChange(e)}/>
                 <label for="dolores">Dolores</label>
               </div>
 
