@@ -263,7 +263,8 @@ const updateAppointment = (apt, cb) => {
     phone: apt.phone,
     service: apt.service,
     manicure: apt.manicure,
-    pedicure: apt.pedicure
+    pedicure: apt.pedicure,
+    duration: apt.duration
   }, {new: true}, (err, result) => {
     if (err) {
       cb(err, null);

@@ -261,6 +261,10 @@ class AptEditor extends React.Component {
               <option value="semiperm">Semi-permanent</option>
             </select>
           </label>
+          <label>
+            Duration (hours):
+            <input required type="number" name="duration" min="1" value={this.state.duration} onChange={(e) => this.handleChange(e)} />
+          </label>
             Pedicure and/or Manicure:
             <div>
               <input type="checkbox" id="manicure" name="manicure" checked={this.state.manicure} onChange={(e) => this.handleChange(e)}/>
