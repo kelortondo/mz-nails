@@ -238,7 +238,7 @@
 
 /* Styling for the button used to submit an appointment request */
 .reqAptBtn {
-  background-color: #f9be95;
+  background-color: #83bae8;
   color: black;
   font-size: 1.25rem;
   font-family: "Quicksand";
@@ -251,7 +251,7 @@
 }
 
 .reqAptBtn:hover {
-  background-color: #83bae8;
+  background-color: #f9be95;
 }
 
 /* Styling for the button used to submit an appointment request */

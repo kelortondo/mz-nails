@@ -10,7 +10,8 @@ const clientSchema = mongoose.Schema({
   pedicure: Boolean,
   phone: String,
   service: String,
-  approved: Boolean
+  approved: Boolean,
+  duration: {type: Number, default: 2}
 });
 
 module.exports = mongoose.models.Client || mongoose.model('Client', clientSchema);

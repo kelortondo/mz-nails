@@ -6,6 +6,8 @@ const axios = require('axios');
 import setHours from "date-fns/setHours";
 import setMinutes from "date-fns/setMinutes";
 import isBefore from "date-fns/isBefore";
+import getHours from 'date-fns/getHours'
+
 
 class BookingForm extends React.Component {
   constructor(props) {
@@ -68,6 +70,37 @@ class BookingForm extends React.Component {
     })
   }
 
+  updateAvailableTimes() {
+
+    let bookedTimes = {
+      9: false, 10: false, 11: false, 12: false, 13: false, 14: false, 15: false, 16: false, 17: false, 18: false
+    }
+    axios.get(`api/schedule?startDate=${this.state.aptDate}`)
+    .then((response) => {
+      let existingApts = response.data;
+      existingApts.forEach((apt) => {
+        let aptTime = (new Date(apt.aptDate)).toLocaleString('en-us', {timeZone: 'America/Argentina/Buenos_Aires'})
+        aptTime = getHours(new Date(aptTime))
+        let duration = apt.duration || 2
+        for (let i = 0; i < duration; i++) {
+          bookedTimes[aptTime + i] = true
+        }
+      })
+
+      let times = [];
+
+      for (let key in bookedTimes) {
+        if (!bookedTimes[key]) {
+          times.push(setHours(setMinutes(new Date(this.state.aptDate), 0), key))
+        }
+      }
+
+      this.setState({
+        includedTimes: times
+      })
+    })
+  }
+
   handleChange(event) {
     if (event.target) {
       let stateVar = event.target.name;
@@ -92,6 +125,8 @@ class BookingForm extends React.Component {
     } else {
       this.setState({
         aptDate: new Date(event)
+      }, () => {
+        this.updateAvailableTimes()
       })
     }
   }
@@ -206,6 +241,8 @@ class BookingForm extends React.Component {
           </form>
         </div>
         <div style={{display: 'flex', flexWrap: 'wrap', alignContent: 'center', flexDirection: 'column', padding: '1%'}}>
+          <div style={{color: 'white'}}><i>All times are for Buenos Aires (GMT -3).</i></div>
+          <div style={{color: 'white'}}><i>Unavailable times are hidden.</i></div>
           <DatePicker
             dateFormat="MM/dd/yyyy h:mm aa"
             includeDates={this.state.availableDays}
