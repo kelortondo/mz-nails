@@ -56,6 +56,8 @@ const Landing = () => {
 
     if (response.ok) {
       setLoggedIn(true);
+    } else {
+      alert("Username/Password incorrect, please try again.")
     }
   }
 
