@@ -112,30 +112,32 @@ class Schedule extends React.Component {
 
   render() {
     return (
-      <>
-        <div>
-          <IconButton aria-label="previous day" onClick={(e) => this.decreaseDay()}>
-            <ArrowBackIcon style={{color: 'white'}}/>
-          </IconButton>
-          <DatePicker selected={this.state.startDate} onChange={date => this.handleChange(date)} />
-          <IconButton aria-label="next day" onClick={(e) => this.increaseDay()}>
-            <ArrowForwardIcon style={{color: 'white'}}/>
-          </IconButton>
-        </div>
-        <div style={{minWidth: '150px', padding: '1%'}}>
+      <div className={styles.info}>
+        <div className={styles.dropDowns}>
           <div>
-            <label style={{paddingRight: '5%'}}>See all</label><input  type="checkbox" id="seeAll" name="seeAll" checked={this.state.seeAll} onChange={(e) => this.handleChange(e)}/>
+            <IconButton aria-label="previous day" onClick={(e) => this.decreaseDay()}>
+              <ArrowBackIcon style={{color: 'white'}}/>
+            </IconButton>
+            <DatePicker selected={this.state.startDate} onChange={date => this.handleChange(date)} />
+            <IconButton aria-label="next day" onClick={(e) => this.increaseDay()}>
+              <ArrowForwardIcon style={{color: 'white'}}/>
+            </IconButton>
           </div>
-          <div style={{display: this.state.seeAll ? 'block' : 'none'}}>
-            <label style={{paddingRight: '5%'}}>Hide past</label><input type="checkbox" id="seeAll" name="hidePast" checked={this.state.hidePast} onChange={(e) => this.handleChange(e)}/>
+          <div style={{minWidth: '150px', padding: '1%'}}>
+            <div>
+              <label style={{paddingRight: '5%'}}>See all</label><input  type="checkbox" id="seeAll" name="seeAll" checked={this.state.seeAll} onChange={(e) => this.handleChange(e)}/>
+            </div>
+            <div style={{display: this.state.seeAll ? 'block' : 'none'}}>
+              <label style={{paddingRight: '5%'}}>Hide past</label><input type="checkbox" id="seeAll" name="hidePast" checked={this.state.hidePast} onChange={(e) => this.handleChange(e)}/>
+            </div>
           </div>
+          {this.state.appointments.map((request, index) => {
+            return(
+              <ApprovedAppointment key={index} req={request} handleRerender={this.refreshSchedule}/>
+            )
+          })}
         </div>
-        {this.state.appointments.map((request, index) => {
-          return(
-            <ApprovedAppointment key={index} req={request} handleRerender={this.refreshSchedule}/>
-          )
-        })}
-      </>
+      </div>
     );
   }
 }

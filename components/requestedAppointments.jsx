@@ -57,17 +57,23 @@ class RequestedAppointments extends React.Component {
   render() {
     if (this.state.requests.length === 0) {
       return (
-        <div style={{margin: 'auto', textAlign: 'center'}}>No pending requests, check back later.</div>
+        <div className={styles.info}>
+          <div className={styles.dropDowns}>
+            <div style={{margin: 'auto', textAlign: 'center'}}>No pending requests, check back later.</div>
+          </div>
+        </div>
       )
     } else {
       return (
-        <>
-          {this.state.requests.map((request, index) => {
-            return(
-              <AppointmentRequest key={index} req={request} handleRerender={this.handleSubmit}/>
-            )
-          })}
-        </>
+        <div className={styles.info}>
+          <div className={styles.dropDowns}>
+            {this.state.requests.map((request, index) => {
+              return(
+                <AppointmentRequest key={index} req={request} handleRerender={this.handleSubmit}/>
+              )
+            })}
+          </div>
+        </div>
       );
     }
   }

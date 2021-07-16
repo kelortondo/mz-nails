@@ -9,6 +9,9 @@ import setHours from "date-fns/setHours";
 import setMinutes from "date-fns/setMinutes";
 import isBefore from "date-fns/isBefore";
 import getHours from "date-fns/getHours";
+import getYear from "date-fns/getYear";
+import getMonth from "date-fns/getMonth";
+import getDate from "date-fns/getDate";
 
 import "react-datepicker/dist/react-datepicker.css";
 import styles from '../styles/Home.module.css'
@@ -170,9 +173,21 @@ class AptScheduler extends React.Component {
       missingInfo = true;
     }
 
-    if (!this.state.aptDate || isBefore(this.state.aptDate, start)) {
+    if (!this.state.aptDate) {
       alert("Please select an appointment date/time and submit again.");
       missingInfo = true;
+    } else {
+      var rawAptDate = this.state.aptDate;
+      var hours = getHours(this.state.aptDate);
+      var day = getDate(this.state.aptDate);
+      var month = getMonth(this.state.aptDate);
+      var year = getYear(this.state.aptDate);
+      var _aptDate = new Date(Date.UTC(year, month, day, hours + 3))
+      let _earliestDate = new Date(Date.UTC(year, month, day, 12))
+      if (isBefore(_aptDate, _earliestDate)) {
+        alert("Please select an appointment date/time and submit again.")
+        missingInfo = true;
+      }
     }
 
     if (!this.state.manicure && !this.state.pedicure) {
@@ -181,11 +196,8 @@ class AptScheduler extends React.Component {
     }
 
     if (!missingInfo) {
-      let fixedTimeString = new Date(this.state.aptDate).toISOString().replace('Z', '');
-      let time = new Date(fixedTimeString)
-
       this.setState({
-        aptDate: time
+        aptDate: _aptDate
       }, () => {
         axios.post('/api/schedule', this.state)
         .then((response) => {
@@ -212,71 +224,72 @@ class AptScheduler extends React.Component {
 
   render() {
     return (
-      <>
-        <div style={{display: 'flex', flexWrap: 'wrap', alignContent: 'center', flexDirection: 'column', padding: '1%'}}>
+      <div className={styles.bookingInfo}>
+        <div className={styles.dropDowns}>
+          <div style={{display: 'flex', flexWrap: 'wrap', alignContent: 'center', flexDirection: 'column', padding: '1%'}}>
+            <form onSubmit={this.handleSubmit}>
+              <label>
+                First name:
+                <input required type="text" name='firstName' value={this.state.firstName} onChange={(e) => this.handleChange(e)} />
+              </label>
+              <label>
+                Last name:
+                <input required type="text" name='lastName' value={this.state.lastName} onChange={(e) => this.handleChange(e)} />
+              </label>
+              <label>
+                Email Address:
+                <input required type="email" name='email' value={this.state.email} onChange={(e) => this.handleChange(e)} />
+              </label>
+              <label>
+                Phone number:
+                <input required type="tel" name='phone' value={this.state.phone} onChange={(e) => this.handleChange(e)} />
+              </label>
+                Location of service:
+                <div>
+                  <input required type="radio" id="veronica" name="location" value="veronica" checked={this.state.location === "veronica"} onChange={(e) => this.handleChange(e)}/>
+                  <label for="veronica">Veronica</label>
+                </div>
+                <div>
+                  <input required type="radio" id="dolores" name="location" value="dolores" checked={this.state.location === "dolores"} onChange={(e) => this.handleChange(e)}/>
+                  <label for="dolores">Dolores</label>
+                </div>
 
-          <form onSubmit={this.handleSubmit}>
-            <label>
-              First name:
-              <input required type="text" name='firstName' value={this.state.firstName} onChange={(e) => this.handleChange(e)} />
-            </label>
-            <label>
-              Last name:
-              <input required type="text" name='lastName' value={this.state.lastName} onChange={(e) => this.handleChange(e)} />
-            </label>
-            <label>
-              Email Address:
-              <input required type="email" name='email' value={this.state.email} onChange={(e) => this.handleChange(e)} />
-            </label>
-            <label>
-              Phone number:
-              <input required type="tel" name='phone' value={this.state.phone} onChange={(e) => this.handleChange(e)} />
-            </label>
-              Location of service:
-              <div>
-                <input required type="radio" id="veronica" name="location" value="veronica" checked={this.state.location === "veronica"} onChange={(e) => this.handleChange(e)}/>
-                <label for="veronica">Veronica</label>
-              </div>
-              <div>
-                <input required type="radio" id="dolores" name="location" value="dolores" checked={this.state.location === "dolores"} onChange={(e) => this.handleChange(e)}/>
-                <label for="dolores">Dolores</label>
-              </div>
-
-            <label>
-              Service:
-              <select required name='service' value={this.state.service} onChange={(e) => this.handleChange(e)}>
-                <option hidden selected disabled value="">Please choose an option</option>
-                <option value="capping">Capping</option>
-                <option value="sculpted">Sculpted</option>
-                <option value="semiperm">Semi-permanent</option>
-              </select>
-            </label>
-              Pedicure and/or Manicure:
-              <div>
-                <input type="checkbox" id="manicure" name="manicure" checked={this.state.manicure} onChange={(e) => this.handleChange(e)}/>
-                <label for="manicure">Manicure</label>
-              </div>
-              <div>
-                <input type="checkbox" id="pedicure" name="pedicure" checked={this.state.pedicure} onChange={(e) => this.handleChange(e)}/>
-                <label for="pedicure">Pedicure</label>
-              </div>
-          </form>
+              <label>
+                Service:
+                <select required name='service' value={this.state.service} onChange={(e) => this.handleChange(e)}>
+                  <option hidden selected disabled value="">Please choose an option</option>
+                  <option value="capping">Capping</option>
+                  <option value="sculpted">Sculpted</option>
+                  <option value="semiperm">Semi-permanent</option>
+                </select>
+              </label>
+                Pedicure and/or Manicure:
+                <div>
+                  <input type="checkbox" id="manicure" name="manicure" checked={this.state.manicure} onChange={(e) => this.handleChange(e)}/>
+                  <label for="manicure">Manicure</label>
+                </div>
+                <div>
+                  <input type="checkbox" id="pedicure" name="pedicure" checked={this.state.pedicure} onChange={(e) => this.handleChange(e)}/>
+                  <label for="pedicure">Pedicure</label>
+                </div>
+            </form>
+          </div>
+          <div style={{display: 'flex', flexWrap: 'wrap', alignContent: 'center', flexDirection: 'column', padding: '1%'}}>
+            <DatePicker
+              dateFormat="MM/dd/yyyy h:mm aa"
+              includeDates={this.state.availableDays}
+              minDate={new Date()}
+              selected={this.state.aptDate}
+              onChange={date => this.handleChange(date)}
+              inline
+              showTimeSelect
+              includeTimes={this.state.includedTimes}
+              timeIntervals={60}
+            />
+            <div><button style={{width: '327px'}}className={styles.reqAptBtn} onClick={(e) => this.handleSubmit(e)}>Create appointment</button></div>
+          </div>
         </div>
-        <div style={{display: 'flex', flexWrap: 'wrap', alignContent: 'center', flexDirection: 'column', padding: '1%'}}>
-          <DatePicker
-            dateFormat="MM/dd/yyyy h:mm aa"
-            includeDates={this.state.availableDays}
-            minDate={new Date()}
-            selected={this.state.aptDate}
-            onChange={date => this.handleChange(date)}
-            inline
-            showTimeSelect
-            includeTimes={this.state.includedTimes}
-            timeIntervals={60}
-          />
-          <div><button style={{width: '327px'}}className={styles.reqAptBtn} onClick={(e) => this.handleSubmit(e)}>Create appointment</button></div>
-        </div>
-      </>
+      </div>
     );
   }
 }

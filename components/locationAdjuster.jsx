@@ -175,38 +175,41 @@ class LocationAdjustor extends React.Component {
 
   render() {
     return (
-      <>
-        <div style={{display: 'flex', flexWrap: 'wrap', alignContent: 'center', flexDirection: 'column', padding: '1%', marginRight: '1%'}}>
-          Choose the location:
-          <div>
-            <input type="radio" id="veronica" name="location" value="veronica" checked={this.state.location === "veronica"} onChange={(e) => this.handleChange(e)}/>
-            <label for="veronica" style={{color: '#fd8abb'}}>Veronica</label>
-          </div>
-          <div>
-            <input type="radio" id="dolores" name="location" value="dolores" checked={this.state.location === "dolores"} onChange={(e) => this.handleChange(e)}/>
-            <label for="dolores" style={{color: '#83bae8'}}>Dolores</label>
-          </div>
-          <div>
-            <input type="radio" id="dayOff" name="location" value="off" checked={this.state.location === "off"} onChange={(e) => this.handleChange(e)}/>
-            <label for="dayOff" style={{color: '#f0f0f0'}}>Day off</label>
-          </div>
-        </div>
+      <div className={styles.info}>
+        <div className={styles.dropDowns}>
 
-        <div style={{display: 'flex', flexWrap: 'wrap', alignContent: 'center', flexDirection: 'column', padding: '1%', marginLeft: '1%'}}>
-          Choose the dates:
-            <DatePicker
-              selected={this.state.startDate}
-              onChange={this.handleChange}
-              startDate={this.state.startDate}
-              endDate={this.state.endDate}
-              minDate={new Date()}
-              highlightDates={this.state.dateHighlights}
-              selectsRange
-              inline
-            />
-          <button className={styles.reqAptBtn} onClick={(e) => this.handleSubmit(e)}>Submit changes</button>
+          <div style={{display: 'flex', flexWrap: 'wrap', alignContent: 'center', flexDirection: 'column', padding: '1%', marginRight: '1%'}}>
+            Choose the location:
+            <div>
+              <input type="radio" id="veronica" name="location" value="veronica" checked={this.state.location === "veronica"} onChange={(e) => this.handleChange(e)}/>
+              <label for="veronica" style={{color: '#fd8abb'}}>Veronica</label>
+            </div>
+            <div>
+              <input type="radio" id="dolores" name="location" value="dolores" checked={this.state.location === "dolores"} onChange={(e) => this.handleChange(e)}/>
+              <label for="dolores" style={{color: '#83bae8'}}>Dolores</label>
+            </div>
+            <div>
+              <input type="radio" id="dayOff" name="location" value="off" checked={this.state.location === "off"} onChange={(e) => this.handleChange(e)}/>
+              <label for="dayOff" style={{color: '#f0f0f0'}}>Day off</label>
+            </div>
+          </div>
+
+          <div style={{display: 'flex', flexWrap: 'wrap', alignContent: 'center', flexDirection: 'column', padding: '1%', marginLeft: '1%'}}>
+            Choose the dates:
+              <DatePicker
+                selected={this.state.startDate}
+                onChange={this.handleChange}
+                startDate={this.state.startDate}
+                endDate={this.state.endDate}
+                minDate={new Date()}
+                highlightDates={this.state.dateHighlights}
+                selectsRange
+                inline
+              />
+            <button className={styles.reqAptBtn} onClick={(e) => this.handleSubmit(e)}>Submit changes</button>
+          </div>
         </div>
-      </>
+      </div>
     );
   }
 }

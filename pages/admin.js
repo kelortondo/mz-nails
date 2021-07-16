@@ -127,18 +127,14 @@ const Landing = () => {
           </div>
 
           <div className={[styles.gridTitleSmall, styles.navBar].join(' ')} style={{height: 'auto'}}>
-              <div className={'navDivs'} onClick={toggleAdjustLoc} id='loc'><Link href="#"><a>LOCATION</a></Link></div>
-              <div className={'navDivs'} onClick={toggleSeeSched} id='apts'><Link href="#"><a>APPOINTMENTS</a></Link></div>
-              <div className={'navDivs'} onClick={toggleRequests} id='requests'><Link href="#"><a>REQUESTS</a></Link></div>
-              <div className={'navDivs'} onClick={toggleAddApt} id='book'><Link href="#"><a>BOOK</a></Link></div>
+            <div className={'navDivs'} onClick={toggleAdjustLoc} id='loc'><Link href="#"><a>LOCATION</a></Link></div>
+            <div className={'navDivs'} onClick={toggleSeeSched} id='apts'><Link href="#"><a>APPOINTMENTS</a></Link></div>
+            <div className={'navDivs'} onClick={toggleRequests} id='requests'><Link href="#"><a>REQUESTS</a></Link></div>
+            <div className={'navDivs'} onClick={toggleAddApt} id='book'><Link href="#"><a>BOOK</a></Link></div>
           </div>
 
           <div className={styles.grid}>
-            <div className={`${styles.info}`} >
-              <div className={styles.dropDowns}>
-                  {adminElement}
-              </div>
-            </div>
+            {adminElement}
           </div>
         </main>
 

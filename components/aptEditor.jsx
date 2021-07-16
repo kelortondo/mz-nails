@@ -9,6 +9,9 @@ import setHours from "date-fns/setHours";
 import setMinutes from "date-fns/setMinutes";
 import isBefore from "date-fns/isBefore";
 import getHours from "date-fns/getHours";
+import getYear from "date-fns/getYear";
+import getMonth from "date-fns/getMonth";
+import getDate from "date-fns/getDate";
 
 import "react-datepicker/dist/react-datepicker.css";
 import styles from '../styles/Home.module.css'
@@ -174,9 +177,21 @@ class AptEditor extends React.Component {
       missingInfo = true;
     }
 
-    if (!this.state.aptDate || isBefore(this.state.aptDate, (setHours(setMinutes(new Date(this.state.aptDate), 0), 9)))) {
+    if (!this.state.aptDate) {
       alert("Please select an appointment date/time and submit again.");
       missingInfo = true;
+    } else {
+      var rawAptDate = this.state.aptDate;
+      var hours = getHours(this.state.aptDate);
+      var day = getDate(this.state.aptDate);
+      var month = getMonth(this.state.aptDate);
+      var year = getYear(this.state.aptDate);
+      var _aptDate = new Date(Date.UTC(year, month, day, hours + 3))
+      let _earliestDate = new Date(Date.UTC(year, month, day, 12))
+      if (isBefore(_aptDate, _earliestDate)) {
+        alert("Please select an appointment date/time and submit again.")
+        missingInfo = true;
+      }
     }
 
     if (!this.state.manicure && !this.state.pedicure) {
@@ -185,24 +200,17 @@ class AptEditor extends React.Component {
     }
 
     if (!missingInfo) {
-      axios.put('/api/schedule', this.state)
-      .then((response) => {
-        this.setState({
-          firstName: '',
-          lastName: '',
-          email: '',
-          phone: '',
-          service: '',
-          aptDate: null,
-          manicure: false,
-          pedicure: false,
-          approved: true
-        });
-        alert('Appointment updated!')
-        this.props.handleClose();
-      })
-      .catch((err) => {
-        console.log(err);
+      this.setState({
+        aptDate: _aptDate
+      }, () => {
+        axios.put('/api/schedule', this.state)
+        .then(() => {
+          alert('Appointment updated!')
+          this.props.handleClose();
+        })
+        .catch((err) => {
+          console.log(err);
+        })
       })
     }
   }
