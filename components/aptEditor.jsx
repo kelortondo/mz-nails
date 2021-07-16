@@ -21,6 +21,8 @@ class AptEditor extends React.Component {
   constructor(props) {
     super(props);
 
+    let currentAptTime = (new Date(this.props.req.aptDate)).toLocaleString('en-us', {timeZone: 'America/Argentina/Buenos_Aires'})
+
     this.state = {
       _id: this.props.req._id,
       firstName: this.props.req.firstName,
@@ -29,7 +31,7 @@ class AptEditor extends React.Component {
       phone: this.props.req.phone,
       location: this.props.req.location,
       service: this.props.req.service,
-      aptDate: new Date(this.props.req.aptDate),
+      aptDate: setHours(setMinutes(new Date(this.props.req.aptDate), 0), getHours(new Date(currentAptTime))),
       manicure: this.props.req.manicure,
       pedicure: this.props.req.pedicure,
       approved: true,
