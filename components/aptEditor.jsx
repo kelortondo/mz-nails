@@ -63,6 +63,8 @@ class AptEditor extends React.Component {
     axios.get(`api/schedule?startDate=${this.state.aptDate}`)
     .then((response) => {
       let existingApts = response.data;
+      let currentAptTime = (new Date(this.props.req.aptDate)).toLocaleString('en-us', {timeZone: 'America/Argentina/Buenos_Aires'})
+      currentAptTime = getHours(new Date(currentAptTime))
 
       existingApts.forEach((apt) => {
         //The currently occupied appointment time will be a string when coming from the DB.
@@ -71,6 +73,11 @@ class AptEditor extends React.Component {
 
         //Parse the hour of the appointment from the date object
         aptTime = getHours(new Date(aptTime))
+
+        //We don't want to consider the hours currently blocked by this appointment
+        if (aptTime === currentAptTime) {
+          return;
+        }
 
         //Most appointments will have a duration of 2 hours, unless otherwise specified
         //We will block appointment times which fall within the duration of this one
