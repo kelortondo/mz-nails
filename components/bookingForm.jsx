@@ -1,24 +1,25 @@
-import React from 'react';
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import styles from '../styles/Home.module.css'
+//DEPENDENCIES
 const axios = require('axios');
+
+import React from 'react';
+
+import DatePicker from "react-datepicker";
+
 import setHours from "date-fns/setHours";
 import setMinutes from "date-fns/setMinutes";
 import isBefore from "date-fns/isBefore";
-import getHours from 'date-fns/getHours'
+import getHours from "date-fns/getHours";
+import getYear from "date-fns/getYear";
+import getMonth from "date-fns/getMonth";
+import getDate from "date-fns/getDate";
 
+import "react-datepicker/dist/react-datepicker.css";
+import styles from "../styles/Home.module.css";
+//END DEPENDENCIES
 
 class BookingForm extends React.Component {
   constructor(props) {
     super(props);
-
-    let startDateString = new Date().toISOString().slice(0, 10);
-    let start = new Date(startDateString+'T09:00:00.000-03:00');
-    let times = [];
-    for (let startHour = 9; startHour <= 18; startHour++) {
-      times.push(setHours(setMinutes(start, 0), startHour))
-    }
 
     this.state = {
       firstName: '',
@@ -31,10 +32,11 @@ class BookingForm extends React.Component {
       manicure: false,
       pedicure: false,
       approved: false,
+      duration: 2,
       veronicaDays: [],
       doloresDays: [],
       availableDays: [],
-      includedTimes: times
+      includedTimes: []
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -71,22 +73,42 @@ class BookingForm extends React.Component {
   }
 
   updateAvailableTimes() {
-
+    //All the possible times an appointment could begin
     let bookedTimes = {
-      9: false, 10: false, 11: false, 12: false, 13: false, 14: false, 15: false, 16: false, 17: false, 18: false
+      9: false,
+      10: false,
+      11: false,
+      12: false,
+      13: false,
+      14: false,
+      15: false,
+      16: false,
+      17: false,
+      18: false
     }
+
+    //Based on the date requested by the client, get already-booked appointment times
     axios.get(`api/schedule?startDate=${this.state.aptDate}`)
     .then((response) => {
       let existingApts = response.data;
+
       existingApts.forEach((apt) => {
+        //The currently occupied appointment time will be a string when coming from the DB.
+        //We need to convert it to a date object, with the hours set for Buenos Aires
         let aptTime = (new Date(apt.aptDate)).toLocaleString('en-us', {timeZone: 'America/Argentina/Buenos_Aires'})
+
+        //Parse the hour of the appointment from the date object
         aptTime = getHours(new Date(aptTime))
+
+        //Most appointments will have a duration of 2 hours, unless otherwise specified
+        //We will block appointment times which fall within the duration of this one
         let duration = apt.duration || 2
         for (let i = 0; i < duration; i++) {
           bookedTimes[aptTime + i] = true
         }
       })
 
+      //Iterate over the bookedTimes object, adding non-occupied timeslots to the times array
       let times = [];
 
       for (let key in bookedTimes) {
@@ -95,6 +117,7 @@ class BookingForm extends React.Component {
         }
       }
 
+      //Update state to reflect times that are non-occupied
       this.setState({
         includedTimes: times
       })
@@ -150,9 +173,21 @@ class BookingForm extends React.Component {
       missingInfo = true;
     }
 
-    if (!this.state.aptDate || isBefore(this.state.aptDate, start)) {
+    if (!this.state.aptDate) {
       alert("Please select an appointment date/time and submit again.");
       missingInfo = true;
+    } else {
+      var rawAptDate = this.state.aptDate;
+      var hours = getHours(this.state.aptDate);
+      var day = getDate(this.state.aptDate);
+      var month = getMonth(this.state.aptDate);
+      var year = getYear(this.state.aptDate);
+      var _aptDate = new Date(Date.UTC(year, month, day, hours + 3))
+      let _earliestDate = new Date(Date.UTC(year, month, day, 12))
+      if (isBefore(_aptDate, _earliestDate)) {
+        alert("Please select an appointment date/time and submit again.")
+        missingInfo = true;
+      }
     }
 
     if (!this.state.manicure && !this.state.pedicure) {
@@ -161,11 +196,8 @@ class BookingForm extends React.Component {
     }
 
     if (!missingInfo) {
-      let fixedTimeString = new Date(this.state.aptDate).toISOString().replace('Z', '');
-      let time = new Date(fixedTimeString)
-
       this.setState({
-        aptDate: time
+        aptDate: _aptDate
       }, () => {
         axios.post('/api/clients', this.state)
         .then((response) => {
@@ -178,7 +210,8 @@ class BookingForm extends React.Component {
             aptDate: null,
             manicure: false,
             pedicure: false,
-            approved: false
+            approved: false,
+            duration: 2
           });
           alert('Request received! You will be contacted to confim your appointment within a day.')
         })

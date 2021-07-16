@@ -1,21 +1,22 @@
+//DEPENDENCIES
+const axios = require('axios');
+
 import React from 'react';
+
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import styles from '../styles/Home.module.css'
+
 import setHours from "date-fns/setHours";
 import setMinutes from "date-fns/setMinutes";
-const axios = require('axios');
+import isBefore from "date-fns/isBefore";
+import getHours from "date-fns/getHours";
+
+import "react-datepicker/dist/react-datepicker.css";
+import styles from '../styles/Home.module.css'
+//END DEPENDENCIES
 
 class AptEditor extends React.Component {
   constructor(props) {
     super(props);
-
-    let startDateString = new Date().toISOString().slice(0, 10);
-    let start = new Date(startDateString+'T09:00:00.000-03:00');
-    let times = [];
-    for (let startHour = 9; startHour <= 18; startHour++) {
-      times.push(setHours(setMinutes(start, 0), startHour))
-    }
 
     this.state = {
       _id: this.props.req._id,
@@ -29,14 +30,67 @@ class AptEditor extends React.Component {
       manicure: this.props.req.manicure,
       pedicure: this.props.req.pedicure,
       approved: true,
+      duration: this.props.req.duration || 2,
       veronicaDays: [],
       doloresDays: [],
       availableDays: [],
-      includedTimes: times
+      includedTimes: []
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  updateAvailableTimes() {
+    //All the possible times an appointment could begin
+    let bookedTimes = {
+      9: false,
+      10: false,
+      11: false,
+      12: false,
+      13: false,
+      14: false,
+      15: false,
+      16: false,
+      17: false,
+      18: false
+    }
+
+    //Based on the date requested by the client, get already-booked appointment times
+    axios.get(`api/schedule?startDate=${this.state.aptDate}`)
+    .then((response) => {
+      let existingApts = response.data;
+
+      existingApts.forEach((apt) => {
+        //The currently occupied appointment time will be a string when coming from the DB.
+        //We need to convert it to a date object, with the hours set for Buenos Aires
+        let aptTime = (new Date(apt.aptDate)).toLocaleString('en-us', {timeZone: 'America/Argentina/Buenos_Aires'})
+
+        //Parse the hour of the appointment from the date object
+        aptTime = getHours(new Date(aptTime))
+
+        //Most appointments will have a duration of 2 hours, unless otherwise specified
+        //We will block appointment times which fall within the duration of this one
+        let duration = apt.duration || 2
+        for (let i = 0; i < duration; i++) {
+          bookedTimes[aptTime + i] = true
+        }
+      })
+
+      //Iterate over the bookedTimes object, adding non-occupied timeslots to the times array
+      let times = [];
+
+      for (let key in bookedTimes) {
+        if (!bookedTimes[key]) {
+          times.push(setHours(setMinutes(new Date(this.state.aptDate), 0), key))
+        }
+      }
+
+      //Update state to reflect times that are non-occupied
+      this.setState({
+        includedTimes: times
+      })
+    })
   }
 
   componentDidMount() {
@@ -62,6 +116,9 @@ class AptEditor extends React.Component {
           })
         }
       })
+    })
+    .then(() => {
+      this.updateAvailableTimes();
     })
     .catch((err) => {
       console.log(err);
@@ -92,18 +149,42 @@ class AptEditor extends React.Component {
     } else {
       this.setState({
         aptDate: new Date(event)
+      }, () => {
+        this.updateAvailableTimes()
       })
     }
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    let fixedTimeString = new Date(this.state.aptDate).toISOString().replace('Z', '');
-    let time = new Date(fixedTimeString)
+    let missingInfo = false;
 
-    this.setState({
-      aptDate: time
-    }, () => {
+    if (!this.state.firstName || !this.state.lastName) {
+      alert("Please enter your full name and submit again.");
+      missingInfo = true;
+    }
+
+    if (!this.state.email || !this.state.phone) {
+      alert("Please enter your phone number and email and submit again.");
+      missingInfo = true;
+    }
+
+    if (!this.state.service) {
+      alert("Please select a service and submit again.");
+      missingInfo = true;
+    }
+
+    if (!this.state.aptDate || isBefore(this.state.aptDate, (setHours(setMinutes(new Date(this.state.aptDate), 0), 9)))) {
+      alert("Please select an appointment date/time and submit again.");
+      missingInfo = true;
+    }
+
+    if (!this.state.manicure && !this.state.pedicure) {
+      alert("Please choose a manicure or pedicure and submit again.");
+      missingInfo = true;
+    }
+
+    if (!missingInfo) {
       axios.put('/api/schedule', this.state)
       .then((response) => {
         this.setState({
@@ -123,7 +204,7 @@ class AptEditor extends React.Component {
       .catch((err) => {
         console.log(err);
       })
-    })
+    }
   }
 
   render() {
