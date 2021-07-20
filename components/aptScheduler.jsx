@@ -44,6 +44,8 @@ class AptScheduler extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+
+
   componentDidMount() {
     axios.get('/api/location')
     .then((response) => {
@@ -270,12 +272,17 @@ class AptScheduler extends React.Component {
             lastName: '',
             email: '',
             phone: '',
+            location: '',
             service: '',
             aptDate: null,
             manicure: false,
             pedicure: false,
             approved: true,
-            duration: 120
+            duration: 120,
+            veronicaDays: [],
+            doloresDays: [],
+            availableDays: [],
+            includedTimes: []
           });
           alert('Appointment created!')
         })
@@ -326,6 +333,10 @@ class AptScheduler extends React.Component {
                   <option value="sculpted">Sculpted</option>
                   <option value="semiperm">Semi-permanent</option>
                 </select>
+              </label>
+              <label>
+                Duration (minutes):
+                <input required type="number" name="duration" min="30" step="30" value={this.state.duration} onChange={(e) => this.handleChange(e)} />
               </label>
                 Pedicure and/or Manicure:
                 <div>
