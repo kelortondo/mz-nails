@@ -9,6 +9,7 @@ import setHours from "date-fns/setHours";
 import setMinutes from "date-fns/setMinutes";
 import isBefore from "date-fns/isBefore";
 import getHours from "date-fns/getHours";
+import getMinutes from "date-fns/getMinutes";
 import getYear from "date-fns/getYear";
 import getMonth from "date-fns/getMonth";
 import getDate from "date-fns/getDate";
@@ -31,11 +32,11 @@ class AptEditor extends React.Component {
       phone: this.props.req.phone,
       location: this.props.req.location,
       service: this.props.req.service,
-      aptDate: setHours(setMinutes(new Date(this.props.req.aptDate), 0), getHours(new Date(currentAptTime))),
+      aptDate: setHours(setMinutes(new Date(this.props.req.aptDate), getMinutes(new Date(currentAptTime))), getHours(new Date(currentAptTime))),
       manicure: this.props.req.manicure,
       pedicure: this.props.req.pedicure,
       approved: true,
-      duration: this.props.req.duration || 2,
+      duration: this.props.req.duration || 120,
       veronicaDays: [],
       doloresDays: [],
       availableDays: [],
@@ -49,43 +50,98 @@ class AptEditor extends React.Component {
   updateAvailableTimes() {
     //All the possible times an appointment could begin
     let bookedTimes = {
-      9: false,
-      10: false,
-      11: false,
-      12: false,
-      13: false,
-      14: false,
-      15: false,
-      16: false,
-      17: false,
-      18: false
+      '0900': false,
+      '0930': false,
+      '1000': false,
+      '1030': false,
+      '1100': false,
+      '1130': false,
+      '1200': false,
+      '1230': false,
+      '1300': false,
+      '1330': false,
+      '1400': false,
+      '1430': false,
+      '1500': false,
+      '1530': false,
+      '1600': false,
+      '1630': false,
+      '1700': false,
+      '1730': false,
+      '1800': false
     }
+
+    let bookedTimesArray = [
+      '0900',
+      '0930',
+      '1000',
+      '1030',
+      '1100',
+      '1130',
+      '1200',
+      '1230',
+      '1300',
+      '1330',
+      '1400',
+      '1430',
+      '1500',
+      '1530',
+      '1600',
+      '1630',
+      '1700',
+      '1730',
+      '1800'
+    ]
 
     //Based on the date requested by the client, get already-booked appointment times
     axios.get(`api/schedule?startDate=${this.state.aptDate}`)
     .then((response) => {
       let existingApts = response.data;
-      let currentAptTime = (new Date(this.props.req.aptDate)).toLocaleString('en-us', {timeZone: 'America/Argentina/Buenos_Aires'})
-      currentAptTime = getHours(new Date(currentAptTime))
+      let thisApt = this.props.req.aptDate;
 
       existingApts.forEach((apt) => {
+        //Don't block times based upon the apt we are presently editing
+        if (apt._id === this.state._id) {
+          return;
+        }
+
         //The currently occupied appointment time will be a string when coming from the DB.
         //We need to convert it to a date object, with the hours set for Buenos Aires
         let aptTime = (new Date(apt.aptDate)).toLocaleString('en-us', {timeZone: 'America/Argentina/Buenos_Aires'})
 
-        //Parse the hour of the appointment from the date object
-        aptTime = getHours(new Date(aptTime))
-
-        //We don't want to consider the hours currently blocked by this appointment
-        if (aptTime === currentAptTime) {
-          return;
+        //Parse the hour/min of the appointment from the date object
+        let aptTimeHr = getHours(new Date(aptTime));
+        if (aptTimeHr.length === 1) {
+          aptTimeHr = '0' + aptTimeHr;
+        } else {
+          aptTimeHr = '' + aptTimeHr;
         }
+
+        let aptTimeMin = getMinutes(new Date(aptTime));
+        if (aptTimeMin === 0) {
+          aptTimeMin = '00';
+        } else {
+          aptTimeMin = '' + aptTimeMin;
+        }
+
+        let aptTimeString = aptTimeHr + aptTimeMin;
+        let startIndex = bookedTimesArray.indexOf(aptTimeString);
 
         //Most appointments will have a duration of 2 hours, unless otherwise specified
         //We will block appointment times which fall within the duration of this one
-        let duration = apt.duration || 2
-        for (let i = 0; i < duration; i++) {
-          bookedTimes[aptTime + i] = true
+        let duration;
+        if (!apt.duration || apt.duration === 2) {
+          duration = 120
+        } else if (apt.duration === 1) {
+          duration = 60;
+        } else {
+          duration = apt.duration;
+        }
+
+        let thirtyMinBlocks = duration / 30
+        for (let i = 0; i < thirtyMinBlocks; i++) {
+          let key = bookedTimesArray[startIndex + i];
+          bookedTimes[key] = true
         }
       })
 
@@ -93,8 +149,10 @@ class AptEditor extends React.Component {
       let times = [];
 
       for (let key in bookedTimes) {
+        let hr = parseInt(key.slice(0, 2))
+        let min = parseInt(key.slice(2))
         if (!bookedTimes[key]) {
-          times.push(setHours(setMinutes(new Date(this.state.aptDate), 0), key))
+          times.push(setHours(setMinutes(new Date(this.state.aptDate), min), hr))
         }
       }
 
@@ -192,10 +250,11 @@ class AptEditor extends React.Component {
     } else {
       var rawAptDate = this.state.aptDate;
       var hours = getHours(this.state.aptDate);
+      var minutes = getMinutes(this.state.aptDate);
       var day = getDate(this.state.aptDate);
       var month = getMonth(this.state.aptDate);
       var year = getYear(this.state.aptDate);
-      var _aptDate = new Date(Date.UTC(year, month, day, hours + 3))
+      var _aptDate = new Date(Date.UTC(year, month, day, hours + 3, minutes))
       let _earliestDate = new Date(Date.UTC(year, month, day, 12))
       if (isBefore(_aptDate, _earliestDate)) {
         alert("Please select an appointment date/time and submit again.")
@@ -264,8 +323,8 @@ class AptEditor extends React.Component {
             </select>
           </label>
           <label>
-            Duration (hours):
-            <input required type="number" name="duration" min="1" value={this.state.duration} onChange={(e) => this.handleChange(e)} />
+            Duration (minutes):
+            <input required type="number" name="duration" min="30" step="30" value={this.state.duration} onChange={(e) => this.handleChange(e)} />
           </label>
             Pedicure and/or Manicure:
             <div>
@@ -288,7 +347,6 @@ class AptEditor extends React.Component {
               inline
               showTimeSelect
               includeTimes={this.state.includedTimes}
-              timeIntervals={60}
             />
             <div><button className={styles.editAptBtn} onClick={(e) => this.handleSubmit(e)}>Save appointment</button></div>
           </div>
