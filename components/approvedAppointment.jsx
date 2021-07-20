@@ -25,6 +25,7 @@ function ApprovedAppointment({req, handleRerender}) {
 
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [deleteOpen, setDeleteOpen] = React.useState(false);
 
   const handleOpen = () => {
     setOpen(true);
@@ -35,6 +36,14 @@ function ApprovedAppointment({req, handleRerender}) {
     handleRerender();
   };
 
+  const handleDeleteOpen = () => {
+    setDeleteOpen(true);
+  };
+
+  const handleDeleteClose = () => {
+    setDeleteOpen(false);
+  };
+
   const handleDelete = function() {
     axios.delete('/api/schedule', {
       data: {
@@ -43,6 +52,7 @@ function ApprovedAppointment({req, handleRerender}) {
     })
     .then((response) => {
       handleRerender();
+      handleDeleteClose()
     })
     .catch((err) => {
       console.log(err)
@@ -57,7 +67,7 @@ function ApprovedAppointment({req, handleRerender}) {
       <p style={{marginLeft: '1rem'}}>Location: {req.location[0].toUpperCase() + req.location.slice(1)} || Date/Time: {new Date(req.aptDate).toLocaleString('en-AR', {timeZone: 'America/Argentina/Buenos_Aires', hour12: false, dateStyle: 'medium', timeStyle: 'short'})} ({req.duration} min) || Service: {req.service}{req.pedicure ? ', pedicure' : ''}{req.manicure ? ', manicure' : ''}</p>
       <div>
         <button className={styles.aptBtn} onClick={handleOpen}>Edit</button>
-        <button className={styles.aptBtn} onClick={handleDelete}>Remove</button>
+        <button className={styles.aptBtn} onClick={handleDeleteOpen}>Remove</button>
 
         <Modal
         className={classes.modal}
@@ -75,6 +85,30 @@ function ApprovedAppointment({req, handleRerender}) {
             </div>
           </Fade>
         </Modal>
+
+        <Modal
+        className={classes.modal}
+        open={deleteOpen}
+        onClose={handleDeleteClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+        >
+          <Fade in={deleteOpen}>
+            <div className={classes.paper}>
+              <div className={styles.aptApproved}>
+                <p style={{fontFamily: "Quicksand", fontSize: '1.25rem'}}>Are you sure you want to delete this appointment?</p>
+                <p style={{fontFamily: "Quicksand", fontSize: '1rem'}}>{req.firstName}&nbsp;{req.lastName} at {new Date(req.aptDate).toLocaleString('en-AR', {timeZone: 'America/Argentina/Buenos_Aires', hour12: false, dateStyle: 'medium', timeStyle: 'short'})}</p>
+                <button className={styles.aptBtn} onClick={() => handleDelete()}>Yes, delete the appointment</button>
+                <br/>
+                <button className={styles.aptBtn} onClick={() => handleDeleteClose()}>No, do not delete the appointment</button>
+              </div>
+            </div>
+          </Fade>
+        </Modal>
+
 
       </div>
     </div>
