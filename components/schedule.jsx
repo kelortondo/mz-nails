@@ -8,6 +8,7 @@ import ApprovedAppointment from './approvedAppointment.jsx';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import setHours from "date-fns/setHours";
 
 class Schedule extends React.Component {
   constructor(props) {
@@ -18,7 +19,7 @@ class Schedule extends React.Component {
 
     this.state = {
       appointments: [],
-      startDate: new Date(),
+      startDate: setHours(new Date(), 3),
       endDate: oneYearFromNow,
       seeAll: false,
       hidePast: true

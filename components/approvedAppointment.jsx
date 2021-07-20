@@ -52,7 +52,7 @@ function ApprovedAppointment({req, handleRerender}) {
   return(
     <div className={styles.aptApproved}>
       <p style={{fontFamily: "Nickainley", fontSize: '1.75rem'}}>Client info:</p>
-      <p style={{marginLeft: '1rem'}}>Name: {req.firstName} {req.lastName} || Email: {req.email} || Phone number: {req.phone}</p>
+      <p style={{marginLeft: '1rem'}}>Name: {req.firstName}&nbsp;{req.lastName} || Email: {req.email} || Phone number: {req.phone}</p>
       <p style={{fontFamily: "Nickainley", fontSize: '1.75rem'}}>Appointment info:</p>
       <p style={{marginLeft: '1rem'}}>Location: {req.location[0].toUpperCase() + req.location.slice(1)} || Date/Time: {new Date(req.aptDate).toLocaleString('en-AR', {timeZone: 'America/Argentina/Buenos_Aires', hour12: false, dateStyle: 'medium', timeStyle: 'short'})} ({req.duration} min) || Service: {req.service}{req.pedicure ? ', pedicure' : ''}{req.manicure ? ', manicure' : ''}</p>
       <div>
